@@ -2,14 +2,15 @@ package com.daegeon.bread2u.domain.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-@Setter
+@Builder
 public class Bread {
     @Id
     @GeneratedValue
@@ -28,5 +29,5 @@ public class Bread {
     private Shop shop;
 
     @OneToMany(mappedBy = "bread")
-    private List<Comment> posts;
+    private List<Comment> comments;
 }
