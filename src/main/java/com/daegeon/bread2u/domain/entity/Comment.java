@@ -14,21 +14,16 @@ public class Comment {
     @GeneratedValue
     @Column(name = "comment_id")
     private Long id;
-
     private String content;
-
     private Long likes;
-
     private LocalDateTime createdAt;
-
     private LocalDateTime modifiedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="post_id")
-    private Post post;
-
+    @JoinColumn(name = "bread_id")
+    private Bread bread;
 }
