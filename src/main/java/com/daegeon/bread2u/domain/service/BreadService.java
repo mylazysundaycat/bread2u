@@ -31,14 +31,15 @@ public class BreadService {
 
     //빵 작성
     public Bread createBread(Bread bread){
-        return breadRepository.save(bread);
+        Bread createdBread = breadRepository.save(bread);
+        return createdBread;
     }
 
     //빵 수정
     //TODO Exceoption
     //TODO Builder도 사용해보기
-    public Bread updateBread(Bread bread) {
-        Bread findBread = breadRepository.findById(bread.getId()) //영속성 엔티티 찾아오기
+    public Bread updateBread(Long breadId, Bread bread) {
+        Bread findBread = breadRepository.findById(breadId) //영속성 엔티티 찾아오기
                 .orElseThrow();
         Optional.ofNullable(bread.getTitle())
                 .ifPresent(title -> findBread.setTitle(title));
@@ -53,9 +54,5 @@ public class BreadService {
                 .orElseThrow();
         breadRepository.delete(findBread);
     }
-
-
-
-
 }
  

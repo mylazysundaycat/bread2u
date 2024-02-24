@@ -4,13 +4,13 @@ import com.daegeon.bread2u.domain.entity.Bread;
 import com.daegeon.bread2u.domain.service.BreadService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class BreadController {
 
@@ -38,15 +38,15 @@ public class BreadController {
     @GetMapping("/{breadId}/update")
     @Operation(summary = "빵 수정 페이지", description = "빵 게시물 수정 페이지로 이동한다")
     public String updateBread(@PathVariable Long breadId, Model model){
+        model.addAttribute("Bread", findById(breadId));
         return "/BraedForm";
     }
 
-    //TODO
     @PostMapping("/{breadId}/update")
     @Operation(summary = "빵 수정", description = "id에 해당하는 빵 게시물을 수정한다")
     public String updateBread(@PathVariable Long breadId, @ModelAttribute Bread bread
             , RedirectAttributes redirectAttributes){
-        Bread updatedBread = breadService.updateBread(bread);
+        Bread updatedBread = breadService.updateBread(breadId, bread);
         redirectAttributes.addAttribute("breadId", updatedBread.getId());
         redirectAttributes.addFlashAttribute("message", "빵이 수정되었습니다.");
         return "redirect:/"+updatedBread.getId();

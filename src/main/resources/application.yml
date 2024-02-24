@@ -5,6 +5,8 @@ spring:
     password:
     driver-class-name: org.h2.Driver
   jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
     properties:
@@ -14,3 +16,7 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+#logging:
+#  level:
+#    root: debug
