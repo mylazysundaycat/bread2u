@@ -18,9 +18,10 @@ import java.util.Optional;
 public interface BreadRepository extends JpaRepository<Bread, Long> {
     public Page<Bread> findAll(Pageable pageable);
     public Optional<Bread> findById(Long braed_id);
-    public List<Bread> findAllShopIdByCreatedAtDesc(Shop shop, Pageable pageable);
-    /**
-     * Returns a bread list by shop
-     */
+
+//    public List<Bread> findAllShopIdByCreatedAtDesc(Shop shop, Pageable pageable);
+//    /**
+//     * Returns a bread list by shop
+//     */
 
 }
