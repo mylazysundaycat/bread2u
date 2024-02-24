@@ -40,12 +40,10 @@ public class BreadService {
     public Bread updateBread(Bread bread) {
         Bread findBread = breadRepository.findById(bread.getId()) //영속성 엔티티 찾아오기
                 .orElseThrow();
-
         Optional.ofNullable(bread.getTitle())
                 .ifPresent(title -> findBread.setTitle(title));
         Optional.ofNullable(bread.getDetail())
                 .ifPresent(detail -> findBread.setDetail(detail));
-
         return breadRepository.save(findBread);
     }
 
