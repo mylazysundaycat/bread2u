@@ -1,6 +1,7 @@
 package com.daegeon.bread2u.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,13 +20,17 @@ public class Member {
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
-    private String email;
-    private String password;
-    private String nickname;
-    private LocalDateTime birth;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String email;
+
+    private String password;
+
+    private String nickname;
+
+//    private LocalDateTime birth;
+//
+//    @Enumerated(EnumType.STRING)
+//    private Role role;
 
     @OneToMany(mappedBy = "member")
     private List<Shop> shops;
@@ -33,6 +38,5 @@ public class Member {
     private List<Bread> bread;
     @OneToMany(mappedBy = "member")
     private List<Comment> comments;
-
 
 }

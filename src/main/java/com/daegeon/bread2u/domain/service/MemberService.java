@@ -34,8 +34,8 @@ public class MemberService {
     public Member updateMember(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow();
-        Optional.ofNullable(findMember.getBirth())
-                .ifPresent(birth -> findMember.setBirth(birth));
+//        Optional.ofNullable(findMember.getBirth())
+//                .ifPresent(birth -> findMember.setBirth(birth));
         Optional.ofNullable(findMember.getNickname())
                 .ifPresent(nickname -> findMember.setNickname(nickname));
         Optional.ofNullable(findMember.getEmail())
