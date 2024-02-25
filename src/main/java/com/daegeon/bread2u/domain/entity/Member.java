@@ -2,15 +2,18 @@ package com.daegeon.bread2u.domain.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id
     @GeneratedValue
@@ -19,7 +22,7 @@ public class Member {
     private String email;
     private String password;
     private String nickname;
-    private Date birth;
+    private LocalDateTime birth;
 
     @Enumerated(EnumType.STRING)
     private Role role;
