@@ -5,6 +5,7 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
     <div>
+        <a href="/breadList/create">빵 등록</a>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -12,6 +13,8 @@
                 <th>제품명</th>
                 <th>가격</th>
                 <th>설명</th>
+                <th>수정</th>
+                <th>삭제</th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +23,12 @@
                 <td th:text="${bread.title}"></td>
                 <td th:text="${bread.price}"></td>
                 <td th:text="${bread.detail}"></td>
+                <td>
+                    <a href="#" th:href="@{/bread/{breadId}/update (breadId=${bread.id})}" class="btn btn-dark" role="button">수정</a>
+                </td>
+                <td>
+                    <a href="#" th:href="@{/bread/{breadId}/delete (breadId=${bread.id})}" class="btn btn-primary" role="button">삭제</a>
+                </td>
             </tr>
             </tbody>
         </table>
