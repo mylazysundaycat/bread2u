@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +19,11 @@ public class BreadService {
     private final BreadRepository breadRepository;
     
     //빵 전체 조회
-    public Page<Bread> findAll(Pageable pageable) {
-        return breadRepository.findAll(pageable);
+//    public Page<Bread> findAll(Pageable pageable) {
+//        return breadRepository.findAll(pageable);
+//    }
+    public List<Bread> findAll(){
+        return breadRepository.findAll();
     }
     
     //빵 조회

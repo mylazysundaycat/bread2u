@@ -2,32 +2,40 @@ package com.daegeon.bread2u.domain.controller;
 
 
 import com.daegeon.bread2u.domain.entity.Member;
+import com.daegeon.bread2u.domain.repository.dto.MemberDto;
 import com.daegeon.bread2u.domain.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
 
+    @GetMapping("/home")
+    public String home(){
+        return "/home";
+    }
+
     //create
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
     @GetMapping("/member")
-    public String createMember() {
+    public String createMember(Model model) {
+        model.addAttribute("member", new MemberDto());
         return "/member/createMemberForm";
     }
 
     @Operation(summary = "회원가입", description = "회원가입을 한다")
     @PostMapping("/member")
-    public String createMember(@ModelAttribute Member memberForm) {
-        memberService.createMember(memberForm);
-//        return "ok";
-        return "redirect:/";
+    public String createMember(@ModelAttribute Member member) {
+        memberService.createMember(member);
+        return "/home";
+//        return "redirect:/";
     }
 
     //readAll

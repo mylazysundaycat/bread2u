@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" action="/member" th:object="${member}"
+          method="post">
+        <div class="form-group">
+            <label th:for="nickname">nickname</label>
+            <input type="text" th:field="*{nickname}" class="form-control"
+                   placeholder="nickname 입력하세요"
+                   th:class="form-control">
+        </div>
+        <div class="form-group">
+            <label th:for="email">email</label>
+            <input type="text" th:field="*{email}" class="form-control"
+                   placeholder="email 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="password">password</label>
+            <input type="text" th:field="*{password}" class="form-control"
+                   placeholder="password 입력하세요">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>
+```

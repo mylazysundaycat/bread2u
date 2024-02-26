@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -31,15 +33,25 @@ public class BreadController {
         return "redirect:/"+createdBread.getId();
     }
 
+    //find
     @GetMapping("/bread/{breadId}")
     @Operation(summary = "특정 빵 조회", description = "id에 해당하는 빵을 보여준다")
     public Bread findById(Long bread_id) {
         return breadService.findById(bread_id);
     }
 
+    //findAll
+    @GetMapping("/breadList")
+    @Operation(summary = "빵 목록 조회", description = "빵 목록을 보여준다")
+    public String findAll(Model model) {
+        model.addAttribute("breadList", breadService.findAll());
+        return "/bread/breadList";
+    }
+
     @GetMapping("/bread/{breadId}/update")
     @Operation(summary = "빵 수정 페이지", description = "빵 게시물 수정 페이지로 이동한다")
-    public String updateBread(@PathVariable Long breadId, Model model){
+    public String updateBread(@PathVariable Long breadId, Model model) {
+
         model.addAttribute("Bread", findById(breadId));
         return "/BraedForm";
     }

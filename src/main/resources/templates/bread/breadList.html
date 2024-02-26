@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>제품명</th>
+                <th>가격</th>
+                <th>설명</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bread : ${breadList}">
+                <td th:text="${bread.id}"></td>
+                <td th:text="${bread.title}"></td>
+                <td th:text="${bread.price}"></td>
+                <td th:text="${bread.detail}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>
