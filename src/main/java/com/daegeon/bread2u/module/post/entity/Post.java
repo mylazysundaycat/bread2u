@@ -22,7 +22,11 @@ public class Post {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    @OneToMany(mappedBy = "post_id")
+    //파일추가
+    private String filename;
+    private String filepath;
+
+    @OneToMany(mappedBy = "post")
     private List<Comment> comment;
 
     @ManyToOne(fetch = FetchType.LAZY)

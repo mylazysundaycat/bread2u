@@ -2,6 +2,7 @@ package com.daegeon.bread2u.module.comment.entity;
 
 
 import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.shop.entity.Bread;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,4 +30,8 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bread_id")
     private Bread bread;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

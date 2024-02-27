@@ -32,7 +32,6 @@ public class Bread {
     @ManyToOne
     @JoinColumn(name = "shop_id")
     private Shop shop;
-
     @OneToMany(mappedBy = "bread")
     private List<Comment> comments;
 }

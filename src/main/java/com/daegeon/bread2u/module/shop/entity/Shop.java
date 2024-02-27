@@ -22,7 +22,6 @@ public class Shop {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
-
     @OneToMany(mappedBy = "shop")
     private List<Bread> bread;
 }
