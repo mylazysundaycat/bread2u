@@ -1,9 +1,9 @@
 package com.daegeon.bread2u.member;
 
 
-import com.daegeon.bread2u.domain.entity.Member;
-import com.daegeon.bread2u.domain.repository.MemberRepository;
-import com.daegeon.bread2u.domain.service.MemberService;
+import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.member.repository.MemberRepository;
+import com.daegeon.bread2u.module.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
