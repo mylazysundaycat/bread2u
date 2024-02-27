@@ -7,8 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +19,18 @@ public class PostService {
     private final PostRepository postRepository;
 
     //create
-    public Post createPost(Post post) {
-        return postRepository.save(post);
+    public void createPost(Post post, MultipartFile file) throws IOException {
+        String projectPath = System.getProperty("user.dir")+"\\src\\main\\java\\com\\daegeon\\bread2u\\lib\\upload";
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid+"_"+file.getOriginalFilename();
+        File saveFile = new File(projectPath, "fileName");
+        file.transferTo(saveFile);
+
+        post.setFilename(fileName);
+        post.setFilepath(projectPath+"\\"+fileName);
+
+
+        postRepository.save(post);
     }
 
     //read
@@ -30,7 +43,7 @@ public class PostService {
     //TODO readByCategoryId
 
     //readAll
-    public List<Post> readPostAll(){
+    public List<Post> findAll(){
         return postRepository.findAll();
     }
 
