@@ -3,7 +3,9 @@ package com.daegeon.bread2u.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,6 +22,7 @@ public class Bread {
     private String title;
     private Long price;
     private String detail;
+    private LocalDateTime createdAt;
 
 
     @ManyToOne

@@ -59,11 +59,8 @@ public class BreadController {
 
     @PostMapping("/bread/{breadId}/update")
     @Operation(summary = "빵 수정", description = "id에 해당하는 빵 게시물을 수정한다")
-    public String updateBread(@PathVariable Long breadId, @ModelAttribute Bread bread
-            , RedirectAttributes redirectAttributes){
+    public String updateBread(@PathVariable Long breadId, @ModelAttribute Bread bread){
         Bread updatedBread = breadService.updateBread(breadId, bread);
-        redirectAttributes.addAttribute("breadId", updatedBread.getId());
-        redirectAttributes.addFlashAttribute("message", "빵이 수정되었습니다.");
         return "redirect:/breadList";
 //        return "redirect:/"+updatedBread.getId();
     }
