@@ -29,7 +29,9 @@
         </div>
         <div >
             <label th:for="filename">filename</label>
-            <input type="file" class="form-control" th:enctype="multipart/form-data">
+            <input type="file" class="form-control" enctype="multipart/form-data"
+            name="file"
+            >
         </div>
         <button type="submit" class="btn btn-primary">입력</button>
     </form>

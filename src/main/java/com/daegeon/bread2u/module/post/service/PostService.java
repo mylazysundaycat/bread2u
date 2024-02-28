@@ -1,7 +1,10 @@
 package com.daegeon.bread2u.module.post.service;
 
 
+import com.daegeon.bread2u.module.file.entity.File;
+import com.daegeon.bread2u.module.file.service.FileService;
 import com.daegeon.bread2u.module.post.entity.Post;
+import com.daegeon.bread2u.module.post.entity.PostDto;
 import com.daegeon.bread2u.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,10 +17,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final FileService fileService;
 
     //create
-    public Post createPost(Post post) {
-        return postRepository.save(post);
+    public void createPost(PostDto postDto) {
+        File saveFile = fileService.createFile(postDto.getFile());
+        Post savePost = Post.builder()
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
+                .file(saveFile)
+                .build();
+
+        postRepository.save(savePost);
     }
 
     //read
@@ -30,7 +41,7 @@ public class PostService {
     //TODO readByCategoryId
 
     //readAll
-    public List<Post> readPostAll(){
+    public List<Post> findAll(){
         return postRepository.findAll();
     }
 
@@ -43,12 +54,13 @@ public class PostService {
                 .ifPresent(comment-> findPost.setComment(comment));
         Optional.of(post.getTitle())
                 .ifPresent(title->findPost.setTitle(title));
-        Optional.of(post.getCreatedAt())
-                .ifPresent(at -> findPost.setModifiedAt(at));
+//        Optional.of(post.getCreatedAt())
+//                .ifPresent(at -> findPost.setModifiedAt(at));
         return postRepository.save(findPost);
     }
 
     //delete
+
     //TODO EXCEPTION
     public void deletePost(Long postId) {
         Post findPost = postRepository.findById(postId)

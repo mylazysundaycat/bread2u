@@ -1,8 +1,9 @@
-package com.daegeon.bread2u.module.post.repository.dto;
+package com.daegeon.bread2u.module.post.entity;
 
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -11,5 +12,5 @@ import java.time.LocalDateTime;
 public class PostDto {
     private String title;
     private String content;
-    private LocalDateTime createdAt;
+    private MultipartFile file;
 }
