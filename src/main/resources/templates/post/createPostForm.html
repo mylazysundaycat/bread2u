@@ -7,7 +7,6 @@
     }
 </style>
 <body>
-<div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
     <form role="form" action="/post/create" th:object="${post}"
           method="post" enctype="multipart/form-data">
@@ -30,7 +29,5 @@
     </form>
     <br/>
     <div th:replace="fragments/footer :: footer" />
-</div> <!-- /container -->
 </body>
 </html>
-```

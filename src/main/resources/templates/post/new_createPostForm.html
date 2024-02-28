@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <title>Bread2U</title>
+</head>
+<body>
+<!--Header 시작-->
+<div class="h-row1 h-set">
+    <div class="col1">
+        회원가입
+    </div>
+    <div class="col2">
+        로그인
+    </div>
+</div>
+<div class="h-row2 h-set">
+    <div class="col1">
+        <img src="../img/main-logo.png" class="main-logo">
+    </div>
+</div>
+<div class="h-row3 h-set">
+    <div class="hr3s1"><a href="/">HOME</a></div>
+    <div class="hr3s1"><a href="/breadList">베스트</a></div>
+    <div class="hr3s1">커스텀빵여행</div>
+    <div class="hr3s1 "><a href="/post">빵뮤니티</a></div>
+    <div class="col1">
+        <div class="search">
+            <input type="text" class="search-box">
+            <img src="../img/icon-search.png" class="search-icon">
+        </div>
+    </div>
+</div>
+<!--Header 종료-->
+
+<!--Article nav 시작-->
+<div class="post-nav-container">
+    <div class="post-nav">
+        <div class="title">
+            <div>빵TALK</div>
+            <img src="../img/icon-rightarrow.png" class="righrarrow-img">
+        </div>
+    </div>
+</div>
+<!--Article nav 종료-->
+
+<!--Article content 시작-->
+
+<div class="post-content-container">
+    <form role="form" class="pc-form" th:object="${post}"
+          action="/post/create" method="post" enctype="multipart/form-data">
+        <div class="title">
+            <input type="text" placeholder="제목을 입력하세요" class="pc-title"
+                   th:field="*{title}">
+        </div>
+        <div class="post">
+            <textarea class="pc-post" th:field="*{content}"></textarea>
+        </div>
+        <div class="btn-pack">
+            <div><input type="file" value="파일첨부" class="pc-file"
+                        name="file"></div>
+            <div><input type="submit" value="submit" class="btn main-color"></div>
+        </div>
+    </form>
+
+</div>
+
+
+</body>
+</html>

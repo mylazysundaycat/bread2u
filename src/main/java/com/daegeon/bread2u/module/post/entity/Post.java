@@ -6,6 +6,7 @@ import com.daegeon.bread2u.module.file.entity.File;
 import com.daegeon.bread2u.module.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,8 +21,10 @@ public class Post {
     private Long id;
     private String title;
     private String content;
-//    private LocalDateTime createdAt;
-//    private LocalDateTime modifiedAt;
+    @ColumnDefault("0")
+    private Long likes;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comment;
@@ -35,9 +38,10 @@ public class Post {
     private File file;
 
     @Builder
-    public Post(String title, String content, File file){
+    public Post(String title, String content, Long likes, File file){
         this.title=title;
         this.content=content;
+        this.likes=likes;
         this.file=file;
     }
 

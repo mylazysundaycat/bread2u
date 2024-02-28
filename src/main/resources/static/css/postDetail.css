@@ -1,0 +1,188 @@
+.post-nav-container{
+    display: flex;
+    width: 1050px;
+    margin: 0px auto;
+    flex-direction: column;
+}
+.post-nav {
+    display: flex;
+    width: 800px;
+    margin: 0px auto;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+
+.post-nav .title{
+    display: flex;
+}
+
+
+.post-container{
+    display: flex;
+    width: 800px;
+    margin: 0px auto;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+.post-title{
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.post-detail{
+    display: flex;
+    margin-bottom: 40px;
+    justify-content: flex-end;
+    border-bottom: 1px solid #a2a2a2;
+    padding-bottom: 20px;
+}
+.pd{
+    margin-right: 30px;
+}
+.post-detail .comment{
+    display: flex;
+}
+.post-detail .likes{
+    display: flex;
+}
+
+
+
+.comment-container1{
+    display: flex;
+    width: 800px;
+    flex-direction: column;
+    margin: 0px auto;
+    margin-bottom: 20px;
+}
+.comment-count{
+    margin-bottom: 25px;
+}
+.comment-input{
+    display: flex;
+}
+.ci-text{
+    font-size: 19px;
+    height: 42px;
+    width: 680px;
+    border-radius: 6px;
+    border: 1px solid;
+    padding-left: 10px;
+    padding-right: 52px;
+}
+.ci-btn{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    background-color: white;
+    border: 0px;
+    position: relative;
+    top: -38px;
+    left: 691px;
+
+}
+
+
+
+.comment-container2{
+    display: flex;
+    width: 800px;
+    flex-direction: column;
+    margin: 0px auto;
+    margin-bottom: 35px;
+}
+.member-detail{
+    display: flex;
+    margin-bottom: 10px;
+
+
+}
+.member-nickname{
+    padding-top: 7px;
+    font-weight: 600;
+}
+.comment-content{
+    margin-bottom: 10px;
+}
+
+.comment-detail .day{
+    margin-right: 50px;
+}
+.comment-detail .likes{
+    display: flex;
+    margin-right: 5px;
+}
+.detail-pack{
+    display: flex;
+}
+.likes-href{
+    display: flex;
+}
+.comment-detail .report{
+    margin: 0px 5px;
+}
+.comment-detail .reply{
+    margin: 0px 5px;
+}
+.comment-detail{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/*버튼*/
+.btn{
+    border: 0px;
+    padding: 4px 13px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: -1px;
+    cursor: pointer;
+
+}
+.btn:hover{
+    color: rgba(0, 0, 0, 0.6);
+}
+
+
+/*컬러*/
+.main-color{
+    background-color: #FFB35A;
+    transition: background-color 0.3s;
+}
+.main-color:hover{
+    background-color: rgba(255, 179, 90, 0.75);
+}
+
+/*이미지*/
+.righrarrow-img{
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.likes-img{
+    width: 20px;
+    height: 20px;
+    padding-right: 4px;
+    padding-top: 4px;
+}
+
+
+.comment-img{
+    width: 20px;
+    height: 20px;
+    padding-right: 4px;
+    padding-top: 6px;
+}
+.heart-img{
+    width: 20px;
+    height: 20px;
+    padding-top: 6px;
+    padding-right: 5px;
+}
+.profile-img{
+    width: 50px;
+    height: 43px;
+    padding: 0px 10px;
+}
