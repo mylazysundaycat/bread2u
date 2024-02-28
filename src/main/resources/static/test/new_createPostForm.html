@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../css/header.css">
@@ -46,28 +46,28 @@
             <div>빵TALK</div>
             <img src="../img/icon-rightarrow.png" class="righrarrow-img">
         </div>
-        <div>
-            <a href="/post/create" class="btn main-color">글쓰기</a>
-        </div>
     </div>
 </div>
 <!--Article nav 종료-->
 
-<!--Article 시작-->
-<div class="article-container">
-    <div class="a-row2">
-        <div class="title">제목</div>
-        <div class="likes">추천</div>
-        <div class="nickname">닉네임</div>
-        <div class="desc">최신순</div>
-    </div>
-    <div class="a-row3" th:each="post : ${posts}">
-        <div class="title" th:text="${post.title}">대전역 오자마자 가야될 곳 5곳 꼽아봤어용!! [12]</div>
-        <div class="likes" th:text="${post.likes}"><img src="../img/icon-likes.png" class="likes-img">84</div>
-        <div class="nickname" th:text="${post.content}">한화우승</div>
-        <div class="desc" th:text="${post.createdAt}">2024-02-01</div>
-    </div>
+<!--Article content 시작-->
+
+<div class="post-content-container">
+    <form action="" name="post" class="pc-form">
+        <div class="title">
+            <input type="text" placeholder="제목을 입력하세요" class="pc-title">
+        </div>
+        <div class="post">
+            <textarea class="pc-post"></textarea>
+        </div>
+        <div class="btn-pack">
+            <div><input type="file" value="파일첨부" class="pc-file"></div>
+            <div><input type="button" value="submit" class="btn main-color"></div>
+        </div>
+    </form>
+
 </div>
-<!--Article 종료-->
+
+
 </body>
 </html>

@@ -32,27 +32,69 @@
 .ar2{
 
 }
-.title{
+.article-container .title{
     width: 55%;
 }
-.likes{
+.article-container .likes{
     width: 10%;
     text-align: center;
 }
-.nickname{
+.article-container .nickname{
     width: 17%;
     text-align: center;
 }
-.desc{
+.article-container .desc{
     width: 18%;
     text-align: center;
 }
-
-
 .a-row3{
     display: flex;
     width: 800px;
     margin: 0px auto;
+}
+
+
+.post-content-container{
+    display: flex;
+    width: 800px;
+    margin: 0px auto;
+    justify-content: space-between;
+}
+.pc-form{
+    display: flex;
+    flex-direction: column;
+}
+.pc-form .title{
+    margin-bottom:16px
+}
+.pc-title{
+    width: 785px;
+    padding: 10px 0;
+    font-size: 30px;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+input::placeholder {color:#ccc;}
+.pc-form .post{
+
+}
+.pc-post{
+    border: 1px solid #ccc;
+    width: 785px;
+    height: 400px;
+    padding: 10px;
+}
+.pc-form .btn-pack{
+    display: flex;
+    justify-content: space-between;
+}
+.pc-file{
+
+}
+.pc-submit{
+
 }
 
 
@@ -62,7 +104,7 @@
     padding: 4px 13px;
     border-radius: 10px;
     font-weight: 500;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
     letter-spacing: -1px;
     cursor: pointer;
 

@@ -26,6 +26,7 @@ public class PostService {
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
                 .file(saveFile)
+                .likes(0L)
                 .build();
 
         postRepository.save(savePost);

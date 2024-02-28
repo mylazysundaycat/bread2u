@@ -24,7 +24,7 @@ public class PostController {
     @GetMapping
     public String findAll(Model model){
         model.addAttribute("posts", postService.findAll() );
-        return "/post/postList";
+        return "/post/new_postList";
     }
     //TODO
     @Operation(summary = "특정 글 조회")
@@ -39,7 +39,7 @@ public class PostController {
     @GetMapping("/create")
     public String createPost(Model model) {
         model.addAttribute("post", new PostDto());
-        return "/post/createPostForm";
+        return "/post/new_createPostForm";
     }
     @PostMapping("/create")
     public String createPost(@ModelAttribute PostDto postDto){

@@ -52,7 +52,7 @@
     width: 800px;
     flex-direction: column;
     margin: 0px auto;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 }
 .comment-count{
     margin-bottom: 25px;
@@ -81,8 +81,50 @@
 }
 
 
+
+.comment-container2{
+    display: flex;
+    width: 800px;
+    flex-direction: column;
+    margin: 0px auto;
+    margin-bottom: 35px;
+}
+.member-detail{
+    display: flex;
+    margin-bottom: 10px;
+
+
+}
+.member-nickname{
+    padding-top: 7px;
+    font-weight: 600;
+}
+.comment-content{
+    margin-bottom: 10px;
+}
+
+.comment-detail .day{
+    margin-right: 50px;
+}
+.comment-detail .likes{
+    display: flex;
+    margin-right: 5px;
+}
+.detail-pack{
+    display: flex;
+}
+.likes-href{
+    display: flex;
+}
+.comment-detail .report{
+    margin: 0px 5px;
+}
+.comment-detail .reply{
+    margin: 0px 5px;
+}
 .comment-detail{
     display: flex;
+    justify-content: space-between;
 }
 
 
@@ -136,6 +178,8 @@
 .heart-img{
     width: 20px;
     height: 20px;
+    padding-top: 6px;
+    padding-right: 5px;
 }
 .profile-img{
     width: 50px;
