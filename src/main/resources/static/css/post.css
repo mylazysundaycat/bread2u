@@ -1,0 +1,93 @@
+.post-nav-container{
+    display: flex;
+    width: 1050px;
+    margin: 0px auto;
+    flex-direction: column;
+}
+.post-nav {
+    display: flex;
+    width: 800px;
+    margin: 0px auto;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+
+.post-nav .title{
+    display: flex;
+}
+
+
+.article-container{
+    display: flex;
+    width: 1050px;
+    margin: 0px auto;
+    flex-direction: column;
+}
+.a-row2{
+    display: flex;
+    width: 800px;
+    margin: 0px auto;
+    margin-bottom: 10px;
+}
+.ar2{
+
+}
+.title{
+    width: 55%;
+}
+.likes{
+    width: 10%;
+    text-align: center;
+}
+.nickname{
+    width: 17%;
+    text-align: center;
+}
+.desc{
+    width: 18%;
+    text-align: center;
+}
+
+
+.a-row3{
+    display: flex;
+    width: 800px;
+    margin: 0px auto;
+}
+
+
+/*버튼*/
+.btn{
+    border: 0px;
+    padding: 4px 13px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: -1px;
+    cursor: pointer;
+
+}
+.btn:hover{
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/*컬러*/
+.main-color{
+    background-color: #FFB35A;
+    transition: background-color 0.3s;
+}
+.main-color:hover{
+    background-color: rgba(255, 179, 90, 0.75);
+}
+
+
+/*이미지*/
+.likes-img{
+    width: 25px;
+}
+.righrarrow-img{
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
