@@ -1,8 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div class="header" th:fragment="bodyHeader">
-    <ul class="nav nav-pills pull-right">
-        <li><a href="/">Home</a></li>
-    </ul>
-    <a href="/"><h3 class="text-muted">테스트용 페이지</h3></a>
+    <!--Header 시작-->
+    <div class="h-row1 h-set">
+        <div class="col1">
+            회원가입
+        </div>
+        <div class="col2">
+            로그인
+        </div>
+    </div>
+    <div class="h-row2 h-set">
+        <div class="col1">
+            <img src="img/main-logo.png" class="main-logo">
+        </div>
+    </div>
+    <div class="h-row3 h-set">
+        <div class="hr3s1"><a href="/">HOME</a></div>
+        <div class="hr3s1"><a href="/breadList">베스트</a></div>
+        <div class="hr3s1">커스텀빵여행</div>
+        <div class="hr3s1 "><a href="/post">빵뮤니티</a></div>
+        <div class="col1">
+            <div class="search">
+                <input type="text" class="search-box">
+                <img src="img/icon-search.png" class="search-icon">
+            </div>
+        </div>
+    </div>
+    <!--Header 종료-->
 </div>
