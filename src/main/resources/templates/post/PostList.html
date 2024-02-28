@@ -22,7 +22,10 @@
                 <td th:text="${post.id}"></td>
                 <td th:text="${post.title}"></td>
                 <td th:text="${post.content}"></td>
-                <td><img th:src="${post.filepath}"></td>
+                <td th:text="${post.file.extension}"></td>
+<!--                <td><img th:src="${post.file.extension}">-->
+<!--                    <img th:src="@{'upload/' + ${post.filename} + '.jpg'}" alt="동적 이미지">-->
+                </td>
 
 <!--                <td>-->
 <!--                    <a href="#" th:href="@{/post/{postId} (postId=${post.id})}" class="btn btn-dark" role="button">수정</a>-->
