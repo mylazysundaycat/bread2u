@@ -36,6 +36,24 @@ public class PostService {
         postRepository.save(savePost);
     }
 
+    //update
+    //TODO EXCEPTION
+    public Post updatePost(Long postId, PostDto postDto) {
+        Post findPost = postRepository.findById(postId)
+                .orElseThrow();
+        findPost.setTitle(postDto.getTitle());
+        findPost.setContent(postDto.getContent());
+        File saveFile = fileService.createFile(postDto.getFile());
+        findPost.setFile(saveFile);
+//        Optional.ofNullable(post.getComment())
+//                .ifPresent(comment-> findPost.setComment(comment));
+//        Optional.of(post.getTitle())
+//                .ifPresent(title->findPost.setTitle(title));
+//        Optional.of(post.getCreatedAt())
+//                .ifPresent(at -> findPost.setModifiedAt(at));
+        return postRepository.save(findPost);
+    }
+
     //read
     public Optional<Post> findById(Long postId) {
         return postRepository.findById(postId);
@@ -46,19 +64,7 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    //update
-    //TODO EXCEPTION
-    public Post updatePost(Long postId, Post post) {
-        Post findPost = postRepository.findById(postId)
-                .orElseThrow();
-        Optional.ofNullable(post.getComment())
-                .ifPresent(comment-> findPost.setComment(comment));
-        Optional.of(post.getTitle())
-                .ifPresent(title->findPost.setTitle(title));
-//        Optional.of(post.getCreatedAt())
-//                .ifPresent(at -> findPost.setModifiedAt(at));
-        return postRepository.save(findPost);
-    }
+
 
     //delete
 
