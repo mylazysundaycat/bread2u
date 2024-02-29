@@ -92,7 +92,8 @@
 <div class="post-wrapper2">
   <div class="comment-container1">
     <div class="comment-count">
-      댓글 8
+      <span>댓글</span>
+      <span th:text="${post.comment.size()}" class="num"></span>
     </div>
     <div class="comment-input">
         <img src="../img/profile-img.svg" class="profile-img">

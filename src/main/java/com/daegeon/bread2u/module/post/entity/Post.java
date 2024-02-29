@@ -42,12 +42,14 @@ public class Post extends BaseTimeEntity {
     private File file;
 
     @Builder
-    public Post(String title, String content, Long likes, Long view, File file){
+    public Post(String title, String content, Long likes, Long view,
+                File file, List<Comment> comment){
         this.title=title;
         this.content=content;
         this.likes=likes;
         this.view=view;
         this.file=file;
+        this.comment=comment;
     }
 
 }

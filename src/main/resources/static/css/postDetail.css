@@ -83,10 +83,15 @@
     width: 1010px;
     flex-direction: column;
     margin: 0px auto;
-    margin-bottom: 20px;
 }
 .comment-count{
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.comment-count .num{
+    color: #FF9A24;
+    font-weight: 700;
 }
 .comment-input{
     display: flex;
@@ -114,9 +119,6 @@
 ci-btn:hover{
     color: rgba(0, 0, 0, 0.65);
 }
-
-
-
 .comment-container2{
     display: flex;
     width: 1010px;
@@ -127,8 +129,6 @@ ci-btn:hover{
 .member-detail{
     display: flex;
     margin-bottom: 10px;
-
-
 }
 .member-nickname{
     padding-top: 7px;
@@ -167,7 +167,7 @@ ci-btn:hover{
 }
 .post-wrapper2{
     margin-left: 35px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .post-wrapper3{
     margin-left: 35px;
@@ -228,5 +228,5 @@ ci-btn:hover{
 .profile-img{
     width: 50px;
     height: 43px;
-    padding: 0px 10px;
+    padding-right: 10px;
 }

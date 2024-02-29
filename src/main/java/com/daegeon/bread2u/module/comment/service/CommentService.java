@@ -24,11 +24,15 @@ public class CommentService {
     public Comment createComment(Long postId, CommentRequestDto commentDto) {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow();
+
         Comment comment = Comment.builder()
                 .content(commentDto.getContent())
                 .likes(0L)
                 .post(findPost)
                 .build();
+
+        findPost.getComment().add(comment);
+        
         return commentRepository.save(comment);
     }
 

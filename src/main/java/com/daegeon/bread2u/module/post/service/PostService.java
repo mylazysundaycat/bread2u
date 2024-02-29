@@ -1,6 +1,7 @@
 package com.daegeon.bread2u.module.post.service;
 
 
+import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.file.entity.File;
 import com.daegeon.bread2u.module.file.service.FileService;
 import com.daegeon.bread2u.module.post.entity.Post;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +24,14 @@ public class PostService {
     //create
     public void createPost(PostDto postDto) {
         File saveFile = fileService.createFile(postDto.getFile());
+        List<Comment> comments = new ArrayList<>();
         Post savePost = Post.builder()
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
                 .file(saveFile)
                 .likes(0L)
                 .view(0L)
+                .comment(comments)
                 .build();
         postRepository.save(savePost);
     }

@@ -23,14 +23,13 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
     private final CommentService commentService;
-
     @Operation(summary = "전체 글 조회")
     @GetMapping
     public String findAll(Model model){
         model.addAttribute("posts", postService.findAll() );
         return "/post/new_postList";
     }
-    //TODO
+
     @Operation(summary = "특정 글 조회")
     @GetMapping("/{postId}")
     public String findById(@PathVariable Long postId, Model model) {
