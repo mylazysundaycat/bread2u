@@ -27,8 +27,8 @@ public class PostService {
                 .content(postDto.getContent())
                 .file(saveFile)
                 .likes(0L)
+                .view(0L)
                 .build();
-
         postRepository.save(savePost);
     }
 
@@ -36,10 +36,6 @@ public class PostService {
     public Optional<Post> findById(Long postId) {
         return postRepository.findById(postId);
     }
-
-    //TODO 검색결과
-
-    //TODO readByCategoryId
 
     //readAll
     public List<Post> findAll(){

@@ -6,7 +6,7 @@
 }
 .post-nav {
     display: flex;
-    width: 800px;
+    width: 1050px;
     margin: 0px auto;
     justify-content: space-between;
     margin-bottom: 35px;
@@ -14,6 +14,7 @@
 
 .post-nav .title{
     display: flex;
+    margin-left: 39px;
 }
 
 
@@ -25,38 +26,72 @@
 }
 .a-row2{
     display: flex;
-    width: 800px;
+    width: 1010px;
     margin: 0px auto;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;
+    margin-left: 39px;
 }
-.ar2{
-
+.article-container .id{
+    width: 3%;
+    text-align: center;
 }
 .article-container .title{
-    width: 55%;
-}
-.article-container .likes{
-    width: 10%;
+    width: 52%;
     text-align: center;
+}
+
+
+
+.a-row2 .views{
+    width: 7%;
+    text-align: center;
+}
+.a-row3 .view{
+    display: flex;
+    width: 7%;
+    justify-content: center;
+}
+.a-row3 .views{
+    text-align: center;
+}
+
+.a-row2 .likes{
+    width: 7%;
+    text-align: center;
+}
+.a-row3 .likes{
+    text-align: center;
+}
+.a-row3 .like{
+    display: flex;
+    width: 7%;
+    justify-content: center;
 }
 .article-container .nickname{
     width: 17%;
     text-align: center;
 }
-.article-container .desc{
-    width: 18%;
+.article-container .date{
+    width: 17%;
     text-align: center;
 }
+
 .a-row3{
     display: flex;
-    width: 800px;
+    width: 1010px;
+    height: 28px;
     margin: 0px auto;
+    margin-bottom: 16px;
+    overflow: hidden;
+    margin-left: 39px;
 }
 
 
 .post-content-container{
     display: flex;
-    width: 800px;
+    width: 1050px;
     margin: 0px auto;
     justify-content: space-between;
 }
@@ -68,13 +103,14 @@
     margin-bottom:16px
 }
 .pc-title{
-    width: 785px;
+    width: 1000px;
     padding: 10px 0;
     font-size: 30px;
     border: 0px;
     border-bottom: 1px solid #ccc;
     padding-left: 10px;
     padding-right: 10px;
+    margin-left: 36px;
 }
 input::placeholder {color:#ccc;}
 .pc-form .post{
@@ -82,13 +118,15 @@ input::placeholder {color:#ccc;}
 }
 .pc-post{
     border: 1px solid #ccc;
-    width: 785px;
+    width: 1000px;
     height: 400px;
     padding: 10px;
+    margin-left: 36px;
 }
 .pc-form .btn-pack{
     display: flex;
     justify-content: space-between;
+    margin-left: 36px;
 }
 .pc-file{
 
@@ -125,7 +163,10 @@ input::placeholder {color:#ccc;}
 
 /*이미지*/
 .likes-img{
-    width: 25px;
+    width: 22px;
+    height: 22px;
+    margin-right: 2px;
+    margin-top: 3px;
 }
 .righrarrow-img{
     width: 20px;
@@ -133,3 +174,4 @@ input::placeholder {color:#ccc;}
     margin-top: 5px;
     margin-left: 5px;
 }
+

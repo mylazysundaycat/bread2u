@@ -6,7 +6,7 @@
 }
 .post-nav {
     display: flex;
-    width: 800px;
+    width: 1050px;
     margin: 0px auto;
     justify-content: space-between;
     margin-bottom: 35px;
@@ -14,19 +14,20 @@
 
 .post-nav .title{
     display: flex;
+    margin-left: 39px;
 }
 
 
 .post-container{
     display: flex;
-    width: 800px;
+    width: 1010px;
     margin: 0px auto;
     flex-direction: column;
-    margin-bottom: 40px;
 }
 .post-title{
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 15px;
+    font-size: 23px;
 }
 .post-detail{
     display: flex;
@@ -44,12 +45,42 @@
 .post-detail .likes{
     display: flex;
 }
-
+.post-container .btn-pack{
+    display: flex;
+    justify-content: flex-end;
+}
+.post-content {
+    margin-bottom: 80px;
+}
+.btn-edit{
+    font-size:16px;
+    border: 0px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    letter-spacing: -1px;
+    cursor: pointer;
+}
+.btn-edit:hover{
+    color: rgba(0, 0, 0, 0.6);
+}
+.btn-delete{
+    font-size:16px;
+    border: 0px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    letter-spacing: -1px;
+    cursor: pointer;
+}
+.btn-delete:hover{
+    color: rgba(0, 0, 0, 0.6);
+}
 
 
 .comment-container1{
     display: flex;
-    width: 800px;
+    width: 1010px;
     flex-direction: column;
     margin: 0px auto;
     margin-bottom: 20px;
@@ -63,7 +94,7 @@
 .ci-text{
     font-size: 19px;
     height: 42px;
-    width: 680px;
+    width: 875px;
     border-radius: 6px;
     border: 1px solid;
     padding-left: 10px;
@@ -76,18 +107,21 @@
     border: 0px;
     position: relative;
     top: -38px;
-    left: 691px;
-
+    left: 884px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+ci-btn:hover{
+    color: rgba(0, 0, 0, 0.65);
 }
 
 
 
 .comment-container2{
     display: flex;
-    width: 800px;
+    width: 1010px;
     flex-direction: column;
     margin: 0px auto;
-    margin-bottom: 35px;
 }
 .member-detail{
     display: flex;
@@ -127,7 +161,16 @@
     justify-content: space-between;
 }
 
-
+.post-wrapper1{
+    margin-left: 35px;
+}
+.post-wrapper2{
+    margin-left: 35px;
+    margin-bottom: 30px;
+}
+.post-wrapper3{
+    margin-left: 35px;
+}
 
 /*버튼*/
 .btn{
@@ -135,7 +178,7 @@
     padding: 4px 13px;
     border-radius: 10px;
     font-weight: 500;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
     letter-spacing: -1px;
     cursor: pointer;
 

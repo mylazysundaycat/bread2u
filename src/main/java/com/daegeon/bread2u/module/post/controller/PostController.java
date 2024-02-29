@@ -32,7 +32,7 @@ public class PostController {
     public String findById(@PathVariable Long postId, Model model) {
         Post postFindedById = postService.findById(postId)
                 .orElseThrow();
-        model.addAttribute("postFindedById",postFindedById);
+        model.addAttribute("post",postFindedById);
         return "/post/postDetail";
     }
 

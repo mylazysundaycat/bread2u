@@ -30,7 +30,7 @@ public class memberTest {
             .email("cat@naver.com")
             .password("1234")
             .nickname("치즈고양이")
-            .birth(LocalDateTime.now())
+            //.birth(LocalDateTime.now())
             .build();
 
     @Test
@@ -42,7 +42,7 @@ public class memberTest {
         Member findMember = memberService.createMember(testMember);
 
         assertThat(findMember.getEmail()).isEqualTo(testMember.getEmail());
-        assertThat(findMember.getBirth()).isEqualTo(testMember.getBirth());
+        //assertThat(findMember.getBirth()).isEqualTo(testMember.getBirth());
         assertThat(findMember.getNickname()).isEqualTo(testMember.getNickname());
         assertThat(findMember.getPassword()).isEqualTo(testMember.getPassword());
 

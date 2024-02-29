@@ -1,6 +1,7 @@
 package com.daegeon.bread2u.module.post.entity;
 
 
+import com.daegeon.bread2u.global.BaseTimeEntity;
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.file.entity.File;
 import com.daegeon.bread2u.module.member.entity.Member;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class Post {
+public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue
     @Column(name = "post_id")
@@ -23,8 +24,11 @@ public class Post {
     private String content;
     @ColumnDefault("0")
     private Long likes;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    @ColumnDefault("0")
+    private Long view;
+
+//    private LocalDateTime createdAt;
+//    private LocalDateTime modifiedAt;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comment;
@@ -38,10 +42,11 @@ public class Post {
     private File file;
 
     @Builder
-    public Post(String title, String content, Long likes, File file){
+    public Post(String title, String content, Long likes, Long view, File file){
         this.title=title;
         this.content=content;
         this.likes=likes;
+        this.view=view;
         this.file=file;
     }
 
