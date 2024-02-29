@@ -2,7 +2,10 @@ package com.daegeon.bread2u.module.comment.service;
 
 
 import com.daegeon.bread2u.module.comment.entity.Comment;
+import com.daegeon.bread2u.module.comment.entity.CommentRequestDto;
 import com.daegeon.bread2u.module.comment.repository.CommentRepository;
+import com.daegeon.bread2u.module.post.entity.Post;
+import com.daegeon.bread2u.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,16 +18,25 @@ import java.util.Optional;
 @Transactional
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
 
     //Create
-    public Comment createComment(Comment comment) {
+    public Comment createComment(Long postId, CommentRequestDto commentDto) {
+        Post findPost = postRepository.findById(postId)
+                .orElseThrow();
+        Comment comment = Comment.builder()
+                .content(commentDto.getContent())
+                .likes(0L)
+                .post(findPost)
+                .build();
         return commentRepository.save(comment);
     }
 
     //ReadAll
-    public List<Comment> findByBreadId(Long breadId) {
-        return commentRepository.findByBreadId(breadId);
+    public List<Comment> findByPostId(Long postId) {
+        return commentRepository.findByPostId(postId);
     }
+
 
     //Read
     public Optional<Comment> findByCommentId(Long commentId) {

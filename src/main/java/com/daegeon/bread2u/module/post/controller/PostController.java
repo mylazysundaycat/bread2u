@@ -1,6 +1,8 @@
 package com.daegeon.bread2u.module.post.controller;
 
 
+import com.daegeon.bread2u.module.comment.entity.Comment;
+import com.daegeon.bread2u.module.comment.service.CommentService;
 import com.daegeon.bread2u.module.file.service.FileService;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.entity.PostDto;
@@ -13,12 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final CommentService commentService;
 
     @Operation(summary = "전체 글 조회")
     @GetMapping
@@ -30,9 +34,11 @@ public class PostController {
     @Operation(summary = "특정 글 조회")
     @GetMapping("/{postId}")
     public String findById(@PathVariable Long postId, Model model) {
-        Post postFindedById = postService.findById(postId)
+        Post postFindedByPostId = postService.findById(postId)
                 .orElseThrow();
-        model.addAttribute("post",postFindedById);
+        List<Comment> commentFindedByPostId = commentService.findByPostId(postId);
+        model.addAttribute("post",postFindedByPostId);
+        model.addAttribute("comments",commentFindedByPostId);
         return "/post/postDetail";
     }
 

@@ -122,6 +122,7 @@ ci-btn:hover{
     width: 1010px;
     flex-direction: column;
     margin: 0px auto;
+    padding-bottom: 40px;
 }
 .member-detail{
     display: flex;
