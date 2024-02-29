@@ -72,9 +72,10 @@ public class PostController {
     }
 
     //delete
-    @GetMapping("/{postid}/delete")
-    public String deletePost(@PathVariable Long postid) {
-        postService.deletePost(postid);
+    @Operation(summary = "게시물 삭제", description = "게시물을 삭제합니다")
+    @GetMapping ("/{postId}/delete")
+    public String deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
         return "redirect:/post";
     }
 }

@@ -9,6 +9,7 @@ import com.daegeon.bread2u.module.post.entity.PostDto;
 import com.daegeon.bread2u.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -66,12 +67,9 @@ public class PostService {
 
 
 
-    //delete
-
     //TODO EXCEPTION
     public void deletePost(Long postId) {
-        Post findPost = postRepository.findById(postId)
-                .orElseThrow();
-        postRepository.delete(findPost);
+        postRepository.deleteById(postId);
+
     }
 }

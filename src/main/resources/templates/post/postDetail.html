@@ -58,6 +58,7 @@
     <div class="post-title" th:text="${post.title}">
       충대 정문에 굿즈샵 대신 성심당 체인점으로 바꿔주세요
     </div>
+
     <div class="post-detail">
       <div class="comment pd">
         <img src="../img/icon-comment.png" class="comment-img">
@@ -74,9 +75,11 @@
         노잼충대인
       </div>
     </div>
+
     <div class="post-content" th:text="${post.content}">
       충대 정문에 굿즈샵 대신 성심당 체인점으로 바꿔주세요 충대 정문에 굿즈샵 대신 성심당 체인점으로 바꿔주세요 충대 정문에 굿즈샵 대신 성심당 체인점으로 바꿔주세요
     </div>
+
     <div class="btn-pack">
       <a href=""
          th:href="@{/post/{postId}/update (postId=${post.id})}"
@@ -87,6 +90,8 @@
     </div>
   </div>
 </div>
+
+
 <!--게시물 종료-->
 <!--댓글창 정보 시작-->
 <div class="post-wrapper2">
@@ -145,5 +150,7 @@
   </div>
 </div>
 <!--댓글창 종료-->
+
+
 </body>
 </html>

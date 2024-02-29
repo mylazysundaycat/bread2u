@@ -27,7 +27,7 @@ public class File {
     private String path;
 
     @Comment(value = "매핑된 게시물")
-    @OneToOne(mappedBy = "file", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "file", fetch = FetchType.LAZY)
     private Post post;
     @Builder
     public File(String originName, String uploadName, String extension, String path){

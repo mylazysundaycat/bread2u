@@ -22,15 +22,13 @@ public class Post extends BaseTimeEntity {
     private Long id;
     private String title;
     private String content;
-    @ColumnDefault("0")
     private Long likes;
-    @ColumnDefault("0")
     private Long view;
 
 //    private LocalDateTime createdAt;
 //    private LocalDateTime modifiedAt;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Comment> comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
