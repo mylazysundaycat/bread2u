@@ -230,3 +230,27 @@ ci-btn:hover{
     height: 43px;
     padding-right: 10px;
 }
+
+
+
+
+.modal-bg {
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index:999;
+}
+.modal-wrap {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:300px;
+    height:300px;
+    background:#fff;
+    z-index:1000;
+}

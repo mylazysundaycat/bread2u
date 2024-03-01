@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  <script defer src="/js/postDetail.js"></script>
   <title>Bread2U</title>
 </head>
 <body>
@@ -84,9 +85,8 @@
       <a href=""
          th:href="@{/post/{postId}/update (postId=${post.id})}"
          class="btn-edit">[수정]</a>
-      <a href=""
-         th:href="@{/post/{postId}/delete (postId=${post.id})}"
-         class="btn-delete">[삭제]</a>
+      <button id="btn-delete"
+         class="btn-delete">[삭제]</button>
     </div>
   </div>
 </div>
@@ -151,6 +151,17 @@
 </div>
 <!--댓글창 종료-->
 
+
+<div id="post-delete-modal" class="pd-modal-wrapper">
+  <div class="modal-bg" id="modal-bg" style="display: none" >
+    modal
+  </div>
+  <div class="modal-wrap" id="modal-wrap"  style="display: none">
+    modal
+    modal
+    modal
+  </div>
+</div>
 
 </body>
 </html>

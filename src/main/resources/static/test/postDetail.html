@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+  <!--css-->
   <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="../css/postDetail.css">
   <!--font-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  <!--js-->
+  <script defer src="../js/postDetail.js"></script>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <title>Bread2U</title>
 </head>
 <body>
+
 <!--Header 시작-->
 <div class="h-row1 h-set">
   <div class="col1">
@@ -80,11 +85,20 @@
     </div>
     <div class="btn-pack">
       <a href="" class="btn-edit">[수정]</a>
-      <form method="post">
-        <input type="hidden" name="_method" value="DELETE"/>
-        <button type="submit" class="btn-delete">[삭제]</button>
+        <button type="submit" class="btn-delete" id="btn-delete">[삭제]</button>
       </form>
     </div>
+  </div>
+</div>
+
+<div id="post-delete-modal" class="pd-modal-wrapper">
+  <div class="modal-bg" id="modal-bg" style="display: none" >
+    modal
+  </div>
+  <div class="modal-wrap" id="modal-wrap"  style="display: none">
+    modal
+    modal
+    modal
   </div>
 </div>
 
@@ -141,5 +155,9 @@
   </div>
 </div>
 </div>
+
+
+
+
 </body>
 </html>
