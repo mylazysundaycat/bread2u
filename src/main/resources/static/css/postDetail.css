@@ -37,7 +37,7 @@
     padding-bottom: 20px;
 }
 .pd{
-    margin-right: 30px;
+    margin-right: 14px;
 }
 .post-detail .comment{
     display: flex;
@@ -47,19 +47,23 @@
 }
 .post-container .btn-pack{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    height: 57px;
 }
 .post-content {
     margin-bottom: 80px;
 }
 .btn-edit{
-    font-size:16px;
+    font-size: 16px;
     border: 0px;
     padding: 3px 8px;
     border-radius: 10px;
-    font-weight: 500;
     letter-spacing: -1px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    height: 57px;
 }
 .btn-edit:hover{
     color: rgba(0, 0, 0, 0.6);
@@ -72,6 +76,7 @@
     font-weight: 500;
     letter-spacing: -1px;
     cursor: pointer;
+    background-color: white;
 }
 .btn-delete:hover{
     color: rgba(0, 0, 0, 0.6);
@@ -213,7 +218,7 @@ ci-btn:hover{
 }
 
 
-.comment-img{
+.view-img{
     width: 20px;
     height: 20px;
     padding-right: 4px;
@@ -241,16 +246,62 @@ ci-btn:hover{
     top:0;
     left:0;
     right:0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.2);
     z-index:999;
 }
 .modal-wrap {
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:300px;
-    height:300px;
-    background:#fff;
-    z-index:1000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 100px;
+    background: #fff;
+    z-index: 1000;
+    border-radius: 14px;
+}
+.mw-message{
+    text-align: center;
+    margin-top: 12px;
+}
+.mw-btn-pack{
+    display: flex;
+    margin-top: 18px;
+    /* margin: 0px auto; */
+    justify-content: center;
+}
+.mw-yes{
+    width: 86px;
+    font-size: 17px;
+    margin-right: 8px;
+    font-weight: 600;
+    background: #F0F0F0;
+    text-align: center;
+    box-sizing: border-box;
+}
+.mw-no{
+    width: 86px;
+    font-size: 17px;
+    font-weight: 600;
+}
+.like-icon{
+    width: 50px;
+    height: 50px;
+}
+.like-count{
+    margin-left: 7px;
+    display: flex;
+    font-size: 36px;
+    margin-top: -3px;
+    color: #FF9A24;
+    font-weight: 600;
+}
+.bp-pack{
+    display: flex;
+}
+.like-btn{
+    margin-left: 460px;
+}
+.like-btn a{
+    display: flex;
 }

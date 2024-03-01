@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("modal-bg").addEventListener("click", function() {
+    document.getElementById("mw-no").addEventListener("click", function() {
         var popup = document.getElementById("modal-bg");
         popup.style.display = "none";
         var popup = document.getElementById("modal-wrap");

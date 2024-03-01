@@ -57,6 +57,9 @@ public class PostService {
 
     //read
     public Optional<Post> findById(Long postId) {
+        Post findPost = postRepository.findById(postId)
+                .orElseThrow();
+        findPost.setView(findPost.getView()+1);
         return postRepository.findById(postId);
     }
 
@@ -66,10 +69,16 @@ public class PostService {
     }
 
 
-
     //TODO EXCEPTION
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
 
+    }
+
+    public Post likePost(Long postId) {
+        Post findPost = postRepository.findById(postId)
+                .orElseThrow();
+        findPost.setLikes(findPost.getLikes()+1);
+        return postRepository.save(findPost);
     }
 }
