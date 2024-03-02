@@ -5,6 +5,7 @@
 .col {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .member-regi-wrap{
 
@@ -25,22 +26,26 @@
 }
 .regi-detail{
     margin-bottom: 5px;
+    width: 100%;
     text-align: right;
 }
 
 .mr2{
-
     display: flex;
-
     justify-content: center;
-
-    /* text-align: center; */
+    align-items: center;
+    flex-direction: column;
 }
+
 .regi-form{
 
     display: flex;
 
-    /* align-items: center; */
+    align-items: flex-start;
+
+    width: 500px;
+
+    margin: 0 auto;
 }
 .regi-id{
 
@@ -100,4 +105,97 @@
 
 .warning{
     color: #FF0000;
+}
+
+
+
+.login-title{
+
+    margin-bottom: 39px;
+
+    padding-top: 42px;
+
+    margin-bottom: 52px;
+
+    font-size: 26px;
+}
+
+.login-id{
+    margin-bottom: 10px;
+}
+.login-pwd{
+
+}
+.find-pack{
+    width: 100%;
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.find-id{font-size: 12px;border: 0px;background-color: transparent;}
+.find-pwd{
+
+    font-size: 12px;
+
+    border: 0px;
+
+    background-color: transparent;
+}
+.login-form .login-btn{
+
+}
+.login-form .txt{
+    width: 270px;
+    padding: 13px 15px;
+    border-radius: 6px;
+    padding-top: 13px;
+    border: 1px solid #D9D9D9;
+    margin: 0px;
+}
+.login-pack{
+
+    width: 100%;
+}
+.login-btn-btn{
+
+    width: 100%;
+
+    border-radius: 5px;
+
+    border: 1px solid #FF9A24;
+
+    background-color: #FF9A24;
+
+    color: white;
+
+    margin-bottom: 9px;
+
+    padding: 10px;
+
+    font-weight: 600;
+}
+.regi-btn-btn{
+
+    color: #FF9A24;
+
+    border: 1px solid #FF9A24;
+
+    width: 100%;
+
+    border-radius: 5px;
+
+    background-color: transparent;
+
+    margin-bottom: 9px;
+
+    padding: 10px;
+
+    font-weight: 600;
+}
+
+.center{
+    display: flex;
+    align-items: center;
 }
