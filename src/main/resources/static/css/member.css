@@ -1,0 +1,103 @@
+.row {
+    display: flex;
+    flex-direction: row;
+}
+.col {
+    display: flex;
+    flex-direction: column;
+}
+.member-regi-wrap{
+
+    width: 1050px;
+
+    margin: 0px auto;
+
+    margin-top: 30px;
+}
+.mr1{margin-bottom: 39px;padding-top: 42px;justify-content: center;border-bottom: 1px solid;/* margin-bottom: 33px; */margin-bottom: 52px;}
+.regi-title{
+
+    text-align: center;
+
+    font-size: 25px;
+
+    margin-bottom: 5px;
+}
+.regi-detail{
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.mr2{
+
+    display: flex;
+
+    justify-content: center;
+
+    /* text-align: center; */
+}
+.regi-form{
+
+    display: flex;
+
+    /* align-items: center; */
+}
+.regi-id{
+
+    margin-bottom: 20px;
+}
+.id-txt{width: 220px;margin-left: 70px;padding: 8px;border-radius: 6px;padding-top: 11px;border: 1px solid #D9D9D9;}
+.regi-pwd{
+
+    margin-bottom: 20px;
+}
+.pwd-txt{width: 220px;margin-left: 53px;padding: 8px;border-radius: 6px;padding-top: 11px;border: 1px solid #D9D9D9;}
+.regi-nickname{margin-bottom: 20px;}
+.nn-txt{width: 220px;margin-left: 70px;padding: 8px;border-radius: 6px;padding-top: 11px;border: 1px solid #D9D9D9;}
+.regi-btn{
+    width: 100%;
+
+}
+.regi-email row{
+
+}
+.email-txt{width: 220px;margin-left: 70px;padding: 8px;border-radius: 6px;padding-top: 11px;border: 1px solid #D9D9D9;}
+#regi-btn{
+    margin: 0 auto;
+    padding: 12px 69px;
+    background-color: #FF9A24;
+    border: 0px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+.regi-email{
+    margin-bottom: 76px;
+}
+
+.id-vali{
+    margin-left: 14px;
+    border: 1px solid #FF9A24;
+    border-radius: 5px;
+    font-weight: 500;
+    color: #FF9A24;
+    background-color: white;
+    padding: 0 12px;
+    cursor: pointer;
+}
+.email-vali{
+    margin-left: 14px;
+    border: 1px solid #FF9A24;
+    border-radius: 5px;
+    font-weight: 500;
+    color: #FF9A24;
+    background-color: white;
+    padding: 0 12px;
+    cursor: pointer;
+}
+
+.warning{
+    color: #FF0000;
+}

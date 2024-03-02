@@ -68,7 +68,6 @@ public class PostService {
         return postRepository.findAll();
     }
 
-
     //TODO EXCEPTION
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);

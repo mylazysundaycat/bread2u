@@ -17,25 +17,24 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/home")
-    public String home(){
-        return "/home";
-    }
-
-    //create
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
     @GetMapping("/member")
     public String createMember(Model model) {
         model.addAttribute("member", new MemberDto());
         return "/member/createMemberForm";
     }
-
     @Operation(summary = "회원가입", description = "회원가입을 한다")
     @PostMapping("/member")
     public String createMember(@ModelAttribute Member member) {
         memberService.createMember(member);
-        return "/home";
-//        return "redirect:/";
+        return "redirect:/";
+    }
+
+    @Operation(summary = "로그인 폼", description = "로그인 페이지로 이동한다")
+    @GetMapping("/member/login")
+    public String loginMember(Model model) {
+        model.addAttribute("member", new MemberDto());
+        return "/member/loginForm";
     }
 
     //readAll

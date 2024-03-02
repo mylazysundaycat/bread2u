@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div class="header" th:fragment="bodyHeader">
+<div class="footer" th:fragment="bodyHeader">
     <!--Header 시작-->
     <div class="h-row1 h-set">
         <div class="col1">
-            회원가입
+            <a href="/member">
+                회원가입
+            </a>
         </div>
         <div class="col2">
-            로그인
+            <a href="/member/login">
+                로그인
+            </a>
         </div>
     </div>
     <div class="h-row2 h-set">
         <div class="col1">
-            <img src="img/main-logo.png" class="main-logo">
+            <img src="/img/main-logo.png" class="main-logo">
         </div>
     </div>
     <div class="h-row3 h-set">
@@ -23,7 +27,7 @@
         <div class="col1">
             <div class="search">
                 <input type="text" class="search-box">
-                <img src="img/icon-search.png" class="search-icon">
+                <img src="/img/icon-search.png" class="search-icon">
             </div>
         </div>
     </div>

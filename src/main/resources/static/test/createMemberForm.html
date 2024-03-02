@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/member.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/member.css">
     <!--font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,43 +11,69 @@
     <title>Bread2U</title>
 </head>
 <body>
-
-<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<!--Header 시작-->
+<div class="h-row1 h-set">
+    <div class="col1">
+        <a href="/member">
+            회원가입
+        </a>
+    </div>
+    <div class="col2">
+        <a href="/member/login">
+            로그인
+        </a>
+    </div>
+</div>
+<div class="h-row2 h-set">
+    <div class="col1">
+        <img src="../img/main-logo.png" class="main-logo">
+    </div>
+</div>
+<div class="h-row3 h-set">
+    <div class="hr3s1"><a href="/">HOME</a></div>
+    <div class="hr3s1"><a href="/breadList">베스트</a></div>
+    <div class="hr3s1">커스텀빵여행</div>
+    <div class="hr3s1 "><a href="/post">빵뮤니티</a></div>
+    <div class="col1">
+        <div class="search">
+            <input type="text" class="search-box">
+            <img src="../img/icon-search.png" class="search-icon">
+        </div>
+    </div>
+</div>
+<!--Header 종료-->
 
 <!--Article content 시작-->
 <div class="member-regi-wrap">
     <div class="mr1 col">
-        <div class="regi-title">
-            회원가입
-        </div>
+        <div class="regi-title">회원가입</div>
         <div class="regi-detail">
             <span class="warning">* </span>
             필수입력사항
         </div>
     </div>
     <div class="mr2">
-        <form role="form" action="/member" class="regi-form col"
-              th:object="${member}" method="post">
+        <form action="" class="regi-form col">
             <div class="regi-id row">
                 <label for="id-txt">아이디 <span class="warning">*</span></label>
                 <input type="text" placeholder="아이디를 입력해주세요"
-                       class="id-txt" id="id-txt" th:field="*{memberRegisterId}">
+                       class="id-txt" id="id-txt">
                 <button class="id-vali">중복확인</button>
             </div>
             <div class="regi-pwd row">
                 <label for="pwd-txt">비밀번호 <span class="warning">*</span></label>
                 <input type="password" placeholder="비밀번호를 입력해주세요"
-                       class="pwd-txt" id="pwd-txt" th:field="*{password}">
+                       class="pwd-txt" id="pwd-txt">
             </div>
             <div class="regi-nickname row">
                 <label for="nn-txt">닉네임 <span class="warning">*</span></label>
                 <input type="text" placeholder="닉네임을 입력해주세요"
-                       class="nn-txt" id="nn-txt" th:field="*{nickname}" >
+                       class="nn-txt" id="nn-txt">
             </div>
             <div class="regi-email row">
                 <label for="email-txt">이메일 <span class="warning">*</span></label>
                 <input type="text" placeholder="예: bbang2u@bread.com"
-                       class="email-txt" id="email-txt" th:field="*{email}">
+                       class="email-txt" id="email-txt">
                 <button class="email-vali">중복확인</button>
             </div>
             <div class="regi-btn row">
@@ -57,6 +83,5 @@
     </div>
 </div>
 <!--Article content 종료-->
-
 </body>
 </html>
