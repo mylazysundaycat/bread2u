@@ -7,6 +7,7 @@ import com.daegeon.bread2u.module.shop.entity.Shop;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String memberRegisterId;
+    private String memberName;
 
     private String email;
 

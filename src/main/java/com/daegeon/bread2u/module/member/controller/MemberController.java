@@ -14,24 +14,25 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
 
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
-    @GetMapping("/member")
+    @GetMapping
     public String createMember(Model model) {
         model.addAttribute("member", new MemberDto());
         return "/member/createMemberForm";
     }
     @Operation(summary = "회원가입", description = "회원가입을 한다")
-    @PostMapping("/member")
+    @PostMapping
     public String createMember(@ModelAttribute Member member) {
         memberService.createMember(member);
         return "redirect:/";
     }
 
     @Operation(summary = "로그인 폼", description = "로그인 페이지로 이동한다")
-    @GetMapping("/member/login")
+    @GetMapping("/login")
     public String loginMember(Model model) {
         model.addAttribute("member", new MemberDto());
         return "/member/loginForm";
@@ -39,7 +40,7 @@ public class MemberController {
 
     //readAll
     @Operation(summary = "회원 리스트 페이지", description = "회원 리스트 페이지로 이동한다")
-    @GetMapping("/members")
+    @GetMapping("/list")
     public String findMembers(Model model) {
         List<Member> members = memberService.findAll();
         model.addAttribute("members", members);
@@ -49,7 +50,7 @@ public class MemberController {
 
     //read
     @Operation(summary = "회원 마이 페이지", description = "회원 마이 페이지로 이동한다")
-    @GetMapping("/member/{memberId}")
+    @GetMapping("/{memberId}")
     public String updateMember(@PathVariable Long memberId, Model model) {
         model.addAttribute("member", memberService.findById(memberId));
         return "/member/MyPage";
@@ -57,7 +58,7 @@ public class MemberController {
 
     //update
     @Operation(summary = "회원정보 수정", description = "회원 정보를 수정한다")
-    @PostMapping("/member/{memberId}")
+    @PostMapping("/{memberId}")
     public String udpateMember(@PathVariable Long memberId, @ModelAttribute Member member) {
         memberService.updateMember(memberId, member);
 //        return "ok";
@@ -66,7 +67,7 @@ public class MemberController {
 
     //delete
     @Operation(summary = "회원 삭제", description = "회원을 삭제한다.")
-    @GetMapping("/member/{memberId}/delete")
+    @GetMapping("/{memberId}/delete")
     public String deleteMember(@PathVariable Long memberId) {
         memberService.deleteMember(memberId);
 //        return "ok";

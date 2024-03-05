@@ -3,7 +3,6 @@ package com.daegeon.bread2u.module.post.controller;
 
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.comment.service.CommentService;
-import com.daegeon.bread2u.module.file.service.FileService;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.entity.PostDto;
 import com.daegeon.bread2u.module.post.service.PostService;
@@ -12,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
