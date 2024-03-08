@@ -2,7 +2,7 @@ package com.daegeon.bread2u.module.member.controller;
 
 
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.member.repository.dto.MemberDto;
+import com.daegeon.bread2u.global.token.repository.dto.LoginRequestDto;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -22,29 +22,17 @@ public class MemberController {
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
     @GetMapping
     public String createMember(Model model) {
-        model.addAttribute("member", new MemberDto());
+        model.addAttribute("member", new LoginRequestDto());
         return "/member/createMemberForm";
     }
     @Operation(summary = "회원가입", description = "회원가입을 정상적으로 마치고, 로그인 화면으로 이동한다.")
     @PostMapping
-    public String join(@ModelAttribute MemberDto memberDto) {
+    public String join(@ModelAttribute LoginRequestDto memberDto) {
         Member member = Member.from(memberDto, passwordEncoder);
         memberService.createMember(member);
-        return "redirect:/member/login";
+        return "redirect:/login";
     }
 
-    @Operation(summary = "로그인 폼", description = "로그인 페이지로 이동한다")
-    @GetMapping("/login")
-    public String loginMember(Model model) {
-        model.addAttribute("member", new MemberDto());
-        return "/member/loginForm";
-    }
-
-//    @Operation(summary = "로그인 폼", description = "로그인 페이지로 이동한다")
-//    @PostMapping("/login")
-//    public String loginMember(@ModelAttribute Member member) {
-//        return "redirect:/index";
-//    }
 
     //readAll
     @Operation(summary = "회원 리스트 페이지", description = "회원 리스트 페이지로 이동한다")

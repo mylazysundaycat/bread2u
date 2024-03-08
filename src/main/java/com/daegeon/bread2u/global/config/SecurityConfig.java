@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,7 +23,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
-@EnableWebSecurity
+@EnableWebSecurity //시큐리티 필터가 등록
+@EnableGlobalMethodSecurity(prePostEnabled = true) //특정 주소로 접근을 하면 권한 및 인증을 미리 체크
 @EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
@@ -46,11 +48,11 @@ public class SecurityConfig {
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 //로그인 페이지
                 .formLogin(login -> login
-                        .loginPage("/member/login")
-                        .loginProcessingUrl("/member/login-process")
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login/process")
                         .usernameParameter("memberName")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/index", true) //로그인 성공시 이동할 url
+                        //.defaultSuccessUrl("/index", true) //로그인 성공시 이동할 url
                         .permitAll()
                 )
                 //url 인가 처리
@@ -60,9 +62,9 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest
                                 .toStaticResources()
                                 .atCommonLocations()).permitAll()//정적자원
-                        .requestMatchers("/member"
-                                ,"/member/login"
-                                , "/bread/**").permitAll()
+                        .requestMatchers("/member/**"
+                                ,"/login/**").permitAll()
+                        .requestMatchers("/post/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정
