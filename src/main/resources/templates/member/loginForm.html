@@ -21,14 +21,14 @@
       <div class="login-title">
         로그인
       </div>
-      <form role="form" action="/member/login" class="login-form col"
+      <form role="form" action="/member/login-process" class="login-form col"
         th:object="${member}" method="post">
         <div class="login-id">
-          <input type="text" placeholder="아이디를 입력해주세요"
-                 class="txt" id="id-txt" th:field="*{memberRegisterId}">
+          <input type="text" placeholder="아이디를 입력해주세요" name="memberName"
+                 class="txt" id="id-txt" th:field="*{memberName}">
         </div>
         <div class="login-pwd">
-          <input type="password" placeholder="비밀번호를 입력해주세요"
+          <input type="password" placeholder="비밀번호를 입력해주세요" name="password"
                  class="txt" id="pwd-txt" th:field="*{password}">
         </div>
         <div class="find-pack row">

@@ -14,23 +14,27 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    //create
     public Member createMember(Member member) {
         return memberRepository.save(member);
     }
 
-    //readAll
+    //유효성 검증
+    private void validateDuplicateMember(Member member) {
+        memberRepository.findById(member.getId())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
+    }
+
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
 
-    //read
     public Optional<Member> findById(Long memberId) {
         return memberRepository.findById(memberId);
     }
 
-    //update
-    //TODO EXCEPTION
+
     public Member updateMember(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow();
@@ -45,8 +49,6 @@ public class MemberService {
         return memberRepository.save(findMember);
     }
 
-    //delete
-    //TODO EXCEPTION
     public void deleteMember(Long memberId) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow();

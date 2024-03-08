@@ -18,7 +18,7 @@
   <div class="post-nav">
     <div class="title">
       <div><a href="/post">빵TALK</a></div>
-      <img src="../img/icon-rightarrow.png" class="righrarrow-img">
+      <img src="../images/icon-rightarrow.png" class="righrarrow-img">
     </div>
     <div>
       <a href="/post/create" class="btn main-color">글쓰기</a>
@@ -36,7 +36,7 @@
 
     <div class="post-detail">
       <div class="comment pd">
-        <img src="../img/icon-view.png" class="view-img">
+        <img src="../images/icon-view.png" class="view-img">
         <div th:text="${post.view}">8</div>
       </div>
       <div class="day pd">
@@ -54,7 +54,7 @@
     <div class="btn-pack">
       <div class="like-btn">
         <a th:href="@{/post/{postId}/like (postId=${post.id})}">
-          <img src="/img/icon-like.png" class="like-icon">
+          <img src="/images/icon-like.png" class="like-icon">
           <div th:text="${post.likes}" class="like-count">8</div>
         </a>
       </div>
@@ -81,7 +81,7 @@
       <span th:text="${post.comment.size()}" class="num"></span>
     </div>
     <div class="comment-input">
-        <img src="../img/profile-img.svg" class="profile-img">
+        <img src="../images/profile-img.svg" class="profile-img">
         <form th:action="@{/comment/{postId} (postId=${post.id})}"
               method="post" name="comment">
           <input type="text" name="content" class="ci-text">
@@ -96,7 +96,7 @@
   <div class="comment-container2" th:each="comment : ${comments}">
     <div class="member-detail">
       <div class="member-img">
-        <img src="../img/profile-img.svg" class="profile-img">
+        <img src="../images/profile-img.svg" class="profile-img">
       </div>
       <div class="member-nickname">
         김꿈돌이에요
@@ -113,7 +113,7 @@
       <div class="detail-pack">
         <div class="likes">
           <a href="" class="likes-href">
-            <img src="../img/icon-heart.png" class="heart-img">
+            <img src="../images/icon-heart.png" class="heart-img">
             <div th:text="${comment.likes}">좋아요</div>
           </a>
         </div>
