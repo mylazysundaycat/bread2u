@@ -28,7 +28,7 @@ public class MemberService {
 
 
         // 3. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
-        return MemberDto.from(loginRequestDto);
+        return MemberDto.from(findedMember);
     }
 
 

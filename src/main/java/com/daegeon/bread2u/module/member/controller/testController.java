@@ -8,12 +8,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/members")
+@Controller
 public class testController {
     private final MemberService memberService;
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
@@ -38,24 +40,21 @@ public class testController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequestDto loginRequestDto,
-                           BindingResult bindingResult,
                            HttpServletRequest request) throws Exception {
-
-        if (bindingResult.hasErrors()) {return "redirect:/";}
 
         MemberDto loginMember = memberService.login(loginRequestDto);
 
         if (loginMember == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "redirect:/";
+            System.out.println("아이엠오류에요...");
+            return "아이엠오류에요";
         }
-
         //로그인 성공 처리
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션 생성
         HttpSession session = request.getSession();
 
         //세션에 로그인 회원 정보 보관
         session.setAttribute("loginMember", loginMember);
+
         return "redirect:/";
     }
 
