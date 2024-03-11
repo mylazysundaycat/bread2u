@@ -1,7 +1,9 @@
 package com.daegeon.bread2u.module.member.service;
 
 
+import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
 import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,17 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    //유효성 검증
-    private void validateDuplicateMember(Member member) {
-        memberRepository.findById(member.getId())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 회원입니다.");
-                });
+    public MemberDto login(final LoginRequestDto loginRequestDto) throws Exception {
+        // 1. 회원 정보 및 비밀번호 조회
+        Member findedMember = memberRepository.findOneByMembername(loginRequestDto.getMembername())
+                .orElseThrow(()->new Exception("회원 정보가 존재하지 않습니다."));
+        String encodedPassword = findedMember.getPassword();
+
+
+        // 3. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
+        return MemberDto.from(loginRequestDto);
     }
+
 
     public List<Member> findAll() {
         return memberRepository.findAll();

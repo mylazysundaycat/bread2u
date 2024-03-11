@@ -2,11 +2,10 @@ package com.daegeon.bread2u.module.member.controller;
 
 
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.global.token.repository.dto.LoginRequestDto;
+import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,6 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
     @GetMapping
     public String createMember(Model model) {
@@ -28,9 +26,15 @@ public class MemberController {
     @Operation(summary = "회원가입", description = "회원가입을 정상적으로 마치고, 로그인 화면으로 이동한다.")
     @PostMapping
     public String join(@ModelAttribute LoginRequestDto memberDto) {
-        Member member = Member.from(memberDto, passwordEncoder);
+        Member member = Member.from(memberDto);
         memberService.createMember(member);
-        return "redirect:/login";
+        return "redirect:/member/login";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model){
+        model.addAttribute("member", new LoginRequestDto());
+        return "/member/loginForm";
     }
 
 

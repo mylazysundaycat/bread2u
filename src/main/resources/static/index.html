@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/header.css">
@@ -19,7 +19,7 @@
         </a>
     </div>
     <div class="col2">
-        <a href="/member/login">
+        <a href="/member/login" th:text="|로그인: ${member.name}|">
             로그인
         </a>
     </div>
