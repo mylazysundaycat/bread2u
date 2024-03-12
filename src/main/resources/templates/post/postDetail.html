@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/postDetail.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/postDetail.css">
   <!--font-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  <!--js-->
   <script defer src="/js/postDetail.js"></script>
+  <script defer src="/js/header.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <title>Bread2U</title>
 </head>
 <body>
@@ -131,7 +134,7 @@
 </div>
 <!--댓글창 종료-->
 
-
+<!--모달창-->
 <div id="post-delete-modal" class="pd-modal-wrapper">
   <div class="modal-bg" id="modal-bg" style="display: none" >
   </div>
@@ -146,6 +149,7 @@
     </div>
   </div>
 </div>
+<!--모달 창 종료-->
 
 </body>
 </html>

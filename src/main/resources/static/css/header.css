@@ -16,6 +16,7 @@ body{
 .h-row1{
     justify-content: flex-end;
     font-weight: 500;
+    height: 35px;
 }
 .h-row1 .col1{
     display: flex;
@@ -57,6 +58,65 @@ body{
     width: 245px;
     height: 31px;
     font-size: 19px;
+}
+
+.login-member{
+    width: 171px;
+    background-color: transparent;
+    border: 0px;
+    font-size: 18px;
+    text-align: right;
+    padding: 0px;
+    font-weight: 500;
+}
+
+/*모달*/
+.logout-modal-wrapper{
+    margin: 0;
+    z-index: 1000;
+    position: relative;
+    left: 171px;
+    top: 36px;
+    border: 1px solid;
+    border-radius: 3px;
+    width: 104px;
+    flex-direction: column;
+    display: none;
+    height: 77px;
+}
+
+.logout-modal-wrapper .modal-bg{
+
+}
+.logout-modal-wrap{
+    /* height: 35px; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.md-lg1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 3px 0px; */
+    border-bottom: 1px solid #ececec;
+    height: 38px;
+}
+.md-lg2{
+    font-size: 15px;
+}
+.md-lg3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 38px;
+}
+.icon-logout{
+    width: 28px;
+}
+.icon-setting{
+    width: 22px;
+    margin-right: 2px;
 }
 
 
@@ -142,3 +202,19 @@ a {
     color: black;
     text-decoration: none;
 }
+
+button{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/*애니메이션*/
+@keyframes DropDownSlide {
+    100% {
+        transform: translateY(0)
+    }
+    0% {
+        transform: translateY(5px)
+    }
+}
+
+
