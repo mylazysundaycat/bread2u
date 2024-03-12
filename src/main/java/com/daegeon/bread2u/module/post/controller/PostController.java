@@ -38,10 +38,9 @@ public class PostController {
     @GetMapping("/{postId}")
     public String findById(@PathVariable Long postId, Model model, HttpServletRequest request) {
         loginService.loginValidation(model, request);
-        Post postFindedByPostId = postService.findById(postId)
-                .orElseThrow();
+        Post postFindById = postService.findById(postId).orElseThrow();
         List<Comment> commentFindedByPostId = commentService.findByPostId(postId);
-        model.addAttribute("post", postFindedByPostId);
+        model.addAttribute("post", postFindById);
         model.addAttribute("comments", commentFindedByPostId);
         return "/post/postDetail";
     }

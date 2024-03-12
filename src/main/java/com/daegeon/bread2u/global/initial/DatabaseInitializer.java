@@ -31,12 +31,18 @@ public class DatabaseInitializer {
     }
 
     private void initializeMembers() {
-            memberRepository.save(Member.builder()
-                    .membername("winter")
-                    .nickname("윈터")
-                    .email("test1@mail.com")
-                    .password("1234")
-                    .build());
+        memberRepository.save(Member.builder()
+                .membername("winter")
+                .nickname("윈터")
+                .email("test1@mail.com")
+                .password("1234")
+                .build());
+        memberRepository.save(Member.builder()
+                .membername("hani")
+                .nickname("뉴진스하니")
+                .email("test2@mail.com")
+                .password("1234")
+                .build());
     }
 
     private void initializePost() {

@@ -61,13 +61,13 @@ body{
 }
 
 .login-member{
-    width: 171px;
     background-color: transparent;
     border: 0px;
     font-size: 18px;
     text-align: right;
     padding: 0px;
     font-weight: 500;
+    cursor: pointer;
 }
 
 /*모달*/
@@ -75,8 +75,7 @@ body{
     margin: 0;
     z-index: 1000;
     position: relative;
-    left: 171px;
-    top: 36px;
+    left: 945px;
     border: 1px solid;
     border-radius: 3px;
     width: 104px;
@@ -84,7 +83,9 @@ body{
     display: none;
     height: 77px;
 }
-
+.logout-modal-row{
+    height: 0px;
+}
 .logout-modal-wrapper .modal-bg{
 
 }

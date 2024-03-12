@@ -8,6 +8,16 @@
                 회원가입
             </a>
         </div>
+        <div class="col2">
+            <button th:if="${loginmember != null}" class="login-member" onclick="popUp()">
+                반갑습니다, <span th:text="${loginmember.nickname}"style="color:#ff8f0d;"></span>님!
+            </button>
+            <a th:unless="${loginmember != null}" href="/members/login">
+                로그인
+            </a>
+        </div>
+    </div>
+    <div class="h-set logout-modal-row">
         <!--모달 창-->
         <div class="logout-modal-wrapper dropdown">
             <div class="logout-modal-wrap">
@@ -22,14 +32,6 @@
             </div>
         </div>
         <!--모달창 종료-->
-        <div class="col2">
-            <button th:if="${loginmember != null}" class="login-member" onclick="popUp()">
-                반갑습니다, <span th:text="${loginmember.nickname}"style="color:#ff8f0d;"></span>님!
-            </button>
-            <a th:unless="${loginmember != null}" href="/members/login">
-                로그인
-            </a>
-        </div>
     </div>
     <div class="h-row2 h-set">
         <div class="col1">
