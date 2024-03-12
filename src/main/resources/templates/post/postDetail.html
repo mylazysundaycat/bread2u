@@ -58,8 +58,7 @@
           <div th:text="${post.likes}" class="like-count">8</div>
         </a>
       </div>
-      <div class="bp-pack">
-
+      <div class="bp-pack" th:if="${loginmember.nickname == post.member.nickname}">
         <form th:action="@{/post/{postId}/update}" th:object="${post}" method="post">
           <input type="hidden" th:name="postId" th:value="${post.id}" />
           <button type="submit" class="btn-edit">[수정]</button>
@@ -80,7 +79,7 @@
       <span>댓글</span>
       <span th:text="${post.comment.size()}" class="num"></span>
     </div>
-    <div class="comment-input">
+    <div class="comment-input" th:if="${loginmember != null}">
         <img src="../images/profile-img.svg" class="profile-img">
         <form th:action="@{/comment/{postId} (postId=${post.id})}"
               method="post" name="comment">
@@ -91,6 +90,7 @@
   </div>
 </div>
 <!--댓글창 정보 종료-->
+
 <!--댓글창 시작-->
 <div class="post-wrapper3">
   <div class="comment-container2" th:each="comment : ${comments}">
@@ -98,7 +98,7 @@
       <div class="member-img">
         <img src="../images/profile-img.svg" class="profile-img">
       </div>
-      <div class="member-nickname">
+      <div class="member-nickname" th:text="${comment.member.nickname}">
         김꿈돌이에요
       </div>
     </div>
@@ -107,7 +107,7 @@
     </div>
     <div class="comment-detail">
       <div class="day"
-           th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}">
+           th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">
         2024-01-15 01:35:13
       </div>
       <div class="detail-pack">

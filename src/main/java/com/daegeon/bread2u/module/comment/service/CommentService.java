@@ -4,6 +4,9 @@ package com.daegeon.bread2u.module.comment.service;
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.comment.entity.CommentRequestDto;
 import com.daegeon.bread2u.module.comment.repository.CommentRepository;
+import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.member.repository.MemberDto;
+import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,18 +22,24 @@ import java.util.Optional;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
 
     //Create
-    public Comment createComment(Long postId, CommentRequestDto commentDto) {
+    public Comment createComment(Long postId, CommentRequestDto commentDto, MemberDto memberDto) {
         Post findPost = postRepository.findById(postId)
+                .orElseThrow();
+
+        Member findMember = memberRepository.findOneByMembername(memberDto.getMembername())
                 .orElseThrow();
 
         Comment comment = Comment.builder()
                 .content(commentDto.getContent())
                 .likes(0L)
                 .post(findPost)
+                .member(findMember)
                 .build();
 
+        //TODO Cascade 이용해서 수정
         findPost.getComment().add(comment);
         
         return commentRepository.save(comment);

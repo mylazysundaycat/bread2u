@@ -28,7 +28,7 @@ public class LoginController {
     public String join(@ModelAttribute LoginRequestDto memberDto) {
         Member member = Member.from(memberDto);
         memberService.createMember(member);
-        return "redirect:/member/login";
+        return "redirect:/members/login";
     }
     @Operation(summary = "로그인 폼", description = "로그인 화면으로 이동")
     @GetMapping("/login")

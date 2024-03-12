@@ -9,11 +9,16 @@ import org.springframework.ui.Model;
 @Service
 public class LoginService {
     HttpSession session;
-    public void loginValidation(final Model model, final HttpServletRequest request){
+    public MemberDto loginValidation(final Model model, final HttpServletRequest request){
         session = request.getSession(false);
-        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-        if(loginMember!=null){
-            model.addAttribute("loginmember", loginMember);
+        if(session==null) {
+            model.addAttribute("loginmember", null);
+            return null;
         }
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+        if(loginMember!=null) model.addAttribute("loginmember", loginMember);
+        else model.addAttribute("loginmember", null);
+
+        return loginMember;
     }
 }

@@ -56,12 +56,9 @@ public class PostController {
 
     @Operation(summary = "게시물 작성", description = "게시물을 작성합니다")
     @PostMapping("/create")
-    public String createPost(@ModelAttribute PostDto postDto, Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-        if(loginMember!=null){
-            model.addAttribute("loginmember", loginMember);
-        }
+    public String createPost(@ModelAttribute PostDto postDto
+            , Model model, HttpServletRequest request) {
+        MemberDto loginMember = loginService.loginValidation(model, request);
         postService.createPost(postDto, loginMember);
         return "redirect:/post";
     }

@@ -41,10 +41,11 @@ public class DatabaseInitializer {
 
     private void initializePost() {
         Post post1 = Post.builder()
-                .title("첫 번째 게시글")
-                .content("첫 번째 게시글 입니다.")
+                .title("괜한 투정처럼 Thirsty 아니 사실 이건 Thirsty")
+                .content("맘이 커질수록 Thirsty~")
+                .likes(0L)
+                .view(0L)
                 .build();
-
         postSave(post1, memberRepository.findOneByMembername("winter").orElseThrow());
     }
 
