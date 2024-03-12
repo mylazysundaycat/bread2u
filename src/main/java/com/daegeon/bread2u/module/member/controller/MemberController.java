@@ -30,14 +30,6 @@ public class MemberController {
         memberService.createMember(member);
         return "redirect:/member/login";
     }
-
-    @GetMapping("/login")
-    public String login(Model model){
-        model.addAttribute("member", new LoginRequestDto());
-        return "/member/loginForm";
-    }
-
-
     //readAll
     @Operation(summary = "회원 리스트 페이지", description = "회원 리스트 페이지로 이동한다")
     @GetMapping("/list")

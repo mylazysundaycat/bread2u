@@ -25,8 +25,6 @@ public class MemberService {
         Member findedMember = memberRepository.findOneByMembername(loginRequestDto.getMembername())
                 .orElseThrow(()->new Exception("회원 정보가 존재하지 않습니다."));
         String encodedPassword = findedMember.getPassword();
-
-
         // 3. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
         return MemberDto.from(findedMember);
     }
@@ -35,9 +33,11 @@ public class MemberService {
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
-
     public Optional<Member> findById(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+    public Optional<Member> findByMembername(String membername){
+        return memberRepository.findOneByMembername(membername);
     }
 
 

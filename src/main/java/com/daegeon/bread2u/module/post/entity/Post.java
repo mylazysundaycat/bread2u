@@ -24,9 +24,8 @@ public class Post extends BaseTimeEntity {
     private String content;
     private Long likes;
     private Long view;
-
-//    private LocalDateTime createdAt;
-//    private LocalDateTime modifiedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Comment> comment;
@@ -41,13 +40,14 @@ public class Post extends BaseTimeEntity {
 
     @Builder
     public Post(String title, String content, Long likes, Long view,
-                File file, List<Comment> comment){
+                File file, List<Comment> comment, Member member){
         this.title=title;
         this.content=content;
         this.likes=likes;
         this.view=view;
         this.file=file;
         this.comment=comment;
+        this.member=member;
     }
 
 }

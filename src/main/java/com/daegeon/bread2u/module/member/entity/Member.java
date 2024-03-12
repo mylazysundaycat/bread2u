@@ -4,6 +4,7 @@ package com.daegeon.bread2u.module.member.entity;
 import com.daegeon.bread2u.global.BaseTimeEntity;
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
+import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.shop.entity.Bread;
 import com.daegeon.bread2u.module.shop.entity.Shop;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,6 +50,17 @@ public class Member extends BaseTimeEntity{
 
     @Operation(summary = "회원가입 편의 메소드")
     public static Member from(LoginRequestDto memberDto) {
+        return Member.builder()
+                .membername(memberDto.getMembername())
+                .nickname(memberDto.getNickname())
+                .email(memberDto.getEmail())
+                .role(memberDto.getRole())
+                .password(memberDto.getPassword())
+                .build();
+    }
+
+    @Operation(summary = "회원가입 편의 메소드")
+    public static Member from(MemberDto memberDto) {
         return Member.builder()
                 .membername(memberDto.getMembername())
                 .nickname(memberDto.getNickname())

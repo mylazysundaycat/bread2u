@@ -20,9 +20,8 @@ public class HomeController {
         //세션에 회원 데이터가 없으면 home
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         if (loginMember == null) {
-            return "세션에 데이터가 없어요...";
+            return "/index";
         }
-        System.out.println("세션 값 내놔.."+loginMember.getNickname());
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("loginmember", loginMember);
         return "/index";

@@ -39,10 +39,10 @@
         <img src="../images/icon-view.png" class="view-img">
         <div th:text="${post.view}">8</div>
       </div>
-      <div class="day pd">
+      <div class="day pd" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">
         2024-01-15 01:32:54
       </div>
-      <div class="nickname pd">
+      <div class="nickname pd" th:text="${post.member.nickname}">
         노잼충대인
       </div>
     </div>

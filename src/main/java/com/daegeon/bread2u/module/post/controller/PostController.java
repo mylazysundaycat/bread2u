@@ -3,10 +3,14 @@ package com.daegeon.bread2u.module.post.controller;
 
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.comment.service.CommentService;
+import com.daegeon.bread2u.module.member.repository.MemberDto;
+import com.daegeon.bread2u.module.member.service.LoginService;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.entity.PostDto;
 import com.daegeon.bread2u.module.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,17 +24,20 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
     private final CommentService commentService;
+    private final LoginService loginService;
 
     @Operation(summary = "전체 글 조회", description = "전제 게시물 목록을 조회합니다")
     @GetMapping
-    public String findAll(Model model) {
+    public String findAll(Model model, HttpServletRequest request) {
+        loginService.loginValidation(model, request);
         model.addAttribute("posts", postService.findAll());
         return "/post/postList";
     }
 
     @Operation(summary = "특정 글 조회", description = "postId 값에 해당하는 게시물을 조회합니다")
     @GetMapping("/{postId}")
-    public String findById(@PathVariable Long postId, Model model) {
+    public String findById(@PathVariable Long postId, Model model, HttpServletRequest request) {
+        loginService.loginValidation(model, request);
         Post postFindedByPostId = postService.findById(postId)
                 .orElseThrow();
         List<Comment> commentFindedByPostId = commentService.findByPostId(postId);
@@ -41,15 +48,21 @@ public class PostController {
 
     @Operation(summary = "게시물 작성 폼", description = "게시물 작성 폼으로 이동합니다")
     @GetMapping("/create")
-    public String createPost(Model model) {
+    public String createPost(Model model, HttpServletRequest request) {
+        loginService.loginValidation(model, request);
         model.addAttribute("post", new PostDto());
         return "/post/createPostForm";
     }
 
     @Operation(summary = "게시물 작성", description = "게시물을 작성합니다")
     @PostMapping("/create")
-    public String createPost(@ModelAttribute PostDto postDto) {
-        postService.createPost(postDto);
+    public String createPost(@ModelAttribute PostDto postDto, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+        if(loginMember!=null){
+            model.addAttribute("loginmember", loginMember);
+        }
+        postService.createPost(postDto, loginMember);
         return "redirect:/post";
     }
 

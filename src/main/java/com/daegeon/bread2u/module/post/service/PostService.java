@@ -4,6 +4,9 @@ package com.daegeon.bread2u.module.post.service;
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.file.entity.File;
 import com.daegeon.bread2u.module.file.service.FileService;
+import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.member.repository.MemberDto;
+import com.daegeon.bread2u.module.member.service.MemberService;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.entity.PostDto;
 import com.daegeon.bread2u.module.post.repository.PostRepository;
@@ -21,10 +24,12 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
     private final FileService fileService;
+    private final MemberService memberService; //추가!
 
     //create
-    public void createPost(PostDto postDto) {
+    public void createPost(PostDto postDto, MemberDto memberDto) {
         File saveFile = fileService.createFile(postDto.getFile());
+        Member member = memberService.findByMembername(memberDto.getMembername()).orElseThrow(); //추가!
         List<Comment> comments = new ArrayList<>();
         Post savePost = Post.builder()
                 .title(postDto.getTitle())
@@ -33,6 +38,7 @@ public class PostService {
                 .likes(0L)
                 .view(0L)
                 .comment(comments)
+                .member(member)
                 .build();
         postRepository.save(savePost);
     }

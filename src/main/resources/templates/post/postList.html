@@ -20,7 +20,7 @@
             <img src="../images/icon-rightarrow.png" class="righrarrow-img">
         </div>
         <div>
-            <a href="/post/create" class="btn main-color">글쓰기</a>
+            <a href="/post/create" class="btn main-color" th:if="${loginmember != null}">글쓰기</a>
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
     <div class="a-row3" th:each="post : ${posts}">
         <div class="id" th:text="${post.id}">1</div>
         <a href="" class="title" th:text="${post.title}" th:href="@{/post/{postId} (postId=${post.id})}">대전역 오자마자 가야될 곳 5곳 꼽아봤어용!! [12]</a>
-        <div class="nickname" th:text="${post.content}">한화우승</div>
+        <div class="nickname" th:text="${post.member.nickname}">한화우승</div>
         <div class="date"
              th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"
         >2024-02-01</div>
