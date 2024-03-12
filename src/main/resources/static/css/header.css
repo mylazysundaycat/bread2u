@@ -53,7 +53,11 @@ body{
     height: 40px;
     display: flex;
     align-items: center;
+    /*transition: background-color linear 0.2s;*/
 }
+/*.hr3s1:hover {*/
+/*    background-color: #d4d4d424;*/
+/*}*/
 .h-row3 .search-box{
     width: 245px;
     height: 31px;
@@ -68,6 +72,13 @@ body{
     padding: 0px;
     font-weight: 500;
     cursor: pointer;
+}
+.category-custom{
+    background: linear-gradient(to bottom, white 50%, white 50%);
+    transition: background linear 0.5s;
+}
+.category-custom:hover {
+    background: linear-gradient(to bottom, white 50%, #ff8f0d30 50%);
 }
 
 /*모달*/
@@ -102,6 +113,10 @@ body{
     /* padding: 3px 0px; */
     border-bottom: 1px solid #ececec;
     height: 38px;
+    transition: background-color linear 0.2s;
+}
+.md-lg1:hover {
+    background-color: #ff8f0d24;
 }
 .md-lg2{
     font-size: 15px;

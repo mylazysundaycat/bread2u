@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -26,11 +27,13 @@ public class PostController {
     private final CommentService commentService;
     private final LoginService loginService;
 
-    @Operation(summary = "전체 글 조회", description = "전제 게시물 목록을 조회합니다")
+    @Operation(summary = "전체 글 조회", description = "전제 게시물 목록을 최신순으로 조회합니다")
     @GetMapping
     public String findAll(Model model, HttpServletRequest request) {
         loginService.loginValidation(model, request);
-        model.addAttribute("posts", postService.findAll());
+        List<Post> posts = postService.findAll();
+        Collections.reverse(posts);
+        model.addAttribute("posts", posts);
         return "/post/postList";
     }
 
