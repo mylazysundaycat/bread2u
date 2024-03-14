@@ -28,6 +28,9 @@
     </div>
 </div>
 <!--Article nav 종료-->
+
+
+
 <!--Article 시작-->
 <div class="article-container">
     <div class="a-row2">
@@ -38,25 +41,46 @@
         <div class="views">조회</div>
         <div class="likes">추천</div>
     </div>
-    <div class="a-row3" th:each="post : ${posts}">
-        <div class="id" th:text="${post.id}">1</div>
-        <div class="title">
-            <a href="" th:text="${post.title}" th:href="@{/post/{postId} (postId=${post.id})}">대전역 오자마자 가야될 곳 5곳 꼽아봤어용!! [12]</a>
-            <div class="count-row">
-                <span>[</span><span class="comment-count" th:text="${post.comment.size()}"></span><span>]</span>
-            </div>
 
+        <div class ="post-box"
+             th:with="
+                pageNumber = ${posts.pageable.pageNumber},
+                pageSize = ${posts.pageable.pageSize},
+                totalPages = ${posts.totalPages},
+                startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                tempEndPage = ${startPage + pageSize - 1},
+                endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+            <div class="a-row3" th:each="post : ${posts}">
+                <div class="id" th:text="${post.id}">게시물 번호</div>
+                <div class="title">
+                    <a href="" th:text="${post.title}" th:href="@{/post/{postId} (postId=${post.id})}" class="link-title">게시물 제목</a>
+                    <div class="count-row"><span>[</span><span class="comment-count" th:text="${post.comment.size()}">댓글 수</span><span>]</span></div>
+                </div>
+                <div class="nickname" th:text="${post.member.nickname}">작성자</div>
+                <div class="date" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</div>
+                <div class="view"><div class="views" th:text="${post.view}">조회수</div></div>
+                <div class="like">
+                    <img src="../images/icon-likes.png" class="likes-img">
+                    <div class="likes" th:text="${post.likes}">좋아요 수</div>
+                </div>
+            </div>
+            <div class="page-box">
+                <!-- 페이지 번호-->
+                <span th:each="page: ${#numbers.sequence(startPage, endPage)}" class="page-num">
+                    <!-- 현재페이지는 링크 없이 숫자만 -->
+                    <span th:if="${page == pageNumber + 1}" th:text="${page}" class="current"></span>
+                        <!-- 현재페이지 링크 X, 다른 페이지번호에는 링크를 보여준다 -->
+                    <span th:unless="${page == pageNumber + 1}">
+                        <a th:href="@{/post(page=${page - 1})}" th:text="${page}" class=""></a>
+                    </span>
+                </span>
+            </div>
         </div>
-        <div class="nickname" th:text="${post.member.nickname}">한화우승</div>
-        <div class="date" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2024-02-01</div>
-        <div class="view">
-            <div class="views" th:text="${post.view}">3,200</div>
-        </div>
-        <div class="like">
-            <img src="../images/icon-likes.png" class="likes-img">
-            <div class="likes" th:text="${post.likes}">84</div>
-        </div>
-    </div>
+
+
+
+
 </div>
 <!--Article 종료-->
 </body>

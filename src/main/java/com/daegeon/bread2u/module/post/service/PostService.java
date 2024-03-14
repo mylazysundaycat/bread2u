@@ -11,6 +11,10 @@ import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.entity.PostDto;
 import com.daegeon.bread2u.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +30,6 @@ public class PostService {
     private final FileService fileService;
     private final MemberService memberService; //추가!
 
-    //create
     public void createPost(PostDto postDto, MemberDto memberDto) {
         File saveFile = fileService.createFile(postDto.getFile());
         Member member = memberService.findByMembername(memberDto.getMembername()).orElseThrow(); //추가!
@@ -43,8 +46,6 @@ public class PostService {
         postRepository.save(savePost);
     }
 
-    //update
-    //TODO EXCEPTION
     public Post updatePost(Long postId, PostDto postDto) {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow();
@@ -60,21 +61,22 @@ public class PostService {
 //                .ifPresent(at -> findPost.setModifiedAt(at));
         return postRepository.save(findPost);
     }
-
-    //read
     public Optional<Post> findById(Long postId) {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow();
         findPost.setView(findPost.getView()+1);
         return postRepository.findById(postId);
     }
-
-    //readAll
     public List<Post> findAll(){
         return postRepository.findAll();
     }
 
-    //TODO EXCEPTION
+    //Pageble 적용하여 모든 게시물 받아오기
+    public Page<Post> findAllPost(Pageable pageable) {
+        Page<Post> pageResult = postRepository.findAll(pageable);
+        return pageResult;
+    }
+
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
 

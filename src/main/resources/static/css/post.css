@@ -35,6 +35,7 @@
 }
 .article-container .id{
     width: 3%;
+    margin-right: 3px;
 }
 .article-container .title{
     width: 52%;
@@ -144,6 +145,21 @@ input::placeholder {color:#ccc;}
 
 }
 
+.page-box{
+    display: flex;
+    justify-content: center;
+    margin: 40px 0px;
+}
+.page-num{
+    margin-right: 10px;
+}
+.page-box .current{
+    font-weight: 600;
+    color: #ff8f0d;
+}
+.link-title{
+
+}
 
 /*버튼*/
 .btn{

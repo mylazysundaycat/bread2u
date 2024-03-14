@@ -12,6 +12,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +31,22 @@ public class PostController {
     private final CommentService commentService;
     private final LoginService loginService;
 
-    @Operation(summary = "전체 글 조회", description = "전제 게시물 목록을 최신순으로 조회합니다")
+//    @Operation(summary = "전체 글 조회", description = "전제 게시물 목록을 최신순으로 조회합니다")
+//    @GetMapping
+//    public String findAll(Model model, HttpServletRequest request) {
+//        loginService.loginValidation(model, request);
+//        List<Post> posts = postService.findAll();
+//        Collections.reverse(posts);
+//        model.addAttribute("posts", posts);
+//        return "/post/postList";
+//    }
+
+    @Operation(summary = "전체 글 조회", description = "Pagination을 이용하여 전체 글 목록을 조회합니다.")
     @GetMapping
-    public String findAll(Model model, HttpServletRequest request) {
+    public String findAll(Model model, HttpServletRequest request
+            ,@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         loginService.loginValidation(model, request);
-        List<Post> posts = postService.findAll();
-        Collections.reverse(posts);
+        Page<Post> posts = postService.findAllPost(pageable);
         model.addAttribute("posts", posts);
         return "/post/postList";
     }
