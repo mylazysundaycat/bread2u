@@ -1,7 +1,9 @@
 package com.daegeon.bread2u.module.member.service;
 
 
+import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
 import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,23 +16,31 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    //create
     public Member createMember(Member member) {
         return memberRepository.save(member);
     }
 
-    //readAll
+    public MemberDto login(final LoginRequestDto loginRequestDto) throws Exception {
+        // 1. 회원 정보 및 비밀번호 조회
+        Member findedMember = memberRepository.findOneByMembername(loginRequestDto.getMembername())
+                .orElseThrow(()->new Exception("회원 정보가 존재하지 않습니다."));
+        String encodedPassword = findedMember.getPassword();
+        // 3. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
+        return MemberDto.from(findedMember);
+    }
+
+
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
-
-    //read
     public Optional<Member> findById(Long memberId) {
         return memberRepository.findById(memberId);
     }
+    public Optional<Member> findByMembername(String membername){
+        return memberRepository.findOneByMembername(membername);
+    }
 
-    //update
-    //TODO EXCEPTION
+
     public Member updateMember(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow();
@@ -45,8 +55,6 @@ public class MemberService {
         return memberRepository.save(findMember);
     }
 
-    //delete
-    //TODO EXCEPTION
     public void deleteMember(Long memberId) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow();

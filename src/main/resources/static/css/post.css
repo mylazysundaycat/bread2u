@@ -35,13 +35,18 @@
 }
 .article-container .id{
     width: 3%;
-    text-align: center;
+    margin-right: 3px;
 }
 .article-container .title{
     width: 52%;
-    text-align: center;
+    display: flex;
 }
-
+.title .title-row{
+   overflow: hidden;
+}
+.title .count-row{
+    width: 5%;
+}
 
 
 .a-row2 .views{
@@ -87,6 +92,11 @@
     overflow: hidden;
     margin-left: 39px;
 }
+.comment-count{
+    font-weight: 500;
+}
+
+
 
 
 .post-content-container{
@@ -119,7 +129,7 @@ input::placeholder {color:#ccc;}
 .pc-post{
     border: 1px solid #ccc;
     width: 1000px;
-    height: 400px;
+    height: 310px;
     padding: 10px;
     margin-left: 36px;
 }
@@ -135,6 +145,21 @@ input::placeholder {color:#ccc;}
 
 }
 
+.page-box{
+    display: flex;
+    justify-content: center;
+    margin: 40px 0px;
+}
+.page-num{
+    margin-right: 10px;
+}
+.page-box .current{
+    font-weight: 600;
+    color: #ff8f0d;
+}
+.link-title{
+
+}
 
 /*버튼*/
 .btn{

@@ -2,49 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/postDetail.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/postDetail.css">
   <!--font-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  <!--js-->
   <script defer src="/js/postDetail.js"></script>
+  <script defer src="/js/header.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <title>Bread2U</title>
 </head>
 <body>
-<!--Header 시작-->
-<div class="h-row1 h-set">
-  <div class="col1">
-    회원가입
-  </div>
-  <div class="col2">
-    로그인
-  </div>
-</div>
-<div class="h-row2 h-set">
-  <div class="col1">
-    <img src="../img/main-logo.png" class="main-logo">
-  </div>
-</div>
-<div class="h-row3 h-set">
-  <div class="hr3s1"><a href="/">HOME</a></div>
-  <div class="hr3s1"><a href="/breadList">베스트</a></div>
-  <div class="hr3s1">커스텀빵여행</div>
-  <div class="hr3s1 "><a href="/post">빵뮤니티</a></div>
-  <div class="col1">
-    <div class="search">
-      <input type="text" class="search-box">
-      <img src="../img/icon-search.png" class="search-icon">
-    </div>
-  </div>
-</div>
-<!--Header 종료-->
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
 <!--Article nav 시작-->
 <div class="post-nav-container">
   <div class="post-nav">
     <div class="title">
       <div><a href="/post">빵TALK</a></div>
-      <img src="../img/icon-rightarrow.png" class="righrarrow-img">
+      <img src="../images/icon-rightarrow.png" class="righrarrow-img">
     </div>
     <div>
       <a href="/post/create" class="btn main-color">글쓰기</a>
@@ -62,13 +39,13 @@
 
     <div class="post-detail">
       <div class="comment pd">
-        <img src="../img/icon-view.png" class="view-img">
+        <img src="../images/icon-view.png" class="view-img">
         <div th:text="${post.view}">8</div>
       </div>
-      <div class="day pd">
+      <div class="day pd" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">
         2024-01-15 01:32:54
       </div>
-      <div class="nickname pd">
+      <div class="nickname pd" th:text="${post.member.nickname}">
         노잼충대인
       </div>
     </div>
@@ -80,14 +57,11 @@
     <div class="btn-pack">
       <div class="like-btn">
         <a th:href="@{/post/{postId}/like (postId=${post.id})}">
-          <img src="/img/icon-like.png" class="like-icon">
+          <img src="/images/icon-like.png" class="like-icon">
           <div th:text="${post.likes}" class="like-count">8</div>
         </a>
       </div>
-      <div class="bp-pack">
-        <form action="">
-          <input type="hidden" value=""
-        </form>
+      <div class="bp-pack" th:if="${loginmember != null and loginmember.nickname eq post.member.nickname}">
         <form th:action="@{/post/{postId}/update}" th:object="${post}" method="post">
           <input type="hidden" th:name="postId" th:value="${post.id}" />
           <button type="submit" class="btn-edit">[수정]</button>
@@ -108,8 +82,8 @@
       <span>댓글</span>
       <span th:text="${post.comment.size()}" class="num"></span>
     </div>
-    <div class="comment-input">
-        <img src="../img/profile-img.svg" class="profile-img">
+    <div class="comment-input" th:if="${loginmember!=null}">
+        <img src="../images/profile-img.svg" class="profile-img">
         <form th:action="@{/comment/{postId} (postId=${post.id})}"
               method="post" name="comment">
           <input type="text" name="content" class="ci-text">
@@ -119,14 +93,15 @@
   </div>
 </div>
 <!--댓글창 정보 종료-->
+
 <!--댓글창 시작-->
 <div class="post-wrapper3">
   <div class="comment-container2" th:each="comment : ${comments}">
     <div class="member-detail">
       <div class="member-img">
-        <img src="../img/profile-img.svg" class="profile-img">
+        <img src="../images/profile-img.svg" class="profile-img">
       </div>
-      <div class="member-nickname">
+      <div class="member-nickname" th:text="${comment.member.nickname}">
         김꿈돌이에요
       </div>
     </div>
@@ -135,13 +110,13 @@
     </div>
     <div class="comment-detail">
       <div class="day"
-           th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}">
+           th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">
         2024-01-15 01:35:13
       </div>
       <div class="detail-pack">
         <div class="likes">
           <a href="" class="likes-href">
-            <img src="../img/icon-heart.png" class="heart-img">
+            <img src="../images/icon-heart.png" class="heart-img">
             <div th:text="${comment.likes}">좋아요</div>
           </a>
         </div>
@@ -159,7 +134,7 @@
 </div>
 <!--댓글창 종료-->
 
-
+<!--모달창-->
 <div id="post-delete-modal" class="pd-modal-wrapper">
   <div class="modal-bg" id="modal-bg" style="display: none" >
   </div>
@@ -174,6 +149,7 @@
     </div>
   </div>
 </div>
+<!--모달 창 종료-->
 
 </body>
 </html>

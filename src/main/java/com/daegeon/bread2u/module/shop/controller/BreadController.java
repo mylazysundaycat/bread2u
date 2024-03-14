@@ -13,19 +13,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/bread")
 public class BreadController {
 
     private final BreadService breadService;
 
 
-    @GetMapping("/breadList/create")
+    @GetMapping("/create")
     @Operation(summary = "빵 등록 페이지", description = "빵 등록 페이지로 이동한다")
     public String createBread(Model model) {
         model.addAttribute("bread", new BreadDto());
         return "/bread/createBreadForm";
     }
 
-    @PostMapping("/breadList/create")
+    @PostMapping("/create")
     @Operation(summary = "빵 등록", description = "빵을 등록한다.")
     public String createBread(@ModelAttribute Bread bread) {
         Bread createdBread = breadService.createBread(bread);
@@ -34,7 +35,7 @@ public class BreadController {
     }
 
     //find
-    @GetMapping("/bread/{breadId}")
+    @GetMapping("/{breadId}")
     @Operation(summary = "특정 빵 조회", description = "id에 해당하는 빵을 보여준다")
     public Bread findById(Long bread_id) {
         return breadService.findById(bread_id);
@@ -48,14 +49,14 @@ public class BreadController {
         return "/bread/breadList";
     }
 
-    @GetMapping("/bread/{breadId}/update")
+    @GetMapping("/{breadId}/update")
     @Operation(summary = "빵 수정 페이지", description = "빵 게시물 수정 페이지로 이동한다")
     public String updateBread(@PathVariable Long breadId, Model model) {
         model.addAttribute("bread", findById(breadId));
         return "/bread/updateBreadForm";
     }
 
-    @PostMapping("/bread/{breadId}/update")
+    @PostMapping("/{breadId}/update")
     @Operation(summary = "빵 수정", description = "id에 해당하는 빵 게시물을 수정한다")
     public String updateBread(@PathVariable Long breadId, @ModelAttribute Bread bread){
         Bread updatedBread = breadService.updateBread(breadId, bread);
@@ -63,7 +64,7 @@ public class BreadController {
 //        return "redirect:/"+updatedBread.getId();
     }
 
-    @GetMapping("/bread/{breadId}/delete")
+    @GetMapping("/{breadId}/delete")
     @Operation(summary = "빵 삭제", description = "id에 해당하는 빵 게시물을 삭제한다.")
     public String deleteBread(@PathVariable(name="breadId") Long breadId, RedirectAttributes redirectAttributes){
         breadService.deleteBread(findById(breadId));

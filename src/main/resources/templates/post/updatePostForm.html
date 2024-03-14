@@ -11,47 +11,22 @@
     <title>Bread2U</title>
 </head>
 <body>
-<!--Header 시작-->
-<div class="h-row1 h-set">
-    <div class="col1">
-        회원가입
-    </div>
-    <div class="col2">
-        로그인
-    </div>
-</div>
-<div class="h-row2 h-set">
-    <div class="col1">
-        <img src="/img/main-logo.png" class="main-logo">
-    </div>
-</div>
-<div class="h-row3 h-set">
-    <div class="hr3s1"><a href="/">HOME</a></div>
-    <div class="hr3s1"><a href="/breadList">베스트</a></div>
-    <div class="hr3s1">커스텀빵여행</div>
-    <div class="hr3s1 "><a href="/post">빵뮤니티</a></div>
-    <div class="col1">
-        <div class="search">
-            <input type="text" class="search-box">
-            <img src="/img/icon-search.png" class="search-icon">
-        </div>
-    </div>
-</div>
-<!--Header 종료-->
 
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
 <!--Article nav 시작-->
 <div class="post-nav-container">
     <div class="post-nav">
         <div class="title">
             <div><a href="/post">빵TALK</a></div>
-            <img src="/img/icon-rightarrow.png" class="righrarrow-img">
+            <img src="../images/icon-rightarrow.png" class="righrarrow-img">
+        </div>
+        <div>
+            <a href="/post/create" class="btn main-color">글쓰기</a>
         </div>
     </div>
 </div>
 <!--Article nav 종료-->
-
 <!--Article content 시작-->
-
 <div class="post-content-container">
     <form role="form" class="pc-form" th:object="${post}"
           th:action="@{/post/{postId}/update (postId=${post.id})}"
@@ -69,9 +44,7 @@
             <div><input type="submit" value="submit" class="btn main-color"></div>
         </div>
     </form>
-
 </div>
-
 
 </body>
 </html>

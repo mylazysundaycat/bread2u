@@ -2,55 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/post.css">
     <!--font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <!--js-->
+    <script defer src="/js/header.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Bread2U</title>
 </head>
 <body>
-<!--Header 시작-->
-<div class="h-row1 h-set">
-    <div class="col1">
-        회원가입
-    </div>
-    <div class="col2">
-        로그인
-    </div>
-</div>
-<div class="h-row2 h-set">
-    <div class="col1">
-        <img src="../img/main-logo.png" class="main-logo">
-    </div>
-</div>
-<div class="h-row3 h-set">
-    <div class="hr3s1"><a href="/">HOME</a></div>
-    <div class="hr3s1"><a href="/breadList">베스트</a></div>
-    <div class="hr3s1">커스텀빵여행</div>
-    <div class="hr3s1 "><a href="/post">빵뮤니티</a></div>
-    <div class="col1">
-        <div class="search">
-            <input type="text" class="search-box">
-            <img src="../img/icon-search.png" class="search-icon">
-        </div>
-    </div>
-</div>
-<!--Header 종료-->
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
 <!--Article nav 시작-->
 <div class="post-nav-container">
     <div class="post-nav">
         <div class="title">
             <div><a href="/post">빵TALK</a></div>
-            <img src="../img/icon-rightarrow.png" class="righrarrow-img">
+            <img src="../images/icon-rightarrow.png" class="righrarrow-img">
         </div>
         <div>
-            <a href="/post/create" class="btn main-color">글쓰기</a>
+            <a href="/post/create" class="btn main-color" th:if="${loginmember != null}">글쓰기</a>
         </div>
     </div>
 </div>
 <!--Article nav 종료-->
+
+
 
 <!--Article 시작-->
 <div class="article-container">
@@ -62,21 +41,46 @@
         <div class="views">조회</div>
         <div class="likes">추천</div>
     </div>
-    <div class="a-row3" th:each="post : ${posts}">
-        <div class="id" th:text="${post.id}">1</div>
-        <a href="" class="title" th:text="${post.title}" th:href="@{/post/{postId} (postId=${post.id})}">대전역 오자마자 가야될 곳 5곳 꼽아봤어용!! [12]</a>
-        <div class="nickname" th:text="${post.content}">한화우승</div>
-        <div class="date"
-             th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"
-        >2024-02-01</div>
-        <div class="view">
-            <div class="views" th:text="${post.view}">3,200</div>
+
+        <div class ="post-box"
+             th:with="
+                pageNumber = ${posts.pageable.pageNumber},
+                pageSize = ${posts.pageable.pageSize},
+                totalPages = ${posts.totalPages},
+                startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                tempEndPage = ${startPage + pageSize - 1},
+                endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+            <div class="a-row3" th:each="post : ${posts}">
+                <div class="id" th:text="${post.id}">게시물 번호</div>
+                <div class="title">
+                    <a href="" th:text="${post.title}" th:href="@{/post/{postId} (postId=${post.id})}" class="link-title">게시물 제목</a>
+                    <div class="count-row"><span>[</span><span class="comment-count" th:text="${post.comment.size()}">댓글 수</span><span>]</span></div>
+                </div>
+                <div class="nickname" th:text="${post.member.nickname}">작성자</div>
+                <div class="date" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</div>
+                <div class="view"><div class="views" th:text="${post.view}">조회수</div></div>
+                <div class="like">
+                    <img src="../images/icon-likes.png" class="likes-img">
+                    <div class="likes" th:text="${post.likes}">좋아요 수</div>
+                </div>
+            </div>
+            <div class="page-box">
+                <!-- 페이지 번호-->
+                <span th:each="page: ${#numbers.sequence(startPage, endPage)}" class="page-num">
+                    <!-- 현재페이지는 링크 없이 숫자만 -->
+                    <span th:if="${page == pageNumber + 1}" th:text="${page}" class="current"></span>
+                        <!-- 현재페이지 링크 X, 다른 페이지번호에는 링크를 보여준다 -->
+                    <span th:unless="${page == pageNumber + 1}">
+                        <a th:href="@{/post(page=${page - 1})}" th:text="${page}" class=""></a>
+                    </span>
+                </span>
+            </div>
         </div>
-        <div class="like">
-            <img src="../img/icon-likes.png" class="likes-img">
-            <div class="likes" th:text="${post.likes}">84</div>
-        </div>
-    </div>
+
+
+
+
 </div>
 <!--Article 종료-->
 </body>

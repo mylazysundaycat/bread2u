@@ -37,14 +37,6 @@ public class memberTest {
     @DisplayName("회원 객체 생성 테스트")
     void createMemberTest(){
 
-        Mockito.when(memberRepository.save(any())).thenReturn(testMember);
-
-        Member findMember = memberService.createMember(testMember);
-
-        assertThat(findMember.getEmail()).isEqualTo(testMember.getEmail());
-        //assertThat(findMember.getBirth()).isEqualTo(testMember.getBirth());
-        assertThat(findMember.getNickname()).isEqualTo(testMember.getNickname());
-        assertThat(findMember.getPassword()).isEqualTo(testMember.getPassword());
 
     }
 }

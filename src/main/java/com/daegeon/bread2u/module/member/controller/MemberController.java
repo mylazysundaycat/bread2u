@@ -2,7 +2,7 @@ package com.daegeon.bread2u.module.member.controller;
 
 
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.comment.repository.dto.MemberDto;
+import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -14,43 +14,34 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-
-    @GetMapping("/home")
-    public String home(){
-        return "/home";
-    }
-
-    //create
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
-    @GetMapping("/member")
+    @GetMapping
     public String createMember(Model model) {
-        model.addAttribute("member", new MemberDto());
+        model.addAttribute("member", new LoginRequestDto());
         return "/member/createMemberForm";
     }
-
-    @Operation(summary = "회원가입", description = "회원가입을 한다")
-    @PostMapping("/member")
-    public String createMember(@ModelAttribute Member member) {
+    @Operation(summary = "회원가입", description = "회원가입을 정상적으로 마치고, 로그인 화면으로 이동한다.")
+    @PostMapping
+    public String join(@ModelAttribute LoginRequestDto memberDto) {
+        Member member = Member.from(memberDto);
         memberService.createMember(member);
-        return "/home";
-//        return "redirect:/";
+        return "redirect:/member/login";
     }
-
     //readAll
     @Operation(summary = "회원 리스트 페이지", description = "회원 리스트 페이지로 이동한다")
-    @GetMapping("/members")
+    @GetMapping("/list")
     public String findMembers(Model model) {
         List<Member> members = memberService.findAll();
         model.addAttribute("members", members);
-//        return "ok";
         return "/member/memberList";
     }
 
     //read
     @Operation(summary = "회원 마이 페이지", description = "회원 마이 페이지로 이동한다")
-    @GetMapping("/member/{memberId}")
+    @GetMapping("/{memberId}")
     public String updateMember(@PathVariable Long memberId, Model model) {
         model.addAttribute("member", memberService.findById(memberId));
         return "/member/MyPage";
@@ -58,7 +49,7 @@ public class MemberController {
 
     //update
     @Operation(summary = "회원정보 수정", description = "회원 정보를 수정한다")
-    @PostMapping("/member/{memberId}")
+    @PostMapping("/{memberId}")
     public String udpateMember(@PathVariable Long memberId, @ModelAttribute Member member) {
         memberService.updateMember(memberId, member);
 //        return "ok";
@@ -67,7 +58,7 @@ public class MemberController {
 
     //delete
     @Operation(summary = "회원 삭제", description = "회원을 삭제한다.")
-    @GetMapping("/member/{memberId}/delete")
+    @GetMapping("/{memberId}/delete")
     public String deleteMember(@PathVariable Long memberId) {
         memberService.deleteMember(memberId);
 //        return "ok";

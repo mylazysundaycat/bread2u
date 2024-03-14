@@ -33,7 +33,7 @@
     display: flex;
     margin-bottom: 40px;
     justify-content: flex-end;
-    border-bottom: 1px solid #a2a2a2;
+    border-bottom: 1px solid #e7e7e7;
     padding-bottom: 20px;
 }
 .pd{
@@ -90,9 +90,11 @@
     margin: 0px auto;
 }
 .comment-count{
-    margin-bottom: 30px;
+    margin-bottom: 18px;
     font-size: 20px;
     margin-top: 10px;
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 17px;
 }
 .comment-count .num{
     color: #FF9A24;
