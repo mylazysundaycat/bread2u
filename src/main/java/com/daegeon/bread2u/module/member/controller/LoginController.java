@@ -5,6 +5,7 @@ import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,19 +13,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Login", description = "Login API")
 @RequiredArgsConstructor
-@RequestMapping("/members")
 @Controller
 public class LoginController {
     private final MemberService memberService;
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
-    @GetMapping
+    @GetMapping("/signup")
     public String createMember(Model model) {
         model.addAttribute("member", new LoginRequestDto());
         return "/member/createMemberForm";
     }
     @Operation(summary = "회원가입", description = "회원가입을 정상적으로 마치고, 로그인 화면으로 이동한다.")
-    @PostMapping
+    @PostMapping("/signup")
     public String join(@ModelAttribute LoginRequestDto memberDto) {
         Member member = Member.from(memberDto);
         memberService.createMember(member);

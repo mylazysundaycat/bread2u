@@ -23,21 +23,26 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-  jwt:
-    header: Authorization
-    # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
-    secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-    token-validity-in-seconds: 86400000
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui
+    disable-swagger-default-url: true
+    display-request-duration: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+    doc-expansion: none
+    syntax-highlight:
+      theme: nord
+    urls-primary-name: TEST API
+    persist-authorization: true
+    query-config-enabled: true
+  pre-loading-enabled: true
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
-
-# JWT 설정 추가
-jwt:
-  header: Authorization
-  # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
-  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-  token-validity-in-seconds: 86400000
 

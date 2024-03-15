@@ -9,6 +9,7 @@ import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.entity.PostDto;
 import com.daegeon.bread2u.module.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 
+@Tag(name="Post", description = "Post API")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
@@ -30,16 +32,6 @@ public class PostController {
     private final PostService postService;
     private final CommentService commentService;
     private final LoginService loginService;
-
-//    @Operation(summary = "전체 글 조회", description = "전제 게시물 목록을 최신순으로 조회합니다")
-//    @GetMapping
-//    public String findAll(Model model, HttpServletRequest request) {
-//        loginService.loginValidation(model, request);
-//        List<Post> posts = postService.findAll();
-//        Collections.reverse(posts);
-//        model.addAttribute("posts", posts);
-//        return "/post/postList";
-//    }
 
     @Operation(summary = "전체 글 조회", description = "Pagination을 이용하여 전체 글 목록을 조회합니다.")
     @GetMapping

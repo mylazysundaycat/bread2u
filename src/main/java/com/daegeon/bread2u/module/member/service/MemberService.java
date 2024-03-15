@@ -5,6 +5,7 @@ import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-
+    //TODO
     public Member createMember(Member member) {
-        return memberRepository.save(member);
+        if(!isExistMember(member)) return memberRepository.save(member);
+        else return null;
+    }
+    public boolean isExistMember(Member member) {
+        Optional<Member> optionalMember = memberRepository.findOneByEmail(member.getEmail());
+        return optionalMember.isPresent();
     }
 
     public MemberDto login(final LoginRequestDto loginRequestDto) throws Exception {
@@ -25,7 +31,7 @@ public class MemberService {
         Member findedMember = memberRepository.findOneByMembername(loginRequestDto.getMembername())
                 .orElseThrow(()->new Exception("회원 정보가 존재하지 않습니다."));
         String encodedPassword = findedMember.getPassword();
-        // 3. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
+        // 2. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
         return MemberDto.from(findedMember);
     }
 

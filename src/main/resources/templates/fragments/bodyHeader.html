@@ -4,7 +4,7 @@
     <!--Header 시작-->
     <div class="h-row1 h-set">
         <div class="col1"th:unless="${loginmember != null}">
-            <a href="/members" >
+            <a href="/signup" >
                 회원가입
             </a>
         </div>
@@ -12,7 +12,7 @@
             <button th:if="${loginmember != null}" class="login-member" onclick="popUp()">
                 반갑습니다, <span th:text="${loginmember.nickname}"style="color:#ff8f0d;"></span>님!
             </button>
-            <a th:unless="${loginmember != null}" href="/members/login">
+            <a th:unless="${loginmember != null}" href="/login">
                 로그인
             </a>
         </div>

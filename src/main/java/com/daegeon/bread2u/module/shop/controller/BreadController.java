@@ -4,6 +4,7 @@ import com.daegeon.bread2u.module.shop.entity.Bread;
 import com.daegeon.bread2u.module.shop.repository.dto.BreadDto;
 import com.daegeon.bread2u.module.shop.service.BreadService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+@Tag(name="Bread", description = "Bread API")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/bread")
@@ -18,14 +20,12 @@ public class BreadController {
 
     private final BreadService breadService;
 
-
     @GetMapping("/create")
     @Operation(summary = "빵 등록 페이지", description = "빵 등록 페이지로 이동한다")
     public String createBread(Model model) {
         model.addAttribute("bread", new BreadDto());
         return "/bread/createBreadForm";
     }
-
     @PostMapping("/create")
     @Operation(summary = "빵 등록", description = "빵을 등록한다.")
     public String createBread(@ModelAttribute Bread bread) {

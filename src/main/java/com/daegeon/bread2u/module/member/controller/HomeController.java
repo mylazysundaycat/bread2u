@@ -1,6 +1,5 @@
 package com.daegeon.bread2u.module.member.controller;
 
-import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
