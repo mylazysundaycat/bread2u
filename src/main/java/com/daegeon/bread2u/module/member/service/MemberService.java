@@ -1,6 +1,8 @@
 package com.daegeon.bread2u.module.member.service;
 
 
+import com.daegeon.bread2u.global.exception.Bread2uException;
+import com.daegeon.bread2u.global.exception.ErrorCode;
 import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
@@ -16,15 +18,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    //TODO
     public Member createMember(Member member) {
-        if(!isExistMember(member)) return memberRepository.save(member);
-        else return null;
+        duplicateEmail(member);
+        return memberRepository.save(member);
     }
-    public boolean isExistMember(Member member) {
-        Optional<Member> optionalMember = memberRepository.findOneByEmail(member.getEmail());
-        return optionalMember.isPresent();
+    public void duplicateEmail(Member member) {
+        if (memberRepository.existsByEmail(member.getEmail())) {
+            throw new Bread2uException(ErrorCode.DUPLICATE_EMAIL);
+        }
     }
+
 
     public MemberDto login(final LoginRequestDto loginRequestDto) throws Exception {
         // 1. 회원 정보 및 비밀번호 조회
