@@ -35,8 +35,7 @@ public class PostController {
 
     @Operation(summary = "전체 글 조회", description = "Pagination을 이용하여 전체 글 목록을 조회합니다.")
     @GetMapping
-    public String findAll(Model model, HttpServletRequest request
-            ,@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String findAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Post> posts = postService.findAllPost(pageable);
         model.addAttribute("posts", posts);
         return "/post/postList";
@@ -44,8 +43,7 @@ public class PostController {
 
     @Operation(summary = "특정 글 조회", description = "postId 값에 해당하는 게시물을 조회합니다")
     @GetMapping("/{postId}")
-    public String findById(@PathVariable Long postId, Model model, HttpServletRequest request) {
-        loginService.loginValidation(model, request);
+    public String findById(@PathVariable Long postId, Model model) {
         Post postFindById = postService.findById(postId).orElseThrow();
         List<Comment> commentFindedByPostId = commentService.findByPostId(postId);
         model.addAttribute("post", postFindById);
@@ -55,18 +53,15 @@ public class PostController {
 
     @Operation(summary = "게시물 작성 폼", description = "게시물 작성 폼으로 이동합니다")
     @GetMapping("/create")
-    public String createPost(Model model, HttpServletRequest request) {
-        loginService.loginValidation(model, request);
+    public String createPost(Model model) {
         model.addAttribute("post", new PostDto());
         return "/post/createPostForm";
     }
 
     @Operation(summary = "게시물 작성", description = "게시물을 작성합니다")
     @PostMapping("/create")
-    public String createPost(@ModelAttribute PostDto postDto
-            , Model model, HttpServletRequest request) {
-        MemberDto loginMember = loginService.loginValidation(model, request);
-        postService.createPost(postDto, loginMember);
+    public String createPost(@ModelAttribute PostDto postDto) {
+        postService.createPost(postDto);
         return "redirect:/post";
     }
 

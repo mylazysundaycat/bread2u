@@ -13,10 +13,5 @@ public class PostDto {
     private String title;
     private String content;
     private MultipartFile file;
-
-    public PostDto(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
-
+    private String email;
 }

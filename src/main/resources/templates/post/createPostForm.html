@@ -41,6 +41,7 @@
         <div class="post">
             <textarea class="pc-post" th:field="*{content}"></textarea>
         </div>
+        <input type="hidden" th:name="email" th:value="${session.loginMember.email}">
         <div class="btn-pack">
             <div><input type="file" value="파일첨부" class="pc-file"
                         name="file"></div>

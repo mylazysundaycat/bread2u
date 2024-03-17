@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
     private final MemberService memberService;
+    @Operation(summary = "홈 화면", description = "홈 화면으로 이동한다")
+    @GetMapping("/")
+    public String home(Model model){
+        return "/index";
+    }
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
     @GetMapping("/signup")
     public String createMember(Model model) {

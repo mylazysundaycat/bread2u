@@ -62,10 +62,7 @@
         </a>
       </div>
       <div class="bp-pack" th:if="${session.loginMember != null and session.loginMember.nickname eq post.member.nickname}">
-        <form th:action="@{/post/{postId}/update}" th:object="${post}" method="post">
-          <input type="hidden" th:name="postId" th:value="${post.id}" />
-          <button type="submit" class="btn-edit">[수정]</button>
-        </form>
+        <a th:href="@{/post/{postId}/update (postId=${post.id})}" class="btn-edit">[수정]</a>
         <button id="btn-delete"
            class="btn-delete">[삭제]</button>
       </div>

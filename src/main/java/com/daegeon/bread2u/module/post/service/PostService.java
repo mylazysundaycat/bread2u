@@ -6,6 +6,7 @@ import com.daegeon.bread2u.module.file.entity.File;
 import com.daegeon.bread2u.module.file.service.FileService;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
+import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.entity.PostDto;
@@ -27,12 +28,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
     private final FileService fileService;
-    private final MemberService memberService; //추가!
 
-    public void createPost(PostDto postDto, MemberDto memberDto) {
+    public void createPost(PostDto postDto) {
         File saveFile = fileService.createFile(postDto.getFile());
-        Member member = memberService.findByMembername(memberDto.getMembername()).orElseThrow(); //추가!
+        Member member = memberRepository.findOneByEmail(postDto.getEmail()).orElseThrow();
         List<Comment> comments = new ArrayList<>();
         Post savePost = Post.builder()
                 .title(postDto.getTitle())

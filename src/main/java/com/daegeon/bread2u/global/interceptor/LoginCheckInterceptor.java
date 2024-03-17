@@ -22,19 +22,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
-//    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-//        HttpSession session = request.getSession(false);
-//        if(session==null) {
-//            modelAndView.addAttribute("loginmember", null);
-//            return null;
-//        }
-//        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-//        if(loginMember!=null) modelAndView.addAttribute("loginmember", loginMember);
-//        else modelAndView.addAttribute("loginmember", null);
-//
-//        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-//    }
 
 
 }
