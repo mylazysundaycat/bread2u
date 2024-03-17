@@ -24,8 +24,8 @@
       <form role="form" action="/login" class="login-form col"
         th:object="${member}" method="post">
         <div class="login-id">
-          <input type="text" placeholder="아이디를 입력해주세요" name="membername"
-                 class="txt" id="id-txt" th:field="*{membername}">
+          <input type="text" placeholder="이메일을 입력해주세요" name="email"
+                 class="txt" id="id-txt" th:field="*{email}">
         </div>
         <div class="login-pwd">
           <input type="password" placeholder="비밀번호를 입력해주세요" name="password"

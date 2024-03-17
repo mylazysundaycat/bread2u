@@ -10,8 +10,6 @@ import com.daegeon.bread2u.module.shop.entity.Shop;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Collection;
 import java.util.List;
 
 @Entity

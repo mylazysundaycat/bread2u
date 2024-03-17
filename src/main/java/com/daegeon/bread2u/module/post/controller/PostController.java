@@ -37,7 +37,6 @@ public class PostController {
     @GetMapping
     public String findAll(Model model, HttpServletRequest request
             ,@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        loginService.loginValidation(model, request);
         Page<Post> posts = postService.findAllPost(pageable);
         model.addAttribute("posts", posts);
         return "/post/postList";

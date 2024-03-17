@@ -37,23 +37,21 @@ public class LoginController {
         model.addAttribute("member", new LoginRequestDto());
         return "/member/loginForm";
     }
-    //TODO 추후에 타임리프로 validation 추가
-    @Operation(summary = "로그인 폼", description = "로그인 화면으로 이동")
+    @Operation(summary = "로그인 폼", description = "로그인 처리 후 홈 화면으로 이동한다")
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequestDto loginRequestDto,
                            HttpServletRequest request) throws Exception {
         MemberDto loginMember = memberService.login(loginRequestDto);
-        //TODO 변경해야할 지점
-        if (loginMember == null) {
-            return "아이엠오류에요";
+        if (loginMember != null) {
+            //로그인 성공 처리
+            HttpSession session = request.getSession();
+            //세션에 로그인 회원 정보 보관
+            session.setAttribute("loginMember", loginMember);
+            session.setMaxInactiveInterval(60 * 30);
         }
-        //로그인 성공 처리
-        //세션이 있으면 있는 세션 반환, 없으면 신규 세션 생성
-        HttpSession session = request.getSession();
-        //세션에 로그인 회원 정보 보관
-        session.setAttribute("loginMember", loginMember);
         return "redirect:/";
     }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         //세션을 삭제한다.

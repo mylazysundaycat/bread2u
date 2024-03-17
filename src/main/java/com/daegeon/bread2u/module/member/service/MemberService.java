@@ -7,7 +7,6 @@ import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    //회원가입
     public Member createMember(Member member) {
         duplicateEmail(member);
         return memberRepository.save(member);
@@ -27,16 +27,21 @@ public class MemberService {
             throw new Bread2uException(ErrorCode.DUPLICATE_EMAIL);
         }
     }
-
-
-    public MemberDto login(final LoginRequestDto loginRequestDto) throws Exception {
-        // 1. 회원 정보 및 비밀번호 조회
-        Member findedMember = memberRepository.findOneByMembername(loginRequestDto.getMembername())
-                .orElseThrow(()->new Exception("회원 정보가 존재하지 않습니다."));
-        String encodedPassword = findedMember.getPassword();
-        // 2. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
-        return MemberDto.from(findedMember);
+    //로그인
+    public MemberDto login(final LoginRequestDto loginRequestDto)  {
+        //1. loginRequestDto로 회원 객체를 찾아온다.
+        Member findedMember = memberRepository.findOneByEmail(loginRequestDto.getEmail())
+                .orElseThrow(()->new Bread2uException(ErrorCode.NOT_FOUND_MEMBER));
+        //2. loginRequestDto로 들어온 비밀번호와 DB내의 비밀번호를 비교한다.
+        if (loginRequestDto.getPassword().equals(findedMember.getPassword())) {
+            return MemberDto.from(findedMember);
+        }else{
+            throw new Bread2uException(ErrorCode.MISMATCHED_EMAIL_OR_PASSWORD);
+        }
     }
+
+
+
 
 
     public List<Member> findAll() {
@@ -49,12 +54,9 @@ public class MemberService {
         return memberRepository.findOneByMembername(membername);
     }
 
-
     public Member updateMember(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow();
-//        Optional.ofNullable(findMember.getBirth())
-//                .ifPresent(birth -> findMember.setBirth(birth));
         Optional.ofNullable(findMember.getNickname())
                 .ifPresent(nickname -> findMember.setNickname(nickname));
         Optional.ofNullable(findMember.getEmail())
