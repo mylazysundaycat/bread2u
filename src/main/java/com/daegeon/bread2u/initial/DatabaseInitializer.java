@@ -1,4 +1,4 @@
-package com.daegeon.bread2u.global.initial;
+package com.daegeon.bread2u.initial;
 
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.comment.repository.CommentRepository;
@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class DatabaseInitializer {
@@ -37,12 +40,15 @@ public class DatabaseInitializer {
     }
 
     private void initializeMembers() {
-        memberRepository.save(Member.builder()
+        Member member1 = Member.builder()
                 .membername("user1")
                 .nickname("윈터")
                 .email("test1@gmail.com")
                 .password("1234")
-                .build());
+                .build();
+        member1.getRoles().add("USER");
+        memberRepository.save(member1);
+
         memberRepository.save(Member.builder()
                 .membername("user2")
                 .nickname("팜하니")

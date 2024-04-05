@@ -33,7 +33,7 @@ public class PostService {
 
     public void createPost(PostDto postDto) {
         File saveFile = fileService.createFile(postDto.getFile());
-        Member member = memberRepository.findOneByEmail(postDto.getEmail()).orElseThrow();
+        Member member = memberRepository.findByEmail(postDto.getEmail()).orElseThrow();
         List<Comment> comments = new ArrayList<>();
         Post savePost = Post.builder()
                 .title(postDto.getTitle())

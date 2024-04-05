@@ -8,15 +8,15 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequestDto {
+public class LoginRequest {
     private String membername;
     private String nickname;
     private String email;
     private String password;
     private String role = "USER";
 
-    public static LoginRequestDto from(Member member) {
-        return LoginRequestDto.builder()
+    public static LoginRequest from(Member member) {
+        return LoginRequest.builder()
                 .membername(member.getMembername())
                 .nickname(member.getNickname())
                 .email(member.getEmail())

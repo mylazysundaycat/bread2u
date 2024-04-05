@@ -2,7 +2,7 @@ package com.daegeon.bread2u.module.member.controller;
 
 
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
+import com.daegeon.bread2u.module.member.repository.LoginRequest;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,12 +22,12 @@ public class MemberController {
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
     @GetMapping
     public String createMember(Model model) {
-        model.addAttribute("member", new LoginRequestDto());
+        model.addAttribute("member", new LoginRequest());
         return "/member/createMemberForm";
     }
     @Operation(summary = "회원가입", description = "회원가입을 정상적으로 마치고, 로그인 화면으로 이동한다.")
     @PostMapping
-    public String join(@ModelAttribute LoginRequestDto memberDto) {
+    public String join(@ModelAttribute LoginRequest memberDto) {
         Member member = Member.from(memberDto);
         memberService.createMember(member);
         return "redirect:/member/login";

@@ -3,7 +3,7 @@ package com.daegeon.bread2u.module.member.service;
 
 import com.daegeon.bread2u.global.exception.Bread2uException;
 import com.daegeon.bread2u.global.exception.ErrorCode;
-import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
+import com.daegeon.bread2u.module.member.repository.LoginRequest;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
@@ -28,12 +28,12 @@ public class MemberService {
         }
     }
     //로그인
-    public MemberDto login(final LoginRequestDto loginRequestDto)  {
+    public MemberDto login(final LoginRequest loginRequest)  {
         //1. loginRequestDto로 회원 객체를 찾아온다.
-        Member findedMember = memberRepository.findOneByEmail(loginRequestDto.getEmail())
+        Member findedMember = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(()->new Bread2uException(ErrorCode.NOT_FOUND_MEMBER));
         //2. loginRequestDto로 들어온 비밀번호와 DB내의 비밀번호를 비교한다.
-        if (loginRequestDto.getPassword().equals(findedMember.getPassword())) {
+        if (loginRequest.getPassword().equals(findedMember.getPassword())) {
             return MemberDto.from(findedMember);
         }else{
             throw new Bread2uException(ErrorCode.MISMATCHED_EMAIL_OR_PASSWORD);

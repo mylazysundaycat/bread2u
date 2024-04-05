@@ -25,11 +25,11 @@ public class MemberDto {
                 .role("USER")
                 .build();
     }
-    public static MemberDto from(LoginRequestDto loginRequestDto) {
+    public static MemberDto from(LoginRequest loginRequest) {
         return MemberDto.builder()
-                .membername(loginRequestDto.getMembername())
-                .nickname(loginRequestDto.getNickname())
-                .email(loginRequestDto.getEmail())
+                .membername(loginRequest.getMembername())
+                .nickname(loginRequest.getNickname())
+                .email(loginRequest.getEmail())
                 .role("USER")
                 .build();
     }

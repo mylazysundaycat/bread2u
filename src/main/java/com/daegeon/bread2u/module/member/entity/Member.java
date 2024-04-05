@@ -3,14 +3,21 @@ package com.daegeon.bread2u.module.member.entity;
 
 import com.daegeon.bread2u.global.BaseTimeEntity;
 import com.daegeon.bread2u.module.comment.entity.Comment;
-import com.daegeon.bread2u.module.member.repository.LoginRequestDto;
+import com.daegeon.bread2u.module.member.repository.LoginRequest;
 import com.daegeon.bread2u.module.member.repository.MemberDto;
 import com.daegeon.bread2u.module.shop.entity.Bread;
 import com.daegeon.bread2u.module.shop.entity.Shop;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -18,7 +25,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseTimeEntity{
+public class Member extends BaseTimeEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id")
@@ -36,9 +43,6 @@ public class Member extends BaseTimeEntity{
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    private String role;
-
     @OneToMany(mappedBy = "member")
     private List<Shop> shops;
     @OneToMany(mappedBy = "member")
@@ -47,12 +51,11 @@ public class Member extends BaseTimeEntity{
     private List<Comment> comments;
 
     @Operation(summary = "회원가입 편의 메소드")
-    public static Member from(LoginRequestDto memberDto) {
+    public static Member from(LoginRequest memberDto) {
         return Member.builder()
                 .membername(memberDto.getMembername())
                 .nickname(memberDto.getNickname())
                 .email(memberDto.getEmail())
-                .role(memberDto.getRole())
                 .password(memberDto.getPassword())
                 .build();
     }
@@ -63,8 +66,45 @@ public class Member extends BaseTimeEntity{
                 .membername(memberDto.getMembername())
                 .nickname(memberDto.getNickname())
                 .email(memberDto.getEmail())
-                .role(memberDto.getRole())
                 .password(memberDto.getPassword())
                 .build();
     }
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }

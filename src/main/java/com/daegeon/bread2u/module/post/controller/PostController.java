@@ -68,7 +68,7 @@ public class PostController {
     @Operation(summary = "게시물 수정 폼", description = "게시물 수정 폼으로 이동합니다")
     @GetMapping("/{postId}/update")
     public String updatePost(@PathVariable Long postId, Model model) {
-        Post findByPostId = postService.findById(postId)
+            Post findByPostId = postService.findById(postId)
                 .orElseThrow();
         model.addAttribute("post", findByPostId);
         return "/post/updatePostForm";
