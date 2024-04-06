@@ -1,75 +1,77 @@
 package com.daegeon.bread2u.global.config;
 
 
-import com.daegeon.bread2u.global.jwt.JwtAuthenticationFilter;
-import com.daegeon.bread2u.global.jwt.JwtTokenProvider;
+import com.daegeon.bread2u.global.jwt.JwtUtil;
+import jakarta.servlet.DispatcherType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-@EnableWebSecurity
-@EnableMethodSecurity
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtTokenProvider jwtTokenProvider;
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    private final JwtUtil jwtUtil;
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        // resources 자원 접근 허용
+//        return (web) -> web.ignoring()
+//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 //token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(AbstractHttpConfigurer::disable)
-                // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                //예외 처리
-//                .exceptionHandling(exceptionHandling -> exceptionHandling
-//                        .accessDeniedHandler(jwtAccessDeniedHandler)
-//                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-//                )
+//                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 //로그인 페이지
-//                .formLogin(form -> form
-//                        .defaultSuccessUrl("/index", true) //로그인 성공시 이동할 url
-//                        .permitAll()
-//                )
+                .formLogin(login -> login
+                        .loginPage("/signIn")
+                        .defaultSuccessUrl("/", true) //로그인 성공시 이동할 url
+                        .permitAll()
+                )
                 //url 인가 처리
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/index").permitAll()
                         .requestMatchers(PathRequest
                                 .toStaticResources()
-                                .atCommonLocations()).permitAll() //정적자원
-                        .requestMatchers("/member/**").permitAll()
-                        .requestMatchers("/post/**").hasRole("USER")
+                                .atCommonLocations()).permitAll()//정적자원
+                        .requestMatchers("/member"
+                                , "/member/login"
+                                , "/signIn"
+                                , "/api/signIn"
+                                , "/bread/**").permitAll()
                         .anyRequest().authenticated()
                 )
-
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
                 // enable h2-console
                 .headers(headers ->
                         headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-                );
-//                .with(new JwtSecurityConfig(tokenProvider), customizer -> {
-//                });
+                )
+                .
+
+                with(new JwtSecurityConfig(jwtUtil), customizer -> {
+                });
         return http.build();
     }
 }

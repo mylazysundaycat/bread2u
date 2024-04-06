@@ -3,7 +3,9 @@ package com.daegeon.bread2u.initial;
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.comment.repository.CommentRepository;
 import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.member.entity.Role;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
+import com.daegeon.bread2u.module.member.service.MemberService;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.repository.PostRepository;
 import jakarta.transaction.Transactional;
@@ -12,23 +14,23 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 public class DatabaseInitializer {
 
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
     @Autowired
     public DatabaseInitializer(MemberRepository memberRepository,
                                PostRepository postRepository,
-                               CommentRepository commentRepository) {
+                               CommentRepository commentRepository,
+                               MemberService memberService) {
         this.memberRepository = memberRepository;
         this.postRepository = postRepository;
         this.commentRepository=commentRepository;
+        this.memberService=memberService;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -40,50 +42,54 @@ public class DatabaseInitializer {
     }
 
     private void initializeMembers() {
-        Member member1 = Member.builder()
-                .membername("user1")
+        memberService.createMember(Member.builder()
+                .username("user1")
                 .nickname("윈터")
                 .email("test1@gmail.com")
                 .password("1234")
-                .build();
-        member1.getRoles().add("USER");
-        memberRepository.save(member1);
-
-        memberRepository.save(Member.builder()
-                .membername("user2")
+                .role(Role.ADMIN)
+                .build());
+        memberService.createMember(Member.builder()
+                .username("user2")
                 .nickname("팜하니")
                 .email("test2@gmail.com")
                 .password("1234")
+                .role(Role.MEMBER)
                 .build());
-        memberRepository.save(Member.builder()
-                .membername("user3")
+        memberService.createMember(Member.builder()
+                .username("user3")
                 .nickname("Newjeans")
                 .email("test3@gmail.com")
                 .password("1234")
+                .role(Role.MEMBER)
                 .build());
         memberRepository.save(Member.builder()
-                .membername("user4")
+                .username("user4")
                 .nickname("애니비아")
                 .email("test4@gmail.com")
                 .password("1234")
+                .role(Role.MEMBER)
                 .build());
         memberRepository.save(Member.builder()
-                .membername("user5")
+                .username("user5")
                 .nickname("갓김치")
                 .email("test5@gmail.com")
                 .password("1234")
+                .role(Role.MEMBER)
                 .build());
         memberRepository.save(Member.builder()
-                .membername("user6")
+                .username("user6")
                 .nickname("제니")
                 .email("test6@gmail.com")
                 .password("1234")
+                .role(Role.MEMBER)
                 .build());
         memberRepository.save(Member.builder()
-                .membername("user7")
+                .username("user7")
                 .nickname("워뇨워뇨워뇨")
                 .email("test7@gmail.com")
                 .password("1234")
+                .role(Role.MEMBER)
                 .build());
     }
 
@@ -161,28 +167,28 @@ public class DatabaseInitializer {
                 .view(36L)
                 .build();
 
-        postSave(test1, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test2, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test3, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test4, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test5, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test6, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test7, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test8, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test9, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test10, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(test11, memberRepository.findOneByMembername("user4").orElseThrow());
+        postSave(test1, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test2, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test3, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test4, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test5, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test6, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test7, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test8, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test9, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test10, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(test11, memberRepository.findByUsername("user4").orElseThrow());
 
-        postSave(post5, memberRepository.findOneByMembername("user4").orElseThrow());
-        postSave(post4, memberRepository.findOneByMembername("user3").orElseThrow());
-        postSave(post3, memberRepository.findOneByMembername("user3").orElseThrow());
-        postSave(post2, memberRepository.findOneByMembername("user2").orElseThrow());
-        postSave(post1, memberRepository.findOneByMembername("user1").orElseThrow());
-        postSave(post6, memberRepository.findOneByMembername("user5").orElseThrow());
-        postSave(post7, memberRepository.findOneByMembername("user2").orElseThrow());
-        postSave(post9, memberRepository.findOneByMembername("user6").orElseThrow());
-        postSave(post10, memberRepository.findOneByMembername("user7").orElseThrow());
-        postSave(post11, memberRepository.findOneByMembername("user1").orElseThrow());
+        postSave(post5, memberRepository.findByUsername("user4").orElseThrow());
+        postSave(post4, memberRepository.findByUsername("user3").orElseThrow());
+        postSave(post3, memberRepository.findByUsername("user3").orElseThrow());
+        postSave(post2, memberRepository.findByUsername("user2").orElseThrow());
+        postSave(post1, memberRepository.findByUsername("user1").orElseThrow());
+        postSave(post6, memberRepository.findByUsername("user5").orElseThrow());
+        postSave(post7, memberRepository.findByUsername("user2").orElseThrow());
+        postSave(post9, memberRepository.findByUsername("user6").orElseThrow());
+        postSave(post10, memberRepository.findByUsername("user7").orElseThrow());
+        postSave(post11, memberRepository.findByUsername("user1").orElseThrow());
 
 
     }
@@ -201,11 +207,11 @@ public class DatabaseInitializer {
                 .likes(2L)
                 .build();
         commentSave(postRepository.findById(16L).orElseThrow(), comment1
-                , memberRepository.findOneByMembername("user1").orElseThrow());
+                , memberRepository.findByUsername("user1").orElseThrow());
         commentSave(postRepository.findById(16L).orElseThrow(), comment2
-                , memberRepository.findOneByMembername("user2").orElseThrow());
+                , memberRepository.findByUsername("user2").orElseThrow());
         commentSave(postRepository.findById(15L).orElseThrow(), comment3
-                , memberRepository.findOneByMembername("user3").orElseThrow());
+                , memberRepository.findByUsername("user3").orElseThrow());
     }
 
     private void postSave(Post post, Member member) {

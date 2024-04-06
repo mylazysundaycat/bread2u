@@ -13,6 +13,7 @@ public enum ErrorCode {
 
     // 401
     MISMATCHED_EMAIL_OR_PASSWORD(UNAUTHORIZED, "이메일 또는 비밀번호가 잘못되었습니다."),
+    MISSING_CREDENTIALS(UNAUTHORIZED, "아이디와 비밀번호를 입력하세요."),
     // 404
     NOT_FOUND_MEMBER(NOT_FOUND, "존재하지 않는 회원입니다."),
     // 500

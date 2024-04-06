@@ -3,11 +3,13 @@ package com.daegeon.bread2u.module.member.service;
 
 import com.daegeon.bread2u.global.exception.Bread2uException;
 import com.daegeon.bread2u.global.exception.ErrorCode;
-import com.daegeon.bread2u.module.member.repository.LoginRequest;
+import com.daegeon.bread2u.module.member.repository.dto.LoginRequestDto;
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.member.repository.MemberDto;
+import com.daegeon.bread2u.module.member.repository.dto.SignUpRequestDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,32 +19,46 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    //회원가입
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    /**
+     * 회원가입
+     * @param member
+     * @return
+     */
     public Member createMember(Member member) {
         duplicateEmail(member);
+        String encodedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encodedPassword);
         return memberRepository.save(member);
     }
+
+    /**
+     * 회원가입시 이메일 중복 검사
+     * @param member
+     */
     public void duplicateEmail(Member member) {
         if (memberRepository.existsByEmail(member.getEmail())) {
             throw new Bread2uException(ErrorCode.DUPLICATE_EMAIL);
         }
     }
-    //로그인
-    public MemberDto login(final LoginRequest loginRequest)  {
+
+    /**
+     * 로그인 기능
+     * @param loginRequestDto
+     * @return
+     */
+    public SignUpRequestDto login(final LoginRequestDto loginRequestDto)  {
         //1. loginRequestDto로 회원 객체를 찾아온다.
-        Member findedMember = memberRepository.findByEmail(loginRequest.getEmail())
+        Member findedMember = memberRepository.findByUsername(loginRequestDto.getUsername())
                 .orElseThrow(()->new Bread2uException(ErrorCode.NOT_FOUND_MEMBER));
         //2. loginRequestDto로 들어온 비밀번호와 DB내의 비밀번호를 비교한다.
-        if (loginRequest.getPassword().equals(findedMember.getPassword())) {
-            return MemberDto.from(findedMember);
+        if (loginRequestDto.getPassword().equals(findedMember.getPassword())) {
+            return SignUpRequestDto.fromEntity(findedMember);
         }else{
             throw new Bread2uException(ErrorCode.MISMATCHED_EMAIL_OR_PASSWORD);
         }
     }
-
-
-
-
 
     public List<Member> findAll() {
         return memberRepository.findAll();
@@ -51,7 +67,7 @@ public class MemberService {
         return memberRepository.findById(memberId);
     }
     public Optional<Member> findByMembername(String membername){
-        return memberRepository.findOneByMembername(membername);
+        return memberRepository.findByUsername(membername);
     }
 
     public Member updateMember(Long memberId, Member member) {

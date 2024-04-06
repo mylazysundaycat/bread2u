@@ -12,7 +12,7 @@
             <button th:if="${session.loginMember != null}" class="login-member" onclick="popUp()">
                 반갑습니다, <span th:text="${session.loginMember.nickname}"style="color:#ff8f0d;"></span>님!
             </button>
-            <a th:unless="${session.loginMember != null}" href="/login">
+            <a th:unless="${session.loginMember != null}" href="/signIn">
                 로그인
             </a>
         </div>

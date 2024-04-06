@@ -5,7 +5,7 @@ import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.comment.entity.CommentRequestDto;
 import com.daegeon.bread2u.module.comment.repository.CommentRepository;
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.member.repository.MemberDto;
+import com.daegeon.bread2u.module.member.repository.dto.SignUpRequestDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import com.daegeon.bread2u.module.post.entity.Post;
 import com.daegeon.bread2u.module.post.repository.PostRepository;
@@ -25,11 +25,11 @@ public class CommentService {
     private final MemberRepository memberRepository;
 
     //Create
-    public Comment createComment(Long postId, CommentRequestDto commentDto, MemberDto memberDto) {
+    public Comment createComment(Long postId, CommentRequestDto commentDto, SignUpRequestDto signUpRequestDto) {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow();
 
-        Member findMember = memberRepository.findOneByMembername(memberDto.getMembername())
+        Member findMember = memberRepository.findByUsername(signUpRequestDto.getUsername())
                 .orElseThrow();
 
         Comment comment = Comment.builder()

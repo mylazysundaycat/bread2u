@@ -21,15 +21,15 @@
       <div class="login-title">
         로그인
       </div>
-      <form role="form" action="/login" class="login-form col"
-        th:object="${member}" method="post">
+      <form method="POST" role="form"
+            action="/api/signIn" class="login-form col" >
         <div class="login-id">
-          <input type="text" placeholder="이메일을 입력해주세요" name="email"
-                 class="txt" id="id-txt" th:field="*{email}">
+          <input type="text" placeholder="아이디를 입력해주세요" name="username"
+                 class="txt" id="id-txt">
         </div>
         <div class="login-pwd">
           <input type="password" placeholder="비밀번호를 입력해주세요" name="password"
-                 class="txt" id="pwd-txt" th:field="*{password}">
+                 class="txt" id="pwd-txt">
         </div>
         <div class="find-pack row">
           <input type="button" value="아이디 찾기" class="find-id">
@@ -46,5 +46,7 @@
   </div>
 </div>
 <!--Article content 종료-->
+
+
 </body>
 </html>
