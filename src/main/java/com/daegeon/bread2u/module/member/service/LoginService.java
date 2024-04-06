@@ -3,7 +3,9 @@ package com.daegeon.bread2u.module.member.service;
 import com.daegeon.bread2u.global.exception.Bread2uException;
 import com.daegeon.bread2u.global.exception.ErrorCode;
 import com.daegeon.bread2u.global.jwt.JwtUtil;
+import com.daegeon.bread2u.global.redis.RedisService;
 import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.member.entity.Role;
 import com.daegeon.bread2u.module.member.repository.dto.LoginRequestDto;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import jakarta.servlet.http.Cookie;
@@ -17,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class LoginService {
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
+    private final RedisService redisService;
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
@@ -31,26 +35,20 @@ public class LoginService {
         if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
             throw new Bread2uException(ErrorCode.MISMATCHED_EMAIL_OR_PASSWORD);
         }
-
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER
-                , jwtUtil.createToken(member.getUsername(), member.getRole()));
-
-//        /*토큰을 쿠키로 발급 및 응답에 추가*/
-//        //TODO 추후에 REDIS로 교체
-//        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER,
-//                jwtUtil.createToken(member.getUsername(), member.getRole()));
-//        cookie.setMaxAge(7 * 24 * 60 * 60); // 7일 동안 유효
-//        cookie.setPath("/");
-//        cookie.setDomain("localhost");
-//        cookie.setSecure(false);
-//
-//        response.addCookie(cookie);
-
+        setAuthentication(member.getUsername(), member.getRole());
+        getAuthentication(member.getUsername(), response);
     }
 
-    public void validateLogin(){
-
+    // Redis 이용하여 Token 저장
+    public void setAuthentication(String username, Role role){
+        String jwtToken = jwtUtil.createToken(username, role);
+        redisService.setValues(username, jwtToken); // key값이 username
     }
 
+    // Redis로 반환받은 Token을 HttpServletResponse Header에 저장
+    public void getAuthentication(String key, HttpServletResponse response){
+        String jwtToken = redisService.getValues(key);
+        response.addHeader(AUTHORIZATION_HEADER, jwtToken);
+    }
 
 }

@@ -28,8 +28,7 @@ spring:
     redis:
       host: localhost
       port: 6379
-      password: 0916
-
+      password: 1234
 
 springdoc:
   api-docs:
