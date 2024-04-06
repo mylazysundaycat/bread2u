@@ -27,6 +27,7 @@ public class MemberService {
      * @return
      */
     public Member createMember(Member member) {
+        //이메일 중복검사
         duplicateEmail(member);
         String encodedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encodedPassword);

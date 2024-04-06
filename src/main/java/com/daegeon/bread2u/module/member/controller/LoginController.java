@@ -41,7 +41,6 @@ public class LoginController {
         return "redirect:/members/login";
     }
 
-
     @GetMapping("/signIn")
     public String login(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         /*이미 로그인된 사용자일 경우 인덱스 페이지로 강제이동.*/
@@ -52,10 +51,11 @@ public class LoginController {
         }
         return "/member/loginForm";
     }
+
     @PostMapping("/api/signIn")
     public String login(LoginRequestDto request, HttpServletResponse response) {
         loginService.login(request, response);
-        return "redirect:/";
+        return "/index";
     }
 
 //    @Operation(summary = "로그인 폼", description = "로그인 화면으로 이동")

@@ -32,16 +32,23 @@ public class LoginService {
             throw new Bread2uException(ErrorCode.MISMATCHED_EMAIL_OR_PASSWORD);
         }
 
-        /*토큰을 쿠키로 발급 및 응답에 추가*/
-        //TODO 추후에 REDIS로 교체
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER,
-                jwtUtil.createToken(member.getUsername(), member.getRole()));
-        cookie.setMaxAge(7 * 24 * 60 * 60); // 7일 동안 유효
-        cookie.setPath("/");
-        cookie.setDomain("localhost");
-        cookie.setSecure(false);
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER
+                , jwtUtil.createToken(member.getUsername(), member.getRole()));
 
-        response.addCookie(cookie);
+//        /*토큰을 쿠키로 발급 및 응답에 추가*/
+//        //TODO 추후에 REDIS로 교체
+//        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER,
+//                jwtUtil.createToken(member.getUsername(), member.getRole()));
+//        cookie.setMaxAge(7 * 24 * 60 * 60); // 7일 동안 유효
+//        cookie.setPath("/");
+//        cookie.setDomain("localhost");
+//        cookie.setSecure(false);
+//
+//        response.addCookie(cookie);
+
+    }
+
+    public void validateLogin(){
 
     }
 
