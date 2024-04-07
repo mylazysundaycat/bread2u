@@ -2,11 +2,15 @@ package com.daegeon.bread2u.global.config;
 
 
 import com.daegeon.bread2u.global.jwt.JwtUtil;
+import com.daegeon.bread2u.module.member.service.UserDetailsServiceImpl;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,12 +31,6 @@ public class SecurityConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        // resources 자원 접근 허용
-//        return (web) -> web.ignoring()
-//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,21 +40,19 @@ public class SecurityConfig {
 //                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 //로그인 페이지
                 .formLogin(login -> login
-                        .loginPage("/signIn")
-                        .defaultSuccessUrl("/", true) //로그인 성공시 이동할 url
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/index", true) //로그인 성공시 이동할 url
                         .permitAll()
                 )
                 //url 인가 처리
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/index").permitAll()
+//                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers("/").permitAll()
                         .requestMatchers(PathRequest
                                 .toStaticResources()
                                 .atCommonLocations()).permitAll()//정적자원
-                        .requestMatchers("/member"
-                                , "/member/login"
-                                , "/signIn"
-                                , "/api/signIn"
+                        .requestMatchers(  "/login"
+                                , "/api/login"
                                 , "/bread/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -68,10 +64,10 @@ public class SecurityConfig {
                 .headers(headers ->
                         headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
-                .
-
-                with(new JwtSecurityConfig(jwtUtil), customizer -> {
+                .with(new JwtSecurityConfig(jwtUtil), customizer -> {
                 });
         return http.build();
     }
+
+
 }

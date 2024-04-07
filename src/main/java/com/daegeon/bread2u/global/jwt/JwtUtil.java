@@ -2,6 +2,7 @@ package com.daegeon.bread2u.global.jwt;
 
 import com.daegeon.bread2u.module.member.entity.Role;
 import com.daegeon.bread2u.module.member.service.UserDetailsServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.security.auth.Subject;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -109,5 +111,6 @@ public class JwtUtil {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
+
 
 }

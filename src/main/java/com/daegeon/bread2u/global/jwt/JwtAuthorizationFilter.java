@@ -1,16 +1,11 @@
 package com.daegeon.bread2u.global.jwt;
 
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +16,7 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtAuthFilter extends OncePerRequestFilter {
+public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
@@ -35,8 +30,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 log.warn("JWT Token 인증 실패");
                 throw new IllegalArgumentException("JWT Token 인증 실패");
             }
-            Claims info = jwtUtil.getUserInfoFromToken(token);
-            setAuthentication(info.getSubject());
+            String subject = jwtUtil.getUserInfoFromToken(token).getSubject();
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            Authentication authentication = jwtUtil.createAuthentication(subject);
+
+            context.setAuthentication(authentication);
+            SecurityContextHolder.setContext(context);
         }
         /*다음 필터 진행*/
         filterChain.doFilter(request, response);
@@ -47,9 +46,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication = jwtUtil.createAuthentication(username);
         context.setAuthentication(authentication);
-
         SecurityContextHolder.setContext(context);
     }
+
+
 
 
 }

@@ -35,8 +35,11 @@ public class LoginService {
         if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
             throw new Bread2uException(ErrorCode.MISMATCHED_EMAIL_OR_PASSWORD);
         }
-        setAuthentication(member.getUsername(), member.getRole());
-        getAuthentication(member.getUsername(), response);
+
+        String jwtToken = jwtUtil.createToken(member.getUsername(), member.getRole());
+        redisService.setValues(member.getUsername(), jwtToken); // key값이 username
+
+        response.addHeader(AUTHORIZATION_HEADER, jwtToken);
     }
 
     // Redis 이용하여 Token 저장
@@ -46,9 +49,10 @@ public class LoginService {
     }
 
     // Redis로 반환받은 Token을 HttpServletResponse Header에 저장
-    public void getAuthentication(String key, HttpServletResponse response){
-        String jwtToken = redisService.getValues(key);
+    public String getAuthentication(String username, HttpServletResponse response){
+        String jwtToken = redisService.getValues(username);
         response.addHeader(AUTHORIZATION_HEADER, jwtToken);
+        return jwtToken;
     }
 
 }
