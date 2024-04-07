@@ -11,8 +11,10 @@ import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +27,10 @@ public class LoginService {
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final AuthenticationManager authenticationManager;
     /*로그인*/
     @Transactional
-    public void login(LoginRequestDto requestDto, HttpServletResponse response) {
+    public String login(LoginRequestDto requestDto, HttpServletResponse response) {
         Member member = memberRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(()->new Bread2uException(ErrorCode.MISSING_CREDENTIALS));
 
@@ -36,23 +39,46 @@ public class LoginService {
             throw new Bread2uException(ErrorCode.MISMATCHED_EMAIL_OR_PASSWORD);
         }
 
-        String jwtToken = jwtUtil.createToken(member.getUsername(), member.getRole());
-        redisService.setValues(member.getUsername(), jwtToken); // key값이 username
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(requestDto.getUsername(), requestDto.getPassword())
+        );
 
-        response.addHeader(AUTHORIZATION_HEADER, jwtToken);
+        String accessToken = jwtUtil.createAccessToken(authentication, member.getId());
+        String refreshToken = jwtUtil.createRefreshToken(authentication, member.getId());
+
+        Cookie cookie1 = createAccessCookie(accessToken);
+        Cookie cookie2 = jwtUtil.createCookie(refreshToken);
+
+        response.addCookie(cookie1);
+        response.addCookie(cookie2);
+
+        return accessToken;
     }
 
-    // Redis 이용하여 Token 저장
-    public void setAuthentication(String username, Role role){
-        String jwtToken = jwtUtil.createToken(username, role);
-        redisService.setValues(username, jwtToken); // key값이 username
+    public Cookie createAccessCookie(String accessToken) {
+        /*토큰을 쿠키로 발급 및 응답에 추가*/
+        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, accessToken);
+
+        cookie.setMaxAge(3 * 60 * 60); // 3시간동안 유효
+        cookie.setPath("/");
+        cookie.setDomain("localhost");
+        cookie.setSecure(false);
+        cookie.setHttpOnly(true);
+
+        return cookie;
     }
 
-    // Redis로 반환받은 Token을 HttpServletResponse Header에 저장
-    public String getAuthentication(String username, HttpServletResponse response){
-        String jwtToken = redisService.getValues(username);
-        response.addHeader(AUTHORIZATION_HEADER, jwtToken);
-        return jwtToken;
-    }
+//    // Redis 이용하여 Token 저장
+//    public void setAuthentication(String username, Role role){
+//        String jwtToken = jwtUtil.createAccessToken(username, role);
+//        redisService.setValues(username, jwtToken); // key값이 username
+//    }
+//
+//    // Redis로 반환받은 Token을 HttpServletResponse Header에 저장
+//    public String getAuthentication(String username, HttpServletResponse response){
+//        String jwtToken = redisService.getValues(username);
+//        response.addHeader(AUTHORIZATION_HEADER, jwtToken);
+//        return jwtToken;
+//    }
 
 }

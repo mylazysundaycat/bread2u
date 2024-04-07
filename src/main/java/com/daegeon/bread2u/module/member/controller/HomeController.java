@@ -27,9 +27,6 @@ public class HomeController {
     public String home(@AuthenticationPrincipal UserDetailsImpl userDetails,
                        HttpServletResponse httpServletResponse,
                        Model model) {
-        String jwtToken = redisService.getValues(userDetails.getMember().getUsername());
-        httpServletResponse.setHeader("Authorization", jwtToken);
-        log.info("jwtToken={}",jwtToken);
         return "/index";
     }
 }

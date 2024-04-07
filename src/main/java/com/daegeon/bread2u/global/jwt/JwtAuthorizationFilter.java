@@ -30,21 +30,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 log.warn("JWT Token 인증 실패");
                 throw new IllegalArgumentException("JWT Token 인증 실패");
             }
-            String subject = jwtUtil.getUserInfoFromToken(token).getSubject();
-            SecurityContext context = SecurityContextHolder.createEmptyContext();
-            Authentication authentication = jwtUtil.createAuthentication(subject);
-
-            context.setAuthentication(authentication);
-            SecurityContextHolder.setContext(context);
+            setAuthentication(token);
         }
         /*다음 필터 진행*/
         filterChain.doFilter(request, response);
     }
 
-    public void setAuthentication(String username) {
+    public void setAuthentication(String token) {
         /*jwt 인증 성공 시*/
         SecurityContext context = SecurityContextHolder.createEmptyContext();
-        Authentication authentication = jwtUtil.createAuthentication(username);
+        Authentication authentication = jwtUtil.getAuthentication(token);
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
     }

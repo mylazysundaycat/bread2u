@@ -8,6 +8,7 @@ import com.daegeon.bread2u.module.member.service.LoginService;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -59,12 +60,19 @@ public class LoginController {
     @PostMapping("/api/login")
     public String login(LoginRequestDto request, HttpServletResponse response) {
         loginService.login(request, response);
-        return "/index";
+        return "redirect:/";
     }
 
+    /*로그아웃 API*/
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-        return "/index";
+    public String logout(@CookieValue(name = "Authorization", defaultValue = "", required = false) Cookie jwtCookie,
+                         HttpServletResponse response) {
+        /*jwt 쿠키를 가지고와서 제거한다.*/
+        jwtCookie.setValue(null);
+        jwtCookie.setMaxAge(0);
+        jwtCookie.setPath("/");
+        response.addCookie(jwtCookie);
+
+        return "redirect:/login";
     }
 }

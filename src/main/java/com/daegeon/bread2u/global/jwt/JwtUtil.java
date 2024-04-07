@@ -1,8 +1,8 @@
 package com.daegeon.bread2u.global.jwt;
 
+import com.daegeon.bread2u.global.redis.RedisService;
 import com.daegeon.bread2u.module.member.entity.Role;
 import com.daegeon.bread2u.module.member.service.UserDetailsServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -17,8 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.security.auth.Subject;
 import java.security.Key;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 
@@ -35,10 +35,18 @@ public class JwtUtil {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    @Value("${jwt.secret}")
+    @Value("${spring.jwt.secret}")
     private String secretKey;
+
+    @Value("${spring.jwt.token.access-expiration-time}")
+    private long accessExpirationTime;
+
+    @Value("${spring.jwt.token.refresh-expiration-time}")
+    private long refreshExpirationTime;
     private Key key;
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
+
+    private final RedisService redisService;
 
     @PostConstruct
     public void init() {
@@ -50,20 +58,20 @@ public class JwtUtil {
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
 
-//        /*헤더에 값이 없다면 토큰 확인*/
-//        if (bearerToken == null) {
-//            Cookie[] cookies = request.getCookies(); // 모든 쿠키 가져오기
-//            if (cookies != null) {
-//                for (Cookie c : cookies) {
-//                    String name = c.getName(); // 쿠키 이름 가져오기
-//
-//                    String value = c.getValue(); // 쿠키 값 가져오기
-//                    if (name.equals(AUTHORIZATION_HEADER)) {
-//                        bearerToken = value;
-//                    }
-//                }
-//            }
-//        }
+        /*헤더에 값이 없다면 토큰 확인*/
+        if (bearerToken == null) {
+            Cookie[] cookies = request.getCookies(); // 모든 쿠키 가져오기
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    String name = c.getName(); // 쿠키 이름 가져오기
+
+                    String value = c.getValue(); // 쿠키 값 가져오기
+                    if (name.equals(AUTHORIZATION_HEADER)) {
+                        bearerToken = value;
+                    }
+                }
+            }
+        }
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
@@ -71,17 +79,50 @@ public class JwtUtil {
         return null;
     }
 
-    // Token 발급
-    public String createToken(String username, Role role) {
-        Date date = new Date();
-        return BEARER_PREFIX +
-                Jwts.builder()
-                        .setSubject(username)
-                        .claim(AUTHORIZATION_KEY, role)
-                        .setExpiration(new Date(date.getTime() + TOKEN_TIME))
-                        .setIssuedAt(date)
+    /**
+     * Access Token 발급
+     */
+    public String createAccessToken(Authentication authentication, Long memberId) {
+        Date now = new Date();
+        Date expireDate = new Date(now.getTime()+accessExpirationTime);
+        return Jwts.builder()
+                        .setSubject(authentication.getName())
+                        .claim("memberId", memberId)
+                        .setIssuedAt(now)
+                        .setExpiration(expireDate)
                         .signWith(key, signatureAlgorithm)
                         .compact();
+    }
+
+    /**
+     * Refresh Token 발급
+     */
+    public String createRefreshToken (Authentication authentication, Long memberId) {
+        Date now = new Date();
+        Date expireDate = new Date(now.getTime() + refreshExpirationTime);
+
+        String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName()) // Token 이름은 username
+                .claim("memberId", memberId)
+                .setIssuedAt(now)
+                .setExpiration(expireDate)
+                .signWith(key, signatureAlgorithm)
+                .compact();
+        redisService.setValues(authentication.getName(), refreshToken, Duration.ofMillis(refreshExpirationTime));
+        return refreshToken;
+
+    }
+
+    public Cookie createCookie(String refreshToken) {
+        String cookieName = "refreshToken";
+        Cookie cookie = new Cookie(cookieName, refreshToken);
+
+        cookie.setHttpOnly(true); //보안강화, 자바스크립트에 대한 접근 차단
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(12 * 60 * 60 * 24); // accessToken 유효
+
+        return cookie;
     }
 
     // Token 검증
@@ -104,6 +145,20 @@ public class JwtUtil {
     // 토큰에서 사용자 정보 가져오기
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
+
+    /**
+     * token으로부터 Authenication을 찾는다
+     * @param token
+     * @return 
+     */
+    public Authentication getAuthentication(String token) {
+        String subject = Jwts.parserBuilder().setSigningKey(secretKey).build()
+                .parseClaimsJws(token).getBody() //Claim 가져옴
+                .getSubject();
+        UserDetails userDetails = userDetailsService.loadUserByUsername(subject); //User 객체 생성
+        //Authentication 객체 반환
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 인증 객체 생성
