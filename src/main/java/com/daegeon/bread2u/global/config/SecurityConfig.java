@@ -51,7 +51,8 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest
                                 .toStaticResources()
                                 .atCommonLocations()).permitAll()//정적자원
-                        .requestMatchers(  "/login"
+                        .requestMatchers("/"
+                                ,"/login"
                                 , "/api/login"
                                 , "/bread/**").permitAll()
                         .anyRequest().authenticated()
@@ -73,6 +74,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager (AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 
 }

@@ -23,7 +23,7 @@ public class MemberController {
     @Operation(summary = "회원가입 폼", description = "회원가입 페이지로 이동한다")
     @GetMapping
     public String createMember(Model model) {
-        model.addAttribute("member", new LoginRequestDto());
+        model.addAttribute("member", new SignUpRequestDto());
         return "/member/createMemberForm";
     }
     @Operation(summary = "회원가입", description = "회원가입을 정상적으로 마치고, 로그인 화면으로 이동한다.")

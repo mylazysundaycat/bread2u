@@ -61,7 +61,7 @@
           <div th:text="${post.likes}" class="like-count">8</div>
         </a>
       </div>
-      <div class="bp-pack" th:if="${session.loginMember != null and session.loginMember.nickname eq post.member.nickname}">
+      <div class="bp-pack" th:if="${loginMember != null and loginMember.nickname eq post.member.nickname}">
         <a th:href="@{/post/{postId}/update (postId=${post.id})}" class="btn-edit">[수정]</a>
         <button id="btn-delete"
            class="btn-delete">[삭제]</button>
@@ -79,7 +79,7 @@
       <span>댓글</span>
       <span th:text="${post.comment.size()}" class="num"></span>
     </div>
-    <div class="comment-input" th:if="${session.loginMember!=null}">
+    <div class="comment-input" th:if="${loginMember!=null}">
         <img src="../images/profile-img.svg" class="profile-img">
         <form th:action="@{/comment/{postId} (postId=${post.id})}"
               method="post" name="comment">
