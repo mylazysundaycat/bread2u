@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="header" th:fragment="bodyHeader">
     <!--Header 시작-->
     <div class="h-row1 h-set">
-        <div class="col1"th:unless="${session.loginMember != null}">
+        <div class="col1"th:unless="${loginMember != null}">
             <a href="/signup" >
                 회원가입
             </a>
         </div>
         <div class="col2">
-            <button th:if="${session.loginMember != null}" class="login-member" onclick="popUp()">
-                반갑습니다, <span th:text="${session.loginMember.nickname}"style="color:#ff8f0d;"></span>님!
-            </button>
-            <a th:unless="${session.loginMember != null}" href="/signIn">
-                로그인
-            </a>
+            <th:block sec:authorize="isAuthenticated()">
+                <button class="login-member" onclick="popUp()">
+<!--                    반갑습니다, <span th:text="${loginMember.nickname}"style="color:#ff8f0d;"></span>님!-->
+                        로그인 ㅊㅋㅊㅋ(테스트용)
+                </button>
+            </th:block>
+            <th:block sec:authorize="isAnonymous()">
+                <a th:unless="${loginMember != null}" href="/signIn">
+                    로그인
+                </a>
+            </th:block>
         </div>
+
     </div>
     <div class="h-set logout-modal-row">
         <!--모달 창-->

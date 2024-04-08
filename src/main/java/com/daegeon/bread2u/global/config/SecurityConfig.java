@@ -41,13 +41,13 @@ public class SecurityConfig {
                 //로그인 페이지
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/index", true) //로그인 성공시 이동할 url
+                        .defaultSuccessUrl("/", true) //로그인 성공시 이동할 url
                         .permitAll()
                 )
                 //url 인가 처리
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
 //                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/").permitAll()
+                        //.requestMatchers("/").permitAll()
                         .requestMatchers(PathRequest
                                 .toStaticResources()
                                 .atCommonLocations()).permitAll()//정적자원

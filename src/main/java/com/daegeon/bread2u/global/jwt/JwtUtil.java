@@ -30,7 +30,7 @@ public class JwtUtil {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String AUTHORIZATION_KEY = "auth";
-    private static final String BEARER_PREFIX = "Bearer ";
+    private static final String BEARER_PREFIX = "Bearer=";
     private static final long TOKEN_TIME = 60 * 60 * 1000L;
 
     private final UserDetailsServiceImpl userDetailsService;
@@ -85,7 +85,7 @@ public class JwtUtil {
     public String createAccessToken(Authentication authentication, Long memberId) {
         Date now = new Date();
         Date expireDate = new Date(now.getTime()+accessExpirationTime);
-        return Jwts.builder()
+        return BEARER_PREFIX + Jwts.builder()
                         .setSubject(authentication.getName())
                         .claim("memberId", memberId)
                         .setIssuedAt(now)
@@ -142,7 +142,11 @@ public class JwtUtil {
         return false;
     }
 
-    // 토큰에서 사용자 정보 가져오기
+    /**
+     * Token으로부터 Claim(정보) 획득
+     * @param token
+     * @return
+     */
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }

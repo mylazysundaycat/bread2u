@@ -25,6 +25,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String token = jwtUtil.resolveToken(request);
 
+        //토큰이 있을 떄
         if (token != null) {
             if (!jwtUtil.validateToken(token)) {
                 log.warn("JWT Token 인증 실패");
@@ -32,6 +33,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             }
             setAuthentication(token);
         }
+        //토큰이 있는 경우
+
         /*다음 필터 진행*/
         filterChain.doFilter(request, response);
     }
