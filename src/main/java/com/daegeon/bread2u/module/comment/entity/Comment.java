@@ -24,7 +24,6 @@ public class Comment extends BaseTimeEntity {
     private Long id;
     private String content;
     private Long likes;
-    private Long parent_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

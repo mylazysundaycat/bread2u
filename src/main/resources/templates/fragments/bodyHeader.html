@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="header" th:fragment="bodyHeader">
     <!--Header 시작-->
     <div class="h-row1 h-set">
@@ -9,12 +10,17 @@
             </a>
         </div>
         <div class="col2">
-            <button th:if="${loginMember != null}" class="login-member" onclick="popUp()">
-                반갑습니다, <span th:text="${loginMember.nickname}"style="color:#ff8f0d;"></span>님!
-            </button>
-            <a th:unless="${loginMember  != null}" href="/signIn">
-                로그인
-            </a>
+            <th:block sec:authorize="isAuthenticated()">
+                <button class="login-member" onclick="popUp()">
+<!--                    반갑습니다, <span th:text="${loginMember.nickname}"style="color:#ff8f0d;"></span>님!-->
+                        로그인 ㅊㅋㅊㅋ(테스트용)
+                </button>
+            </th:block>
+            <th:block sec:authorize="isAnonymous()">
+                <a th:unless="${loginMember != null}" href="/signIn">
+                    로그인
+                </a>
+            </th:block>
         </div>
 
     </div>
