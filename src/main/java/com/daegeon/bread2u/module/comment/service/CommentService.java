@@ -25,15 +25,18 @@ public class CommentService {
     private final MemberRepository memberRepository;
 
     //Create
-    public Comment createComment(Long postId, CommentRequestDto commentDto, Member member) {
+    public Comment createComment(Long postId, CommentRequestDto commentDto, SignUpRequestDto signUpRequestDto) {
         Post findPost = postRepository.findById(postId)
+                .orElseThrow();
+
+        Member findMember = memberRepository.findByUsername(signUpRequestDto.getUsername())
                 .orElseThrow();
 
         Comment comment = Comment.builder()
                 .content(commentDto.getContent())
                 .likes(0L)
                 .post(findPost)
-                .member(member)
+                .member(findMember)
                 .build();
 
         //TODO Cascade 이용해서 수정
@@ -55,10 +58,11 @@ public class CommentService {
 
     //Update
     //TODO Exception
-    public Comment updateComment(CommentRequestDto comment) {
-        Comment findComment = commentRepository.findById(comment.getId())
+    public Comment updateComment(Long commentId, Comment comment) {
+        Comment findComment = commentRepository.findById(commentId)
                 .orElseThrow();
-        findComment.setContent(comment.getContent());
+        Optional.ofNullable(comment.getContent())
+                .ifPresent(content -> findComment.setContent(content));
         return commentRepository.save(findComment);
     }
 
