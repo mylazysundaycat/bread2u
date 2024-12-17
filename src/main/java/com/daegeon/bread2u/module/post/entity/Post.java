@@ -1,28 +1,20 @@
 package com.daegeon.bread2u.module.post.entity;
 
-
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
-import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.scrap.entity.Scrap;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Entity
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue
     private Long id;
-    private String title;
-    private String content;
-    private String view;
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-    @OneToMany(mappedBy = "post")
-    private List<Scrap> scrap;
 }
+

@@ -3,7 +3,7 @@ package com.daegeon.bread2u.module.member.entity;
 
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
 import com.daegeon.bread2u.module.comment.entity.Comment;
-import com.daegeon.bread2u.module.post.entity.Post;
+import com.daegeon.bread2u.module.post.entity.Bread;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +26,7 @@ public class Member extends BaseTimeEntity {
     private String email;
     private String name;
     @OneToMany(mappedBy = "member")
-    private List<Post> posts = new ArrayList<>();
+    private List<Bread> breads = new ArrayList<>();
     @OneToMany(mappedBy = "member")
     private List<Comment> comments = new ArrayList<>();
     @OneToMany(mappedBy = "member")

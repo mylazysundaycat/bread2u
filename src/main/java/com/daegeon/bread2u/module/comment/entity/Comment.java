@@ -3,7 +3,7 @@ package com.daegeon.bread2u.module.comment.entity;
 
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.post.entity.Post;
+import com.daegeon.bread2u.module.post.entity.Bread;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,6 +21,6 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
     @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @JoinColumn(name = "bread_id")
+    private Bread bread;
 }
