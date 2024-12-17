@@ -24,6 +24,36 @@ public class BreadService {
     private final String API_URL = "https://www.seogu.go.kr/seoguAPI/3660000/getBakryStts";
     private final BreadRepository breadRepository;
 
+    //API를 모두 데이터베이스에 저장
+    public void saveOpenBreadApi() {
+        String url = UriComponentsBuilder.fromHttpUrl(API_URL)
+                .queryParam("pageNo", 1)
+                .queryParam("numOfRows", 1000)
+                .build()
+                .toUriString();
+        ApiResponseWrapper responseWrapper = restTemplate.getForObject(url, ApiResponseWrapper.class);
+        if (responseWrapper == null || responseWrapper.getResponse() == null || responseWrapper.getResponse().getBody() == null) {
+            throw new RuntimeException("API 호출 실패 또는 응답 데이터가 없습니다.");
+        }
+        List<Bread> breads = responseWrapper.getResponse().getBody().getItems().stream().map(response -> new Bread(
+                response.getBssh_nm(),           // storeName
+                response.getLnm_adrs(),          // address (지번)
+                response.getRn_adrs(),           // roadAddress (도로명)
+                response.getTelno(),             // phone
+                response.getLa().longValue(),    // latitude
+                response.getLo().longValue(),    // longitude
+                response.getData_stdr_de()       // standardDate
+        )).collect(Collectors.toList());
+        // DB에 저장
+        breadRepository.saveAll(breads);
+    }
+
+    public List<BreadResponse> getBreadList() {
+        List<Bread> bread = breadRepository.findAll();
+        List<BreadResponse> breadResponses = bread.stream().map(res -> BreadResponse.from(res)).collect(Collectors.toList());
+        return breadResponses;
+    }
+
     //Todo Tistory에 정리하기
     //TODO API 자동 업데이트 배치 프로그램을 넣으려면, 어떻게 해야될까? 주기도 정해야 됨
     public List<BreadResponse> fetchApiResponses(int pageNo, int numOfRows) {
@@ -33,7 +63,6 @@ public class BreadService {
                 .queryParam("numOfRows", numOfRows)
                 .build()
                 .toUriString();
-        System.out.println("Request URL: " + url);
 
         // API 호출 및 JSON 응답 매핑
         ApiResponseWrapper responseWrapper = restTemplate.getForObject(url, ApiResponseWrapper.class);
