@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/breadList.css">
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <title>Title</title>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffdcda5ee8f53772038e59e82fb3ce7c&libraries=services,clusterer,drawing">
+    </script>
+    <script src="/js/breadList.js"></script>
+</head>
+<body>
+    <!--Header 시작-->
+    <div class="h-row1 h-set">
+        <div class="col1">
+            <a href="/members">
+                회원가입
+            </a>
+        </div>
+        <div class="col2">
+            <a href="/members/login">
+                로그인
+            </a>
+        </div>
+    </div>
+    <div class="h-row2 h-set">
+        <div class="col1">
+            <img src="images/main-logo.png" class="main-logo">
+        </div>
+    </div>
+    <!--Header 종료-->
+    <!--Article 시작-->
+    <div class="a-row1">
+        <div class="col" id="map" style="width:60%;height:470px;"></div>
+        <div class="col" id="bakery-list"></div>
+    </div>
+    <!--Article 종료-->
+</body>
+</html>
