@@ -16,3 +16,66 @@
 .bakery-item:hover {
     background-color: #f0f0f0;
 }
+
+.bakery-item .title {
+    display: flex;
+    align-items: center;
+}
+.bakery-item .content{
+
+}
+
+#bookmark-before {
+    width: 21px;
+    margin-left: 6px;
+    padding-top: 0px;
+}
+#bookmark-after{
+
+}
+#bakery-detail{
+    padding: 0px 15px;
+    position: relative;
+}
+#bakery-detail .title{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+#bakery-detail .title #bookmark-before{
+    position: absolute;
+    top: -10px;
+    right: 4px;
+    width: 34px;
+}
+#bakery-detail .address{
+    display: flex;
+    align-items: center;
+    height: 27px;
+}
+#bakery-detail .phone{
+    display: flex;
+    align-items: center;
+    height: 27px;
+}
+#bakery-detail .time{
+    display: flex;
+    align-items: center;
+    height: 27px;
+}
+#bakery-location{
+    width: 18px;
+    margin-top: 1px;
+    margin-right: 7px;
+}
+#bakery-time {
+    width: 19px;
+    margin-right: 6px;
+    margin-top: 3px;
+}
+#bakery-phone{
+    width: 17px;
+    margin-right: 6px;
+    margin-left: 2px;
+    margin-top: 3px;
+}

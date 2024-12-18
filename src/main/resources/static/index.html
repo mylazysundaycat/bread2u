@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/breadList.css">
+    <link rel="stylesheet" href="/css/login.css">
     <!--font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,24 +13,18 @@
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffdcda5ee8f53772038e59e82fb3ce7c&libraries=services,clusterer,drawing">
     </script>
     <script src="/js/breadList.js"></script>
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <!--Header 시작-->
     <div class="h-row1 h-set">
         <div class="col1">
-            <a href="/members">
-                회원가입
-            </a>
+            <img src="/images/bread2u-logo.png" id="main-logo">
+            <div class="title1">빵</div>
+            <div class="title2">이유 (Bread2U)</div>
         </div>
-        <div class="col2">
-            <a href="/members/login">
-                로그인
-            </a>
-        </div>
-    </div>
-    <div class="h-row2 h-set">
-        <div class="col1">
-            <img src="images/main-logo.png" class="main-logo">
+        <div id="login-btn" class="col2">
+            로그인
         </div>
     </div>
     <!--Header 종료-->
@@ -39,6 +33,35 @@
         <div class="col" id="map" style="width:60%;height:470px;"></div>
         <div class="col" id="bakery-list"></div>
     </div>
+    <div class="a-row2">
+        <div id="bakery-detail">
+            <div class="title">
+                <strong>하레하레</strong>
+                <img src="/images/icon-bookmark-before.png" id="bookmark-before">
+            </div>
+            <div class="address">
+                <img src="/images/icon-location.png" id="bakery-location">
+                대전광역시 서구 둔산동 1509번지, 제상가동 1,2층 (둔산동, 크로바아파트)
+            </div>
+            <div class="time">
+                <img src="/images/icon-time.png" id="bakery-time">
+                수정제안
+            </div>
+            <div class="phone">
+                <img src="/images/icon-telphone.png" id="bakery-phone">
+                042 -483 -1595
+            </div>
+        </div>
+    </div>
     <!--Article 종료-->
+    <!-- 전체 화면 어두운 배경 -->
+    <div class="overlay" id="overlay">
+        <!-- 팝업창 -->
+        <div class="popup">
+            <h2>빵이유 로그인</h2>
+            <a class="google-btn">구글로 로그인</a>
+            <a href ="/api/kakao/login" class="kakao-btn">카카오로 로그인</a>
+        </div>
+    </div>
 </body>
 </html>

@@ -5,10 +5,7 @@ import com.daegeon.bread2u.global.common.BaseTimeEntity;
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.post.entity.Bread;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +22,10 @@ public class Member extends BaseTimeEntity {
     private Long id;
     private String email;
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
+
     @OneToMany(mappedBy = "member")
     private List<Bread> breads = new ArrayList<>();
     @OneToMany(mappedBy = "member")

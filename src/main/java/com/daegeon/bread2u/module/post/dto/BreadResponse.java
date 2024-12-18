@@ -35,7 +35,7 @@ public class BreadResponse{
                 bread.getStoreName(),
                 bread.getAddress(),
                 bread.getRoadAddress(),
-                bread.getStandardDate(),
+                bread.getPhone(),
                 bread.getLatitude(),
                 bread.getLongitude(),
                 bread.getStandardDate()
