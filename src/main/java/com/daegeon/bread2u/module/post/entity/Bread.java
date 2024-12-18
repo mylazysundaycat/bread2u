@@ -23,8 +23,8 @@ public class Bread extends BaseTimeEntity {
     private String address; // 지번
     private String roadAddress; // 도로명
     private String phone;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private String standardDate;
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -32,8 +32,8 @@ public class Bread extends BaseTimeEntity {
     @OneToMany(mappedBy = "bread")
     private List<Scrap> scrap;
 
-    public Bread(final String storeName, final String address, final String roadAddress, final String phone, final Long latitude,
-                 final Long longitude, final String standardDate) {
+    public Bread(final String storeName, final String address, final String roadAddress, final String phone, final Double latitude,
+                 final Double longitude, final String standardDate) {
         this.storeName = storeName;
         this.address = address;
         this.roadAddress = roadAddress;

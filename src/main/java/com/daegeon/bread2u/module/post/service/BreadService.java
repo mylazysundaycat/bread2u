@@ -40,8 +40,8 @@ public class BreadService {
                 response.getLnm_adrs(),          // address (지번)
                 response.getRn_adrs(),           // roadAddress (도로명)
                 response.getTelno(),             // phone
-                response.getLa().longValue(),    // latitude
-                response.getLo().longValue(),    // longitude
+                response.getLa(),    // latitude
+                response.getLo(),    // longitude
                 response.getData_stdr_de()       // standardDate
         )).collect(Collectors.toList());
         // DB에 저장
@@ -80,8 +80,8 @@ public class BreadService {
                 response.getLnm_adrs(),          // address (지번)
                 response.getRn_adrs(),           // roadAddress (도로명)
                 response.getTelno(),             // phone
-                response.getLa().longValue(),    // latitude
-                response.getLo().longValue(),    // longitude
+                response.getLa(),    // latitude
+                response.getLo(),    // longitude
                 response.getData_stdr_de()       // standardDate
         )).collect(Collectors.toList());
 

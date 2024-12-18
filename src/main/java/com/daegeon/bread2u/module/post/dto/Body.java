@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class BakeryResponse {
+public class Body {
     private int totalCnt;              // 총 개수
     private List<ApiResponse> items;   // items 리스트
 }

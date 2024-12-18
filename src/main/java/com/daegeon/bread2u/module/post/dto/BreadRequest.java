@@ -11,7 +11,7 @@ public class BreadRequest{
     private String address;
     private String roadAddress;
     private String phone;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private String standardDate;
 }

@@ -13,12 +13,12 @@ public class BreadResponse{
     private String address;
     private String roadAddress;
     private String phone;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private String standardDate;
 
     public BreadResponse(final Long id, final String storeName, final String address, final String roadAddress, final String phone,
-                         final Long latitude, final Long longitude, final String standardDate) {
+                         final Double latitude, final Double longitude, final String standardDate) {
         this.id = id;
         this.storeName = storeName;
         this.address = address;

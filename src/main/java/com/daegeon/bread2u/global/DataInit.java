@@ -1,2 +1,4 @@
-package com.daegeon.bread2u.global;public class DataInit {
+package com.daegeon.bread2u.global;
+
+public class DataInit {
 }
