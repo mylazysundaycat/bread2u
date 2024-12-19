@@ -8,9 +8,9 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
-    @Value("${jwt.token.expiration-time")
+    @Value("${jwt.token.expiration-time}")
     private long expirationTime;
-    @Value("${jwt.secret-key")
+    @Value("${jwt.secret-key}")
     private String secretKey;
 
     public String CreateToken(final String email) {
@@ -20,7 +20,7 @@ public class JwtProvider {
                 .setSubject(email)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(SignatureAlgorithm.ES256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
     public boolean validateAvailableToken(final String token) {
