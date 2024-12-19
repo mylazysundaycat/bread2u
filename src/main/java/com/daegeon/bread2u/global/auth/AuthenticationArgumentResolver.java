@@ -15,9 +15,9 @@ import java.util.Objects;
 
 
 @Component
-public class AuthenticationArgumentHandler implements HandlerMethodArgumentResolver {
+public class AuthenticationArgumentResolver implements HandlerMethodArgumentResolver {
     private final JwtProvider jwtProvider;
-    public AuthenticationArgumentHandler(JwtProvider jwtProvider) {
+    public AuthenticationArgumentResolver(JwtProvider jwtProvider) {
         this.jwtProvider = jwtProvider;
     }
 
