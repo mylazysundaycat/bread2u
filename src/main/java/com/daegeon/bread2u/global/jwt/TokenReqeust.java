@@ -1,4 +1,4 @@
-package com.daegeon.bread2u.module.token;
+package com.daegeon.bread2u.global.jwt;
 
 
 import lombok.AccessLevel;

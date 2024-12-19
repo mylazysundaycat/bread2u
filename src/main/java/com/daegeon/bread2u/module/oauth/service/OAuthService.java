@@ -1,11 +1,11 @@
 package com.daegeon.bread2u.module.oauth.service;
 
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.member.repository.MemberRepository;
+import com.daegeon.bread2u.module.member.service.MemberService;
 import com.daegeon.bread2u.module.oauth.dto.KakaoUserInfoResponse;
-import com.daegeon.bread2u.module.token.AccessTokenResponse;
-import com.daegeon.bread2u.module.token.TokenReqeust;
-import com.daegeon.bread2u.module.token.TokenReseponse;
+import com.daegeon.bread2u.global.jwt.AccessTokenResponse;
+import com.daegeon.bread2u.global.jwt.TokenReqeust;
+import com.daegeon.bread2u.global.jwt.TokenReseponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 @RequiredArgsConstructor
 public class OAuthService {
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     public TokenReseponse processKakaoLogin(final TokenReqeust tokenReqeust) {
         String accessToken = getKakaoAccessToken(tokenReqeust).getAccessToken();
         KakaoUserInfoResponse kakaoUserInfoResponse = getKakaoUserInfo(accessToken);
-
+        return loginAfterMemberCheck(kakaoUserInfoResponse);
     }
     public AccessTokenResponse getKakaoAccessToken(final TokenReqeust tokenReqeust) {
         // Authorization Server와 통신 - accessToken을 받아오기 위함
@@ -56,7 +56,11 @@ public class OAuthService {
                 .block();
     }
 
-    public TokenReseponse signupOrLogin(KakaoUserInfoResponse kakaoUserInfoResponse) {
-        memberRepository.save(Member.from(kakaoUserInfoResponse));
+    public TokenReseponse loginAfterMemberCheck(KakaoUserInfoResponse kakaoUserInfoResponse) {
+        String email = kakaoUserInfoResponse.getKakaoAccount().getEmail();
+        if (!memberService.isMember(email)) {
+            memberService.createMember(Member.from(kakaoUserInfoResponse));
+        }
+        return memberService.login(email);
     }
 }
