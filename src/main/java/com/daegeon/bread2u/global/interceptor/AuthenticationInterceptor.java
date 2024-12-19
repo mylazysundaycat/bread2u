@@ -19,10 +19,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response,
-                             final Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+                             Object handler) throws Exception {
         final String token = jwtExtractor.extractToken(request);
-        if (jwtProvider.validateAvailableToken(token)) return true;
-        return false;
+        try {
+            jwtProvider.validateAvailableToken(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

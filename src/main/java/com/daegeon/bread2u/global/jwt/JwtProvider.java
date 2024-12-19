@@ -13,7 +13,7 @@ public class JwtProvider {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    public String CreateToken(final String email) {
+    public String CreateToken(String email) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + expirationTime);
         return Jwts.builder()
@@ -23,15 +23,18 @@ public class JwtProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
-    public boolean validateAvailableToken(final String token) {
+    public Claims validateAvailableToken(String token) {
         try {
-            String email = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-            return true;
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
             throw new RuntimeException("만료된 토큰");
         } catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
             throw new RuntimeException("잘못된 토큰");
         }
+    }
+
+    public String getSubject(String token) {
+        return validateAvailableToken(token).getSubject();
     }
 
 }

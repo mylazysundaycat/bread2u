@@ -24,6 +24,10 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public Long findMemberId(String email) {
+        return memberRepository.findIdByEmail(email);
+    }
+
     public TokenReseponse login(String email) {
         return new TokenReseponse("Bearer "+jwtProvider.CreateToken(email));
     }
