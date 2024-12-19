@@ -3,7 +3,7 @@ package com.daegeon.bread2u.module.scrap.entity;
 
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.post.entity.Bread;
+import com.daegeon.bread2u.module.post.entity.Bakery;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,11 +18,15 @@ public class Scrap extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne
-    private Bread bread;
+    @JoinColumn(name = "bakery_id")
+    private Bakery bakery;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-
+    public Scrap(Bakery bakery, Member member) {
+        this.bakery = bakery;
+        this.member = member;
+    }
 }

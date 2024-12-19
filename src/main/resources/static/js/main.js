@@ -1,4 +1,7 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
+
     const loginBtn = document.getElementById('login-btn'); // 로그인 버튼
     const overlay = document.getElementById('overlay'); // 어두운 배경 (팝업)
     const popup = document.querySelector('.popup'); // 팝업창
@@ -15,4 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
             overlay.style.display = 'none'; // 팝업 닫기
         }
     });
-});
+
+
+
+    });
+

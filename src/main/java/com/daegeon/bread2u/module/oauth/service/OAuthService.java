@@ -3,8 +3,8 @@ package com.daegeon.bread2u.module.oauth.service;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.service.MemberService;
 import com.daegeon.bread2u.module.oauth.dto.KakaoUserInfoResponse;
-import com.daegeon.bread2u.global.jwt.response.AccessTokenResponse;
-import com.daegeon.bread2u.global.jwt.response.TokenReseponse;
+import com.daegeon.bread2u.global.jwt.dto.AccessTokenResponse;
+import com.daegeon.bread2u.global.jwt.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ public class OAuthService {
     @Value("${kakao.redirect-uri}")
     private String KAKAO_REDIRECT_URI;
 
-    public TokenReseponse processKakaoLogin(final String code) {
+    public TokenResponse processKakaoLogin(final String code) {
         String accessToken = getKakaoAccessToken(code).getAccessToken();
         KakaoUserInfoResponse kakaoUserInfoResponse = getKakaoUserInfo(accessToken);
         return loginAfterMemberCheck(kakaoUserInfoResponse);
@@ -49,7 +49,6 @@ public class OAuthService {
         WebClient resourceServer = WebClient.builder()
                 .baseUrl("https://kapi.kakao.com/v2/user/me")
                 .build();
-
         return resourceServer.get().uri(uriBuilder -> uriBuilder
                 .queryParam("secure_resource", "true").build())
                 .header("Authorization", "Bearer "+accessToken)
@@ -58,7 +57,7 @@ public class OAuthService {
                 .block();
     }
 
-    public TokenReseponse loginAfterMemberCheck(KakaoUserInfoResponse kakaoUserInfoResponse) {
+    public TokenResponse loginAfterMemberCheck(KakaoUserInfoResponse kakaoUserInfoResponse) {
         String email = kakaoUserInfoResponse.getKakaoAccount().getEmail();
         if (!memberService.isMember(email)) {
             memberService.createMember(Member.from(kakaoUserInfoResponse));

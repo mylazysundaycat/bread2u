@@ -12,7 +12,7 @@
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffdcda5ee8f53772038e59e82fb3ce7c&libraries=services,clusterer,drawing">
     </script>
-    <script src="/js/breadList.js"></script>
+    <script src="/js/authentication.js"></script>
     <script src="/js/main.js"></script>
 </head>
 <body>
@@ -25,6 +25,8 @@
         </div>
         <div id="login-btn" class="col2">
             로그인
+        </div>
+        <div id="profile-container" style="display: none;">
         </div>
     </div>
     <!--Header 종료-->
@@ -60,8 +62,10 @@
         <div class="popup">
             <h2>빵이유 로그인</h2>
             <a class="google-btn">구글로 로그인</a>
-            <a href ="/api/kakao/login" class="kakao-btn">카카오로 로그인</a>
+            <a href = "/api/kakao/login"
+               class="kakao-btn">카카오로 로그인</a>
         </div>
+
     </div>
 </body>
 </html>

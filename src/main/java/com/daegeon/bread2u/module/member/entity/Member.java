@@ -4,7 +4,7 @@ package com.daegeon.bread2u.module.member.entity;
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
 import com.daegeon.bread2u.module.comment.entity.Comment;
 import com.daegeon.bread2u.module.oauth.dto.KakaoUserInfoResponse;
-import com.daegeon.bread2u.module.post.entity.Bread;
+import com.daegeon.bread2u.module.post.entity.Bakery;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -27,12 +27,14 @@ public class Member extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private Platform platform;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "member")
-    private List<Bread> breads = new ArrayList<>();
+    private List<Bakery> bakeries = new ArrayList<>();
     @OneToMany(mappedBy = "member")
     private List<Comment> comments = new ArrayList<>();
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Scrap> scraps = new ArrayList<>();
 
     public Member(String email, String name, String profileImage, Platform platform) {
@@ -40,6 +42,7 @@ public class Member extends BaseTimeEntity {
         this.name = name;
         this.profileImage = profileImage;
         this.platform = platform;
+        this.role = Role.USER;
     }
 
     public static Member from(KakaoUserInfoResponse kakaoUserInfoResponse) {
@@ -49,4 +52,15 @@ public class Member extends BaseTimeEntity {
                 Platform.KAKAO);
         return member;
     }
+
+    public void setScraps(List<Scrap> scraps) {
+        this.scraps = scraps;
+    }
+    public void addScrap(Scrap scrap) {
+        this.scraps.add(scrap);
+    }
+    public void removeScrap(Scrap scrap) {
+        this.scraps.remove(scrap);
+    }
+
 }

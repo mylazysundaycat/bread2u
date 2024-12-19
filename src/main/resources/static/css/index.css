@@ -42,6 +42,14 @@ body{
 .title2{
 
 }
+.user-info{
+    display: flex;
+}
+.profile-img{
+    width: 27px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
 .h-row2{
     display: flex;
     justify-content: center;
@@ -189,6 +197,7 @@ body{
     width: 127px;
     padding-top: 35px;
     padding-bottom: 35px;
+    margin-bottom: 4px;
 }
 .search-icon{
     width: 22px;
@@ -198,7 +207,6 @@ body{
     left: 222px;
     top: -29px;
 }
-
 .map-img{
     width: 275px;
     height: 338px;
@@ -211,8 +219,6 @@ body{
     width: 30px;
     margin-right: 3px;
 }
-
-
 
 
 
