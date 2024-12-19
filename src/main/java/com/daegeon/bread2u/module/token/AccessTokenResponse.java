@@ -1,9 +1,11 @@
 package com.daegeon.bread2u.module.token;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccessTokenResponse {
-    private String access_token;
+    @JsonProperty("access_token")
+    private String accessToken;
 }
