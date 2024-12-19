@@ -4,7 +4,7 @@ package com.daegeon.bread2u.module.member.service;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.repository.MemberRepository;
 import com.daegeon.bread2u.global.jwt.JwtProvider;
-import com.daegeon.bread2u.global.jwt.TokenReseponse;
+import com.daegeon.bread2u.global.jwt.response.TokenReseponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,6 @@ public class MemberService {
     }
 
     public TokenReseponse login(String email) {
-        return new TokenReseponse(jwtProvider.CreateToken(email));
+        return new TokenReseponse("Bearer "+jwtProvider.CreateToken(email));
     }
 }

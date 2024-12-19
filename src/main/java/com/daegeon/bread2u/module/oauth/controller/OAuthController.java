@@ -2,8 +2,7 @@ package com.daegeon.bread2u.module.oauth.controller;
 
 
 import com.daegeon.bread2u.module.oauth.service.OAuthService;
-import com.daegeon.bread2u.global.jwt.TokenReqeust;
-import com.daegeon.bread2u.global.jwt.TokenReseponse;
+import com.daegeon.bread2u.global.jwt.response.TokenReseponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -26,9 +25,9 @@ public class OAuthController {
         headers.setLocation(URI.create(kakaoUri));
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
-    @PostMapping("/kakao/callback")
-    public ResponseEntity<TokenReseponse> kakaoCallback(@RequestBody TokenReqeust tokenReqeust) {
-        TokenReseponse tokenReseponse = oAuthService.processKakaoLogin(tokenReqeust);
+    @GetMapping("/kakao/callback")
+    public ResponseEntity<TokenReseponse> kakaoCallback(@RequestParam String code) {
+        TokenReseponse tokenReseponse = oAuthService.processKakaoLogin(code);
         return new ResponseEntity<>(tokenReseponse, HttpStatus.OK);
     }
 }
