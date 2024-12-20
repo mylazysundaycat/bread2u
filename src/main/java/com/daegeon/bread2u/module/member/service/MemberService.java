@@ -39,4 +39,5 @@ public class MemberService {
     public TokenResponse login(String email) {
         return new TokenResponse("Bearer "+jwtProvider.CreateToken(email));
     }
+
 }

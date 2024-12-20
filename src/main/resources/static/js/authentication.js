@@ -54,10 +54,27 @@ document.addEventListener('DOMContentLoaded',  async () => {
                 <div class="user-info">
                     <img src="${userInfo.profileImage}" alt="Profile Image" class="profile-img">
                     <span class="user-name">${userInfo.name}</span>
+                    <img src="/images/icon-logout.png" class="logout-img" id="logout-img">
                 </div>
             `;
             profileContainer.style.display = 'block';
             loginBtnContainer.style.display = 'none'; // 로그인 버튼 숨김
+
+            //로그아웃
+            document.getElementById('logout-img').addEventListener('click', async () => {
+                try {
+                    if (!response.ok) {
+                        throw new Error('로그아웃 실패');
+                    }
+                    // 클라이언트 토큰 제거
+                    localStorage.removeItem('token');
+                    window.location.reload()
+                } catch (error) {
+                    console.error('로그아웃 중 오류 발생:', error);
+                    alert('로그아웃 중 문제가 발생했습니다. 다시 시도해주세요.');
+                }
+            });
+
         } catch (error) {
             console.error('Error fetching user info:', error);
             alert('로그인 상태를 확인할 수 없습니다. 다시 시도해주세요.');
@@ -69,7 +86,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
     }
 
 
-    console.log(userBookMarks);
+
 
     // 1. API 호출하여 데이터 가져오기
     fetch('/api/bread')
@@ -100,20 +117,26 @@ document.addEventListener('DOMContentLoaded',  async () => {
 
                 // 3. 마커 추가
                 const markerPosition = new kakao.maps.LatLng(bakery.latitude, bakery.longitude);
-                const marker = new kakao.maps.Marker({
+                const imageSrc = userBookMarks.includes(bakery.id)? '/images/icon-pin-after.png':'/images/icon-pin-before.png';
+                const imageSize = new kakao.maps.Size(29, 42); // 마커이미지의 크기
+                const imageOption = {offset: new kakao.maps.Point(19, 40)}; // 마커시작점
+                const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+                let marker = new kakao.maps.Marker({
                     position: markerPosition,
-                    // image: markerImage,
+                    image: markerImage,
                     map: map
                 });
                 // 마커 저장 (필요하면 배열로 관리)
-                markers.push(marker);
+                markers.push({ bakeryId: bakery.id, marker });
+
 
                 // 4. 마커 클릭 이벤트 (목록 스크롤 이동)
                 kakao.maps.event.addListener(marker, 'click', () => {
                     const targetDiv = document.getElementById(`bakery-${bakeryId}`);
                     if (targetDiv) {
                         targetDiv.scrollIntoView({ behavior: 'auto', block: 'center' }); // 스크롤 이동
-                        targetDiv.style.backgroundColor = '#f0f8ff'; // 강조 효과 (선택사항)
+                        targetDiv.style.backgroundColor = '#83541c2b'; // 강조 효과
                         setTimeout(() => targetDiv.style.backgroundColor = '', 2000); // 강조 해제
                     }
                     // 지도 중심 이동 및 레벨 변경
@@ -138,10 +161,8 @@ document.addEventListener('DOMContentLoaded',  async () => {
                 // 6. 북마크 클릭 이벤트 추가
                 bakeryDiv.querySelector('#bookmark-icon').addEventListener('click', async () => {
                     if (token) {
-
                         const isBookmarked = userBookMarks.includes(bakery.id); // 항상 최신 상태 확인
-                        console.log("북마크 클릭 이벤트"+userBookMarks)
-                        await handleBookmark(bakery, isBookmarked, token, userBookMarks, bakeryDiv, bakeryDetail); // 북마크 처리
+                        await handleBookmark(bakery, isBookmarked, token, userBookMarks, bakeryDiv, bakeryDetail, markers, map); // 북마크 처리
                     } else {
                         showLoginPopup(); // 비회원 상태, 로그인 팝업 표시
                     }
@@ -156,7 +177,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
 });
 
 // 북마크 추가/삭제 함수
-async function handleBookmark(bakery, isBookmarked, token, userBookMarks, bakeryDiv, bakeryDetail) {
+async function handleBookmark(bakery, isBookmarked, token, userBookMarks, bakeryDiv, bakeryDetail, markers, map) {
     try {
         let response;
         if (isBookmarked) {
@@ -170,14 +191,12 @@ async function handleBookmark(bakery, isBookmarked, token, userBookMarks, bakery
             });
             if (response.ok) {
                 // 북마크 삭제 성공
-                console.log("북마크 삭제 전"+userBookMarks)
-                // userBookMarks = userBookMarks.filter(id => id !== bakery.id); // 북마크 목록에서 제거
                 const index = userBookMarks.indexOf(bakery.id);
                 if (index > -1) {
                     userBookMarks.splice(index, 1); // 배열에서 제거
                 }
-                console.log("북마크 삭제 성공"+userBookMarks)
                 updateBookmarkUI(bakeryDiv, bakeryDetail, false); // UI 업데이트
+                updateMarkerImage(bakery.id, false, markers, map); // 마커 이미지 업데이트
             } else {
                 throw new Error('북마크 삭제에 실패했습니다.');
             }
@@ -190,16 +209,13 @@ async function handleBookmark(bakery, isBookmarked, token, userBookMarks, bakery
                     'Content-Type': 'application/json',
                 },
             });
-
             if (response.ok) {
                 // 북마크 추가 성공
-                console.log("북마크 추가 전"+userBookMarks)
-                // userBookMarks.push(bakery.id); // 북마크 목록에 추가
                 if (!userBookMarks.includes(bakery.id)) {
                     userBookMarks.push(bakery.id); // 배열에 추가
                 }
-                console.log("북마크 추가 성공"+userBookMarks)
                 updateBookmarkUI(bakeryDiv, bakeryDetail, true); // UI 업데이트
+                updateMarkerImage(bakery.id, true, markers, map); // 마커 이미지 업데이트
             } else {
                 throw new Error('북마크 추가에 실패했습니다.');
             }
@@ -209,6 +225,28 @@ async function handleBookmark(bakery, isBookmarked, token, userBookMarks, bakery
         alert('북마크 처리 중 문제가 발생했습니다. 다시 시도해주세요.');
     }
 }
+
+
+//TODO
+//마커 업데이트 함수
+function updateMarkerImage(bakeryId, isBookmarked, markers) {
+    // 저장된 마커 중 bakeryId와 일치하는 마커를 찾음
+    let targetMarker = markers.find(marker => marker.bakeryId === bakeryId);
+
+    if (targetMarker) {
+        // 새로운 마커 이미지 설정
+        const newImage = new kakao.maps.MarkerImage(
+            isBookmarked ? '/images/icon-pin-after.png' : '/images/icon-pin-before.png',
+            new kakao.maps.Size(29, 42),
+            { offset: new kakao.maps.Point(19, 40) }
+        );
+
+        // 기존 마커 이미지 업데이트
+        targetMarker.marker.setImage(newImage);
+    }
+}
+
+
 
 // 북마크 UI 업데이트 함수
 function updateBookmarkUI(bakeryDiv, bakeryDetail, isBookmarked) {
