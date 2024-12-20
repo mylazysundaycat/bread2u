@@ -12,18 +12,16 @@ public class MemoResponse {
     private Long id;
     private String content;
     private Long bakeryId;
-    private Long memberId;
 
-    public MemoResponse(Long id, String content, Long bakeryId, Long memberId) {
+    public MemoResponse(Long id, String content, Long bakeryId) {
         this.id = id;
         this.content = content;
         this.bakeryId = bakeryId;
-        this.memberId = memberId;
     }
 
     public static MemoResponse from(Memo memo) {
         return new MemoResponse(
-                memo.getId(), memo.getContent(), memo.getBakery().getId(), memo.getMember().getId()
+                memo.getId(), memo.getContent(), memo.getBakery().getId()
         );
     }
 }

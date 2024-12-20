@@ -141,7 +141,7 @@ body{
     font-weight: 600;
     background-color: transparent;
 }
-#bakery-pen{
+.bakery-pen{
     width: 24px;
     margin-bottom: 2px;
     margin-left: 9px;

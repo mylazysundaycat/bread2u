@@ -26,7 +26,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             jwtProvider.validateAvailableToken(token);
             return true;
         } catch (Exception e) {
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

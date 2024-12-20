@@ -2,6 +2,7 @@ package com.daegeon.bread2u.module.member.dto;
 
 
 import com.daegeon.bread2u.module.member.entity.Member;
+import com.daegeon.bread2u.module.memo.dto.MemoResponse;
 import com.daegeon.bread2u.module.scrap.dto.ScrapResponse;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
 import lombok.AccessLevel;
@@ -21,14 +22,16 @@ public class LoginMemberResponse {
     private String platform;
     private String role;
     private List<ScrapResponse> scraps;
+    private List<MemoResponse> memos;
 
-    public LoginMemberResponse(String email, String name, String profileImage, String platform, String role, List<ScrapResponse> scraps) {
+    public LoginMemberResponse(String email, String name, String profileImage, String platform, String role, List<ScrapResponse> scraps, List<MemoResponse> memos) {
         this.email = email;
         this.name = name;
         this.profileImage = profileImage;
         this.platform = platform;
         this.role = role;
         this.scraps = scraps;
+        this.memos = memos;
     }
 
     public static LoginMemberResponse from(Member member) {
@@ -40,7 +43,11 @@ public class LoginMemberResponse {
                 member.getRole().name(),
                 member.getScraps().stream()
                         .map(ScrapResponse::from)
+                        .collect(Collectors.toList()),
+                member.getMemos().stream()
+                        .map(MemoResponse::from)
                         .collect(Collectors.toList())
         );
     }
+
 }
