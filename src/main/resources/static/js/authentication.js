@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
                 throw new Error('Failed to fetch user info');
             }
             userInfo = await response.json();
-            userBookMarks = userInfo.scraps.map(scrap => scrap.bakery.id) || [];
+            userBookMarks = (userInfo.scraps.map(scrap => scrap.bakeryId)) || [];
 
             // 사용자 프로필 표시
             profileContainer.innerHTML = `
@@ -81,20 +81,21 @@ document.addEventListener('DOMContentLoaded',  async () => {
         })
         .then(data => {
             // 2. 데이터 순회하며 목록 생성
-            data.forEach((bakery, index) => {
+            data.forEach((bakery) => {
+                const bakeryId = bakery.id
                 const bakeryDiv = document.createElement('div');
                 bakeryDiv.className = 'bakery-item';
-                bakeryDiv.id = `bakery-${index}`;
-                const bookmarkIcon = userBookMarks.includes(index)
-                    ? `<img src="/images/icon-bookmark-after.png" id="bookmark-after">`
-                    : `<img src="/images/icon-bookmark-before.png" id="bookmark-before">`;
+                bakeryDiv.id = `bakery-${bakeryId}`;
+                const bookmarkIcon = userBookMarks.includes(bakeryId)
+                    ? `<img src="/images/icon-bookmark-after.png" class="bookmark-after" id="bookmark-icon">`
+                    : `<img src="/images/icon-bookmark-before.png" class="bookmark-before" id="bookmark-icon">`;
                 bakeryDiv.innerHTML = `
-                <div class="title">
-                    <strong>${bakery.storeName}</strong>
-                    ${bookmarkIcon}
-                </div>
-                <div class="content">${bakery.address}</div>
-            `;
+                    <div class="title">
+                        <strong>${bakery.storeName}</strong>
+                        ${bookmarkIcon}
+                    </div>
+                    <div class="content">${bakery.address}</div>
+                `;
 
 
                 // 3. 마커 추가
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
 
                 // 4. 마커 클릭 이벤트 (목록 스크롤 이동)
                 kakao.maps.event.addListener(marker, 'click', () => {
-                    const targetDiv = document.getElementById(`bakery-${index}`);
+                    const targetDiv = document.getElementById(`bakery-${bakeryId}`);
                     if (targetDiv) {
                         targetDiv.scrollIntoView({ behavior: 'auto', block: 'center' }); // 스크롤 이동
                         targetDiv.style.backgroundColor = '#f0f8ff'; // 강조 효과 (선택사항)
@@ -118,25 +119,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
                     // 지도 중심 이동 및 레벨 변경
                     map.setCenter(markerPosition); // 마커 위치로 중심 이동
                     // 상세 페이지 아래 추가
-                    bakeryDetail.innerHTML = "";
-                    bakeryDetail.innerHTML += `
-                        <div class="title">
-                            <strong>${bakery.storeName}</strong>
-                            <img src="/images/icon-bookmark-before.png" id="bookmark-before">
-                        </div>
-                        <div class="address">
-                            <img src="/images/icon-location.png" id="bakery-location">
-                            ${bakery.address}
-                        </div>
-                        <div class="time">
-                            <img src="/images/icon-time.png" id="bakery-time">
-                            수정제안
-                        </div>
-                        <div class="phone">
-                            <img src="/images/icon-telphone.png" id="bakery-phone">
-                            ${bakery.phone ? bakery.phone : "수정제안"}
-                        </div>
-                    `;
+                    updateBakeryDetail(bakery, userBookMarks, bakeryDetail);
                 });
 
 
@@ -148,33 +131,134 @@ document.addEventListener('DOMContentLoaded',  async () => {
                     // 지도 중심 이동
                     map.setCenter(position);
                     // 상세 페이지 아래 추가
-                    bakeryDetail.innerHTML = "";
-                    bakeryDetail.innerHTML += `
-                        <div class="title">
-                            <strong>${bakery.storeName}</strong>
-                            <img src="/images/icon-bookmark-before.png" id="bookmark-before">
-                        </div>
-                        <div class="address">
-                            <img src="/images/icon-location.png" id="bakery-location">
-                            ${bakery.address}
-                        </div>
-                        <div class="time">
-                            <img src="/images/icon-time.png" id="bakery-time">
-                            수정제안
-                        </div>
-                        <div class="phone">
-                            <img src="/images/icon-telphone.png" id="bakery-phone">
-                            ${bakery.phone ? bakery.phone : "수정제안"}
-                        </div>
-                    `;
+                    updateBakeryDetail(bakery, userBookMarks, bakeryDetail);
+                });
+
+
+                // 6. 북마크 클릭 이벤트 추가
+                bakeryDiv.querySelector('#bookmark-icon').addEventListener('click', async () => {
+                    if (token) {
+
+                        const isBookmarked = userBookMarks.includes(bakery.id); // 항상 최신 상태 확인
+                        console.log("북마크 클릭 이벤트"+userBookMarks)
+                        await handleBookmark(bakery, isBookmarked, token, userBookMarks, bakeryDiv, bakeryDetail); // 북마크 처리
+                    } else {
+                        showLoginPopup(); // 비회원 상태, 로그인 팝업 표시
+                    }
                 });
 
                 bakeryList.appendChild(bakeryDiv);
-
             });
         })
         .catch(error => {
             console.error('Error fetching bakery data:', error);
         });
-
 });
+
+// 북마크 추가/삭제 함수
+async function handleBookmark(bakery, isBookmarked, token, userBookMarks, bakeryDiv, bakeryDetail) {
+    try {
+        let response;
+        if (isBookmarked) {
+            // 북마크 삭제 요청
+            response = await fetch(`/api/scrap/${bakery.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                // 북마크 삭제 성공
+                console.log("북마크 삭제 전"+userBookMarks)
+                // userBookMarks = userBookMarks.filter(id => id !== bakery.id); // 북마크 목록에서 제거
+                const index = userBookMarks.indexOf(bakery.id);
+                if (index > -1) {
+                    userBookMarks.splice(index, 1); // 배열에서 제거
+                }
+                console.log("북마크 삭제 성공"+userBookMarks)
+                updateBookmarkUI(bakeryDiv, bakeryDetail, false); // UI 업데이트
+            } else {
+                throw new Error('북마크 삭제에 실패했습니다.');
+            }
+        } else {
+            // 북마크 추가 요청
+            response = await fetch(`/api/scrap/${bakery.id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                // 북마크 추가 성공
+                console.log("북마크 추가 전"+userBookMarks)
+                // userBookMarks.push(bakery.id); // 북마크 목록에 추가
+                if (!userBookMarks.includes(bakery.id)) {
+                    userBookMarks.push(bakery.id); // 배열에 추가
+                }
+                console.log("북마크 추가 성공"+userBookMarks)
+                updateBookmarkUI(bakeryDiv, bakeryDetail, true); // UI 업데이트
+            } else {
+                throw new Error('북마크 추가에 실패했습니다.');
+            }
+        }
+    } catch (error) {
+        console.error('북마크 처리 중 오류:', error);
+        alert('북마크 처리 중 문제가 발생했습니다. 다시 시도해주세요.');
+    }
+}
+
+// 북마크 UI 업데이트 함수
+function updateBookmarkUI(bakeryDiv, bakeryDetail, isBookmarked) {
+    const icon = bakeryDiv.querySelector('#bookmark-icon');
+    if (isBookmarked) {
+        icon.src = '/images/icon-bookmark-after.png';
+        icon.className = 'bookmark-after';
+    } else {
+        icon.src = '/images/icon-bookmark-before.png';
+        icon.className = 'bookmark-before';
+    }
+    // 상세 페이지도 업데이트
+    const detailIcon = bakeryDetail.querySelector('#bookmark-icon');
+    if (detailIcon) {
+        detailIcon.src = isBookmarked
+            ? '/images/icon-bookmark-after.png'
+            : '/images/icon-bookmark-before.png';
+        detailIcon.className = isBookmarked ? 'bookmark-after' : 'bookmark-before';
+    }
+}
+
+// 상세 페이지 업데이트 함수
+function updateBakeryDetail(bakery, userBookMarks, bakeryDetail) {
+    const isBookmarked = userBookMarks.includes(bakery.id); // 북마크 여부 확인
+    const bookmarkIcon = isBookmarked
+        ? `<img src="/images/icon-bookmark-after.png" class="bookmark-after" id="bookmark-icon">`
+        : `<img src="/images/icon-bookmark-before.png" class="bookmark-before" id="bookmark-icon">`;
+
+    bakeryDetail.innerHTML = `
+        <div class="title">
+            <strong>${bakery.storeName}</strong>
+            ${bookmarkIcon}
+        </div>
+        <div class="address">
+            <img src="/images/icon-location.png" id="bakery-location">
+            ${bakery.address}
+        </div>
+        <div class="time">
+            <img src="/images/icon-time.png" id="bakery-time">
+            수정제안
+        </div>
+        <div class="phone">
+            <img src="/images/icon-telphone.png" id="bakery-phone">
+            ${bakery.phone ? bakery.phone : "수정제안"}
+        </div>
+    `;
+}
+
+// 팝업 표시 함수 (비회원 상태)
+function showLoginPopup() {
+    const overlay = document.getElementById('overlay'); // 어두운 배경 (팝업)
+    overlay.style.display = 'flex'; // 팝업 보이기
+}
