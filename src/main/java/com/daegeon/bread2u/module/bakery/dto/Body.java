@@ -1,4 +1,4 @@
-package com.daegeon.bread2u.module.post.dto;
+package com.daegeon.bread2u.module.bakery.dto;
 
 import lombok.Getter;
 import lombok.Setter;

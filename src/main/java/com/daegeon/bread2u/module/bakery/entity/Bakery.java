@@ -1,8 +1,7 @@
-package com.daegeon.bread2u.module.post.entity;
+package com.daegeon.bread2u.module.bakery.entity;
 
 
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
-import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -28,11 +27,22 @@ public class Bakery extends BaseTimeEntity {
     private String standardDate;
 
     @OneToMany(mappedBy = "bakery")
-    @JsonIgnore
     private List<Scrap> scraps;
 
-    public Bakery(final String storeName, final String address, final String roadAddress, final String phone, final Double latitude,
-                  final Double longitude, final String standardDate) {
+    public Bakery(String storeName, String address, String roadAddress, String phone, Double latitude,
+                  Double longitude, String standardDate) {
+        this.storeName = storeName;
+        this.address = address;
+        this.roadAddress = roadAddress;
+        this.phone = phone;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.standardDate = standardDate;
+    }
+
+    public Bakery(Long id, String storeName, String address, String roadAddress, String phone,
+                  Double latitude, Double longitude, String standardDate) {
+        this.id = id;
         this.storeName = storeName;
         this.address = address;
         this.roadAddress = roadAddress;

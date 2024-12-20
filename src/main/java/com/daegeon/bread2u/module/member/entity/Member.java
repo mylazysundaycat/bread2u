@@ -2,9 +2,8 @@ package com.daegeon.bread2u.module.member.entity;
 
 
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
-import com.daegeon.bread2u.module.comment.entity.Comment;
+import com.daegeon.bread2u.module.memo.entity.Memo;
 import com.daegeon.bread2u.module.oauth.dto.KakaoUserInfoResponse;
-import com.daegeon.bread2u.module.post.entity.Bakery;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,7 +30,7 @@ public class Member extends BaseTimeEntity {
     private Role role;
 
     @OneToMany(mappedBy = "member")
-    private List<Comment> comments = new ArrayList<>();
+    private List<Memo> memos = new ArrayList<>();
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Scrap> scraps = new ArrayList<>();
 
@@ -53,6 +52,9 @@ public class Member extends BaseTimeEntity {
 
     public void setScraps(List<Scrap> scraps) {
         this.scraps = scraps;
+    }
+    public void setMemos(List<Memo> memos) {
+        this.memos = memos;
     }
     public void addScrap(Scrap scrap) {
         this.scraps.add(scrap);

@@ -3,7 +3,7 @@ package com.daegeon.bread2u.module.scrap.entity;
 
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.post.entity.Bakery;
+import com.daegeon.bread2u.module.bakery.entity.Bakery;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.daegeon.bread2u.module.post.dto;
+package com.daegeon.bread2u.module.bakery.dto;
 
-import com.daegeon.bread2u.module.post.entity.Bakery;
+import com.daegeon.bread2u.module.bakery.entity.Bakery;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

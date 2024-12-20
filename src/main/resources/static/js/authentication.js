@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded',  async () => {
 
 
 
-
     // 1. API 호출하여 데이터 가져오기
     fetch('/api/bread')
         .then(response => {
@@ -142,7 +141,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
                     // 지도 중심 이동 및 레벨 변경
                     map.setCenter(markerPosition); // 마커 위치로 중심 이동
                     // 상세 페이지 아래 추가
-                    updateBakeryDetail(bakery, userBookMarks, bakeryDetail);
+                    updateBakeryDetail(bakery, userBookMarks, bakeryDetail,token);
                 });
 
 
@@ -154,7 +153,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
                     // 지도 중심 이동
                     map.setCenter(position);
                     // 상세 페이지 아래 추가
-                    updateBakeryDetail(bakery, userBookMarks, bakeryDetail);
+                    updateBakeryDetail(bakery, userBookMarks, bakeryDetail,token);
                 });
 
 
@@ -167,6 +166,7 @@ document.addEventListener('DOMContentLoaded',  async () => {
                         showLoginPopup(); // 비회원 상태, 로그인 팝업 표시
                     }
                 });
+
 
                 bakeryList.appendChild(bakeryDiv);
             });
@@ -269,7 +269,7 @@ function updateBookmarkUI(bakeryDiv, bakeryDetail, isBookmarked) {
 }
 
 // 상세 페이지 업데이트 함수
-function updateBakeryDetail(bakery, userBookMarks, bakeryDetail) {
+function updateBakeryDetail(bakery, userBookMarks, bakeryDetail,token) {
     const isBookmarked = userBookMarks.includes(bakery.id); // 북마크 여부 확인
     const bookmarkIcon = isBookmarked
         ? `<img src="/images/icon-bookmark-after.png" class="bookmark-after" id="bookmark-icon">`
@@ -292,7 +292,41 @@ function updateBakeryDetail(bakery, userBookMarks, bakeryDetail) {
             <img src="/images/icon-telphone.png" id="bakery-phone">
             ${bakery.phone ? bakery.phone : "수정제안"}
         </div>
+        <div class="bakery-memo">
+            <textarea class="area" id="bakery-memo"></textarea>
+            <img src="/images/icon-pen.png" alt="메모작성" id="bakery-pen">
+        </div>
     `;
+
+    const bakeryMemoBtn = document.getElementById('bakery-pen');
+    const memoContent = document.getElementById('bakery-memo')
+    bakeryMemoBtn.addEventListener('click', async () => {
+        try{
+            const memoRequest = {
+                content: memoContent.value,
+                bakeryId: bakery.id,
+            };
+            const memeResponse = await fetch('/api/memo', {
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(memoRequest),
+            });
+            //메모 등록 성공
+            if(memeResponse.ok){
+                alert('메모가 성공적으로 등록되었습니다!');
+            }else{
+                throw new Error('메모 등록에 실패했습니다.');
+            }
+        }catch(error){
+            if (!token) {
+                showLoginPopup();
+            }
+        }
+    });
+
 }
 
 // 팝업 표시 함수 (비회원 상태)

@@ -3,8 +3,8 @@ package com.daegeon.bread2u.module.scrap.service;
 
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.member.service.MemberService;
-import com.daegeon.bread2u.module.post.entity.Bakery;
-import com.daegeon.bread2u.module.post.service.BakeryService;
+import com.daegeon.bread2u.module.bakery.entity.Bakery;
+import com.daegeon.bread2u.module.bakery.service.BakeryService;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
 import com.daegeon.bread2u.module.scrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +33,8 @@ public class ScrapService {
         scrapRepository.delete(scrap);
     }
 
+    public List<Scrap> getMemberScraps(String email) {
+        return scrapRepository.findAllByMemberEmail(email);
+    }
 
 }

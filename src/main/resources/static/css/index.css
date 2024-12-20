@@ -119,7 +119,34 @@ body{
     margin-left: 4px;
     cursor: pointer;
 }
-
+.bakery-memo{
+    /* border: 1px solid #795548; */
+    border-radius: 2px;
+    margin: 11px 6px;
+    height: 58px;
+    display: flex
+;
+    align-items: center;
+    padding-left: 12px;
+    background-color: #f9f9f9;
+}
+.bakery-memo .area{
+    font-size: 18px;
+    font-family: "Noto Sans KR", sans-serif;
+    letter-spacing: -1px;
+    border: 0px;
+    width: 937px;
+    height: 30px;
+    resize: none;
+    font-weight: 600;
+    background-color: transparent;
+}
+#bakery-pen{
+    width: 24px;
+    margin-bottom: 2px;
+    margin-left: 9px;
+    cursor: pointer;
+}
 
 
 /*컬러*/

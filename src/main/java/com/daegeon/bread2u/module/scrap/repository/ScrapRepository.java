@@ -1,7 +1,7 @@
 package com.daegeon.bread2u.module.scrap.repository;
 
 import com.daegeon.bread2u.module.member.entity.Member;
-import com.daegeon.bread2u.module.post.entity.Bakery;
+import com.daegeon.bread2u.module.bakery.entity.Bakery;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

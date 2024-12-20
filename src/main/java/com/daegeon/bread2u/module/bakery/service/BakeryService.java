@@ -1,10 +1,10 @@
-package com.daegeon.bread2u.module.post.service;
+package com.daegeon.bread2u.module.bakery.service;
 
 
-import com.daegeon.bread2u.module.post.dto.ApiResponseWrapper;
-import com.daegeon.bread2u.module.post.dto.BakeryResponse;
-import com.daegeon.bread2u.module.post.entity.Bakery;
-import com.daegeon.bread2u.module.post.repository.BakeryRepository;
+import com.daegeon.bread2u.module.bakery.dto.ApiResponseWrapper;
+import com.daegeon.bread2u.module.bakery.dto.BakeryResponse;
+import com.daegeon.bread2u.module.bakery.entity.Bakery;
+import com.daegeon.bread2u.module.bakery.repository.BakeryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

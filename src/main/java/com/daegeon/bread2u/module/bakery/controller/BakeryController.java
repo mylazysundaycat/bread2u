@@ -1,8 +1,8 @@
-package com.daegeon.bread2u.module.post.controller;
+package com.daegeon.bread2u.module.bakery.controller;
 
 
-import com.daegeon.bread2u.module.post.dto.BakeryResponse;
-import com.daegeon.bread2u.module.post.service.BakeryService;
+import com.daegeon.bread2u.module.bakery.dto.BakeryResponse;
+import com.daegeon.bread2u.module.bakery.service.BakeryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

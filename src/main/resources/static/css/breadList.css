@@ -45,16 +45,12 @@
     margin-bottom: 5px;
 }
 #bakery-detail .title .bookmark-before{
-    position: absolute;
-    top: -10px;
-    right: 4px;
-    width: 34px;
+    width: 22px;
+    margin-top: 4px;
 }
 #bakery-detail .title .bookmark-after{
-    position: absolute;
-    top: -10px;
-    right: 4px;
-    width: 34px;
+    width: 23px;
+    margin-top: 3px;
 }
 #bakery-detail .address{
     display: flex;
