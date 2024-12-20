@@ -31,8 +31,6 @@ public class Member extends BaseTimeEntity {
     private Role role;
 
     @OneToMany(mappedBy = "member")
-    private List<Bakery> bakeries = new ArrayList<>();
-    @OneToMany(mappedBy = "member")
     private List<Comment> comments = new ArrayList<>();
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Scrap> scraps = new ArrayList<>();

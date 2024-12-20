@@ -4,6 +4,7 @@ package com.daegeon.bread2u.module.post.entity;
 import com.daegeon.bread2u.global.common.BaseTimeEntity;
 import com.daegeon.bread2u.module.member.entity.Member;
 import com.daegeon.bread2u.module.scrap.entity.Scrap;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,10 +26,9 @@ public class Bakery extends BaseTimeEntity {
     private Double latitude;
     private Double longitude;
     private String standardDate;
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+
     @OneToMany(mappedBy = "bakery")
+    @JsonIgnore
     private List<Scrap> scraps;
 
     public Bakery(final String storeName, final String address, final String roadAddress, final String phone, final Double latitude,

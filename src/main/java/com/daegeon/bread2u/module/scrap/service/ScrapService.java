@@ -23,7 +23,6 @@ public class ScrapService {
         Bakery bakery = bakeryService.getBakery(bakeryId);
         Member member = memberService.getMemberByEmail(email);
         Scrap scrap = new Scrap(bakery, member);
-        member.addScrap(scrap);
         scrapRepository.save(scrap);
     }
 
@@ -31,9 +30,8 @@ public class ScrapService {
         Bakery bakery = bakeryService.getBakery(bakeryId);
         Member member = memberService.getMemberByEmail(email);
         Scrap scrap = scrapRepository.findByBakeryAndMember(bakery, member);
-        member.removeScrap(scrap);
+        scrapRepository.delete(scrap);
     }
-
 
 
 }
