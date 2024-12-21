@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/breadList.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <title>Title</title>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffdcda5ee8f53772038e59e82fb3ce7c&libraries=services,clusterer,drawing">
+    </script>
+    <script src="/js/authentication.js"></script>
+    <script src="/js/main.js"></script>
+</head>
+<body>
+    <!--Header 시작-->
+    <div class="h-row1 h-set">
+        <div class="col1">
+            <img src="/images/bread2u-logo.png" id="main-logo">
+            <div class="title1">빵</div>
+            <div class="title2">이유 (Bread2U)</div>
+        </div>
+        <div id="login-btn" class="col2">
+            로그인
+        </div>
+        <div id="profile-container" style="display: none;">
+        </div>
+    </div>
+    <!--Header 종료-->
+    <!--Article 시작-->
+    <div class="a-row1">
+        <div class="col" id="map" style="width:60%;height:470px;"></div>
+        <div class="col" id="bakery-list"></div>
+    </div>
+    <div class="a-row2">
+        <div id="bakery-detail">
+        </div>
+    </div>
+    <!--Article 종료-->
+    <!-- 전체 화면 어두운 배경 -->
+    <div class="overlay" id="overlay">
+        <!-- 팝업창 -->
+        <div class="popup">
+            <h2>빵이유 로그인</h2>
+            <a class="google-btn">구글로 로그인</a>
+            <a href = "/api/kakao/login"
+               class="kakao-btn">카카오로 로그인</a>
+        </div>
+    </div>
+</body>
+</html>

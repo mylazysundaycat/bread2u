@@ -1,0 +1,52 @@
+/* 전체 화면 어두운 배경 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 어두운 배경 */
+    display: none; /* 기본적으로 숨김 */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* 팝업창 */
+.popup {
+    background-color: #fff;
+    width: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+/* 로그인 버튼 스타일 */
+.google-btn, .kakao-btn {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.google-btn {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+.kakao-btn {
+    background-color: #FFEB00;
+    color: #333;
+    font-weight: bold;
+}
+
+#login-btn{
+    cursor: pointer;
+    font-weight: 600;
+}
