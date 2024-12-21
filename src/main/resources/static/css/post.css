@@ -1,0 +1,202 @@
+.post-nav-container{
+    display: flex;
+    width: 1050px;
+    margin: 0px auto;
+    flex-direction: column;
+}
+.post-nav {
+    display: flex;
+    width: 1050px;
+    margin: 0px auto;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+
+.post-nav .title{
+    display: flex;
+    margin-left: 39px;
+}
+
+
+.article-container{
+    display: flex;
+    width: 1050px;
+    margin: 0px auto;
+    flex-direction: column;
+}
+.a-row2{
+    display: flex;
+    width: 1010px;
+    margin: 0px auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;
+    margin-left: 39px;
+}
+.article-container .id{
+    width: 3%;
+    margin-right: 3px;
+}
+.article-container .title{
+    width: 52%;
+    display: flex;
+}
+.title .title-row{
+   overflow: hidden;
+}
+.title .count-row{
+    width: 5%;
+}
+
+
+.a-row2 .views{
+    width: 7%;
+    text-align: center;
+}
+.a-row3 .view{
+    display: flex;
+    width: 7%;
+    justify-content: center;
+}
+.a-row3 .views{
+    text-align: center;
+}
+
+.a-row2 .likes{
+    width: 7%;
+    text-align: center;
+}
+.a-row3 .likes{
+    text-align: center;
+}
+.a-row3 .like{
+    display: flex;
+    width: 7%;
+    justify-content: center;
+}
+.article-container .nickname{
+    width: 17%;
+    text-align: center;
+}
+.article-container .date{
+    width: 17%;
+    text-align: center;
+}
+
+.a-row3{
+    display: flex;
+    width: 1010px;
+    height: 28px;
+    margin: 0px auto;
+    margin-bottom: 16px;
+    overflow: hidden;
+    margin-left: 39px;
+}
+.comment-count{
+    font-weight: 500;
+}
+
+
+
+
+.post-content-container{
+    display: flex;
+    width: 1050px;
+    margin: 0px auto;
+    justify-content: space-between;
+}
+.pc-form{
+    display: flex;
+    flex-direction: column;
+}
+.pc-form .title{
+    margin-bottom:16px
+}
+.pc-title{
+    width: 1000px;
+    padding: 10px 0;
+    font-size: 30px;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 36px;
+}
+input::placeholder {color:#ccc;}
+.pc-form .post{
+
+}
+.pc-post{
+    border: 1px solid #ccc;
+    width: 1000px;
+    height: 310px;
+    padding: 10px;
+    margin-left: 36px;
+}
+.pc-form .btn-pack{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 36px;
+}
+.pc-file{
+
+}
+.pc-submit{
+
+}
+
+.page-box{
+    display: flex;
+    justify-content: center;
+    margin: 40px 0px;
+}
+.page-num{
+    margin-right: 10px;
+}
+.page-box .current{
+    font-weight: 600;
+    color: #ff8f0d;
+}
+.link-title{
+
+}
+
+/*버튼*/
+.btn{
+    border: 0px;
+    padding: 4px 13px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -1px;
+    cursor: pointer;
+
+}
+.btn:hover{
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/*컬러*/
+.main-color{
+    background-color: #FFB35A;
+    transition: background-color 0.3s;
+}
+.main-color:hover{
+    background-color: rgba(255, 179, 90, 0.75);
+}
+
+
+/*이미지*/
+.likes-img{
+    width: 22px;
+    height: 22px;
+    margin-right: 2px;
+    margin-top: 3px;
+}
+.righrarrow-img{
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
