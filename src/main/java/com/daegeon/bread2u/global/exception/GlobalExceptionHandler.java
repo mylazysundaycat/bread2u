@@ -20,7 +20,6 @@ public class GlobalExceptionHandler {
                 .stream()
                 .map(ObjectError::getDefaultMessage)
                 .collect(Collectors.joining(", "));
-
         ErrorResponse errorResponse = new ErrorResponse(400, "BAD_REQUEST", errorMessage);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
