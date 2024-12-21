@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,23 +34,28 @@ public class BakeryService {
             throw new RuntimeException("API 호출 실패 또는 응답 데이터가 없습니다.");
         }
 
-        Set<String> excludedKeywords = Set.of("파리바게뜨", "파리바게트","뚜레","자연드림","손만두");
+        Set<String> excludedKeywords = Set.of("파리바게뜨", "파리바게트", "뚜레", "자연드림", "손만두");
 
+        //위도, 경도가 같은 가게는 중복으로 제거함
+        Set<String> uniqueCoordinates = new HashSet<>();
         List<Bakery> bakeries = responseWrapper.getResponse().getBody().getItems().stream()
                 .filter(response ->
                         excludedKeywords.stream().noneMatch(keyword -> response.getBssh_nm().contains(keyword))
                 )
+                .filter(response ->
+                        uniqueCoordinates.add(response.getLa() + "," + response.getLo())
+                )
                 .map(response -> new Bakery(
-                response.getBssh_nm(),           // storeName
-                response.getLnm_adrs(),          // address
-                response.getRn_adrs(),           // roadAddress
-                response.getTelno(),             // phone
-                response.getLa(),    // latitude
-                response.getLo(),    // longitude
-                response.getData_stdr_de()       // standardDate
-        )).collect(Collectors.toList());
+                        response.getBssh_nm(),
+                        response.getLnm_adrs(),
+                        response.getRn_adrs(),
+                        response.getTelno(),
+                        response.getLa(),
+                        response.getLo(),
+                        response.getData_stdr_de()
+                ))
+                .collect(Collectors.toList());
 
-        // DB에 저장
         bakeryRepository.saveAll(bakeries);
     }
 
