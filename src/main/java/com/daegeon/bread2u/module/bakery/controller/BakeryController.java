@@ -25,10 +25,10 @@ public class BakeryController {
         return new ResponseEntity<>(bakeryRespons, HttpStatus.OK);
     }
 
-    @GetMapping("/bread/update")
-    public ResponseEntity<Void> updateOpenBreadApi() {
-        bakeryService.saveOpenBreadApi();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @GetMapping("/bread/update")
+//    public ResponseEntity<Void> updateOpenBreadApi() {
+//        bakeryService.saveOpenBreadApi();
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
 }
