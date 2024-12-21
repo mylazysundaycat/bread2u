@@ -25,7 +25,6 @@ public class OAuthController {
     private String kakaoUri;
     @Value("${home-uri}")
     private String homeUri;
-
     @GetMapping("/kakao/login")
     public ResponseEntity<Void> OAuth2LoginRedirect() {
         HttpHeaders headers = new HttpHeaders();

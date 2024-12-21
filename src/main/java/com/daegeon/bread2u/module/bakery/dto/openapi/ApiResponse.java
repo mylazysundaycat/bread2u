@@ -1,4 +1,4 @@
-package com.daegeon.bread2u.module.bakery.dto;
+package com.daegeon.bread2u.module.bakery.dto.openapi;
 
 import lombok.Getter;
 import lombok.Setter;

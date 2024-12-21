@@ -1,7 +1,7 @@
 package com.daegeon.bread2u.module.bakery.service;
 
 
-import com.daegeon.bread2u.module.bakery.dto.ApiResponseWrapper;
+import com.daegeon.bread2u.module.bakery.dto.openapi.ApiResponseWrapper;
 import com.daegeon.bread2u.module.bakery.dto.BakeryResponse;
 import com.daegeon.bread2u.module.bakery.entity.Bakery;
 import com.daegeon.bread2u.module.bakery.repository.BakeryRepository;
@@ -41,8 +41,8 @@ public class BakeryService {
                 )
                 .map(response -> new Bakery(
                 response.getBssh_nm(),           // storeName
-                response.getLnm_adrs(),          // address (지번)
-                response.getRn_adrs(),           // roadAddress (도로명)
+                response.getLnm_adrs(),          // address
+                response.getRn_adrs(),           // roadAddress
                 response.getTelno(),             // phone
                 response.getLa(),    // latitude
                 response.getLo(),    // longitude

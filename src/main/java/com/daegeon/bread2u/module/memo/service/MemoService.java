@@ -22,7 +22,6 @@ public class MemoService {
 
     public MemoResponse createMemo(MemoRequest memoRequest, String email) {
         Member member = memberService.getMemberByEmail(email);
-        System.out.println("서비스에서 베이커리 아이디 확인..?"+memoRequest.getBakeryId());
         Bakery bakery = bakeryService.getBakery(memoRequest.getBakeryId());
         Memo memo = new Memo(memoRequest.getContent(), member, bakery);
         return MemoResponse.from(memoRepository.save(memo));

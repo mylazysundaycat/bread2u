@@ -7,11 +7,8 @@ import lombok.Setter;
 
 @Getter
 public class KakaoUserInfoResponse {
-
     @JsonProperty("kakao_account")
     private KakaoAccount kakaoAccount;
-
-
     @Getter
     @Setter
     public static class KakaoAccount{
@@ -26,7 +23,5 @@ public class KakaoUserInfoResponse {
             @JsonProperty("profile_image_url")
             private String profileImageUrl;
         }
-
     }
-
 }

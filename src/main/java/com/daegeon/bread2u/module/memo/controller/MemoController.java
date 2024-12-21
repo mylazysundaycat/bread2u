@@ -6,6 +6,7 @@ import com.daegeon.bread2u.module.member.dto.LoginMemberRequest;
 import com.daegeon.bread2u.module.memo.dto.MemoRequest;
 import com.daegeon.bread2u.module.memo.dto.MemoResponse;
 import com.daegeon.bread2u.module.memo.service.MemoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class MemoController {
     private final MemoService memoService;
     @PostMapping
     public ResponseEntity<MemoResponse> createMemo(@Auth LoginMemberRequest loginMemberRequest,
-                                                   @RequestBody MemoRequest memoRequest) {
+                                                   @RequestBody @Valid  MemoRequest memoRequest) {
         MemoResponse memoResponse = memoService.createMemo(memoRequest, loginMemberRequest.getEmail());
         return new ResponseEntity<>(memoResponse, HttpStatus.OK);
     }
