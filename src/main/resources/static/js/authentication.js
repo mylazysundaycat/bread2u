@@ -74,6 +74,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const bakeries = await response.json();
 
+        // 기본 bakery.id 1인 데이터 설정
+        const defaultBakery = bakeries.find(bakery => bakery.id === 1);
+        if (defaultBakery) {
+            updateBakeryDetail(defaultBakery, userBookMarks, bakeryDetail, userMemos, token);
+            const markerPosition = new kakao.maps.LatLng(defaultBakery.latitude, defaultBakery.longitude);
+            map.setCenter(markerPosition); // 지도의 기본 위치 설정
+        }
+
         bakeries.forEach(bakery => {
             const bakeryDiv = document.createElement('div');
             bakeryDiv.className = 'bakery-item';
@@ -227,7 +235,7 @@ function updateBakeryDetail(bakery, userBookMarks, bakeryDetail, userMemos, toke
             ${bakery.phone ? bakery.phone : "수정제안"}
         </div>
         <div class="bakery-memo">
-            <textarea class="area" id="bakery-memo">${memoContent}</textarea>
+            <textarea class="area" id="bakery-memo" placeholder="베이커리가 회원님의 한 줄 메모를 기다리고있어요">${memoContent}</textarea>
             <img src="/images/icon-pen.png" alt="메모작성" class="bakery-pen" id="save-memo">
         </div>
     `;
@@ -259,7 +267,7 @@ function updateBakeryDetail(bakery, userBookMarks, bakeryDetail, userMemos, toke
                 }
                 alert('메모가 저장되었습니다');
             } else {
-                throw new Error('Failed to save memo');
+                showLoginPopup();
             }
         } catch (error) {
             console.error('Error saving memo:', error);

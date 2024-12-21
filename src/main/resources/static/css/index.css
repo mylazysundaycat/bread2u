@@ -147,7 +147,9 @@ body{
     margin-left: 9px;
     cursor: pointer;
 }
-
+.area::placeholder {
+    color: #aaa;
+}
 
 /*컬러*/
 .bg-c1{
