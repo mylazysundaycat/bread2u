@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error('Error fetching user info:', error);
             alert('로그인 상태를 확인할 수 없습니다. 다시 시도해주세요.');
+            localStorage.removeItem('token');
         }
     } else {
         loginBtnContainer.style.display = 'block';
