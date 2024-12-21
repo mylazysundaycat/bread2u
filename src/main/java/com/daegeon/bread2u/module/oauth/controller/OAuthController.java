@@ -23,8 +23,7 @@ public class OAuthController {
     private final OAuthService oAuthService;
     @Value("${kakao.uri}")
     private String kakaoUri;
-    @Value("${home-uri}")
-    private String homeUri;
+
     @GetMapping("/kakao/login")
     public ResponseEntity<Void> OAuth2LoginRedirect() {
         HttpHeaders headers = new HttpHeaders();
@@ -37,7 +36,7 @@ public class OAuthController {
         // JavaScript로 메인 페이지 리다이렉트
         String script = "<script>"
                 + "localStorage.setItem('token', '" + tokenResponse.getAccessToken() + "');"
-                + "window.location.href = '"+homeUri+ "';"
+                + "window.location.href = '/';"
                 + "</script>";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_HTML);
