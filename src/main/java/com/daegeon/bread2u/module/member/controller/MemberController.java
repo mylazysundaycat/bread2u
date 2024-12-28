@@ -27,8 +27,6 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<LoginMemberResponse> getLoginMemberInfo(@Auth LoginMemberRequest loginMemberRequest) {
         Member member = memberService.getMemberByEmail(loginMemberRequest.getEmail());
-        member.setScraps(scrapService.getMemberScraps(member.getEmail()));
-        member.setMemos(memoService.getMemberMemo(member.getEmail()));
         LoginMemberResponse loginMemberResponse = LoginMemberResponse.from(member);
         return new ResponseEntity<>(loginMemberResponse, HttpStatus.OK);
     }
