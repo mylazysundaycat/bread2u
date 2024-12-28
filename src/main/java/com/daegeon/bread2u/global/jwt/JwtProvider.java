@@ -2,6 +2,7 @@ package com.daegeon.bread2u.global.jwt;
 
 import com.daegeon.bread2u.global.exception.BaseException;
 import com.daegeon.bread2u.global.exception.ErrorCode;
+import com.daegeon.bread2u.global.exception.TokenException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,9 +30,9 @@ public class JwtProvider {
         try {
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
-            throw new BaseException(ErrorCode.INVALID_TOKEN);
+            throw new TokenException(ErrorCode.INVALID_TOKEN);
         } catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
-            throw new BaseException(ErrorCode.EXPIRED_TOKEN);
+            throw new TokenException(ErrorCode.EXPIRED_TOKEN);
         }
     }
 

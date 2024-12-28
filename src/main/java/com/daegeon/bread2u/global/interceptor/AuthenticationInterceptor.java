@@ -1,5 +1,6 @@
 package com.daegeon.bread2u.global.interceptor;
 
+import com.daegeon.bread2u.global.exception.BaseException;
 import com.daegeon.bread2u.global.jwt.JwtExtractor;
 import com.daegeon.bread2u.global.jwt.JwtProvider;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,11 +23,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
         final String token = jwtExtractor.extractToken(request);
-        try {
-            jwtProvider.validateAvailableToken(token);
-            return true;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        jwtProvider.validateAvailableToken(token);
+        return true;
     }
 }
