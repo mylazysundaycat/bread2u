@@ -25,12 +25,12 @@ public class MemoServiceTest extends ServiceTest {
         memberRepository.save(member);
         savedBakery = bakeryRepository.save(bakery);
     }
-
     @Test
     void creatMemo() {
         //given
         String email = member.getEmail();
         MemoRequest memoRequest = new MemoRequest("태양의 손을 가진 제빵사가 있는 곳입니당", 1l);
+        System.out.println(savedBakery.getId());
 
         //when
         MemoResponse response = memoService.createMemo(memoRequest, email);

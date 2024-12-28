@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemoController {
     private final MemoService memoService;
     @PostMapping
-    public ResponseEntity<MemoResponse> createMemo(@Auth LoginMemberRequest loginMemberRequest,
+    public ResponseEntity<MemoResponse> setMemo(@Auth LoginMemberRequest loginMemberRequest,
                                                    @RequestBody @Valid  MemoRequest memoRequest) {
         MemoResponse memoResponse = memoService.createMemo(memoRequest, loginMemberRequest.getEmail());
         return new ResponseEntity<>(memoResponse, HttpStatus.OK);

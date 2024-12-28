@@ -27,6 +27,19 @@ public class MemoService {
         return MemoResponse.from(memoRepository.save(memo));
     }
 
+    public MemoResponse setMemo(MemoRequest memoRequest, String email) {
+        Member member = memberService.getMemberByEmail(email);
+        Bakery bakery = bakeryService.getBakery(memoRequest.getBakeryId());
+
+        Memo memo = memoRepository.findByBakeryIdAndMemberId(bakery.getId(), member.getId())
+                .orElseGet(() -> new Memo(memoRequest.getContent(), member, bakery));
+
+        memo.updateContent(memoRequest.getContent());
+
+        return MemoResponse.from(memo);
+    }
+
+
     public List<Memo> getMemberMemo(String email) {
         return memoRepository.findAllByMemberEmail(email);
     }

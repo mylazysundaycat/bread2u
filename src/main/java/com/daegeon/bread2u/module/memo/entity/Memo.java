@@ -30,4 +30,8 @@ public class Memo extends BaseTimeEntity {
         this.member = member;
         this.bakery = bakery;
     }
+
+    public void updateContent(String newContent) {
+        this.content = newContent;
+    }
 }
