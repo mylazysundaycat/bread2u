@@ -1,6 +1,5 @@
 package com.daegeon.bread2u.module.bakery.service;
 
-
 import com.daegeon.bread2u.module.bakery.dto.openapi.ApiResponseWrapper;
 import com.daegeon.bread2u.module.bakery.dto.BakeryResponse;
 import com.daegeon.bread2u.module.bakery.entity.Bakery;
@@ -33,7 +32,8 @@ public class BakeryService {
         if (responseWrapper == null || responseWrapper.getResponse() == null || responseWrapper.getResponse().getBody() == null) {
             throw new RuntimeException("API 호출 실패 또는 응답 데이터가 없습니다.");
         }
-
+        
+        //예외 가게명
         Set<String> excludedKeywords = Set.of("파리바게뜨", "파리바게트", "뚜레", "자연드림", "손만두");
 
         //위도, 경도가 같은 가게는 중복으로 제거함
@@ -68,6 +68,5 @@ public class BakeryService {
     public Bakery getBakery(Long id) {
         return bakeryRepository.findById(id).orElseThrow(()->new RuntimeException("존재하지 않는 베이커리입니다."));
     }
-
 
 }

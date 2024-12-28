@@ -13,22 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/bread")
 @RequiredArgsConstructor
 public class BakeryController {
 
     private final BakeryService bakeryService;
-
-    @GetMapping("/bread")
+    @GetMapping
     public ResponseEntity<List<BakeryResponse>> getBreadList() {
         List<BakeryResponse> bakeryRespons = bakeryService.getBreadList();
         return new ResponseEntity<>(bakeryRespons, HttpStatus.OK);
     }
-
-    @GetMapping("/bread/update")
+    @GetMapping("/update")
     public ResponseEntity<Void> updateOpenBreadApi() {
         bakeryService.saveOpenBreadApi();
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
