@@ -39,7 +39,6 @@ public class MemoService {
         return MemoResponse.from(memo);
     }
 
-
     public List<Memo> getMemberMemo(String email) {
         return memoRepository.findAllByMemberEmail(email);
     }

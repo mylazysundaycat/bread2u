@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class Bakery extends BaseTimeEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String storeName;
     private String address; // 지번

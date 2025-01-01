@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Memo extends BaseTimeEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
     @ManyToOne

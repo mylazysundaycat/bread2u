@@ -21,12 +21,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (token) {
         try {
             const response = await fetch('/api/member', {
-                method: 'GET',
-                headers: {
-                    Authorization: token,
-                    'Content-Type': 'application/json',
-                },
-            });
+                    method: 'GET',
+                    headers: {
+                        Authorization: token,
+                        'Content-Type' : 'application/json',
+                    },
+                }
+            );
 
             if (!response.ok) {
                 throw new Error('Failed to fetch user info');
@@ -65,6 +66,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         loginBtnContainer.style.display = 'block';
         profileContainer.style.display = 'none';
     }
+
+
 
     try {
         const response = await fetch('/api/bread');
@@ -118,6 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     targetDiv.style.backgroundColor = '#83541c2b';
                     setTimeout(() => (targetDiv.style.backgroundColor = ''), 2000);
                 }
+                map.setCenter(markerPosition);
                 updateBakeryDetail(bakery, userBookMarks, bakeryDetail, userMemos, token);
             });
 
@@ -244,10 +248,6 @@ function updateBakeryDetail(bakery, userBookMarks, bakeryDetail, userMemos, toke
     document.getElementById('save-memo').addEventListener('click', async () => {
         const updatedContent = document.getElementById('bakery-memo').value;
         try {
-            // if (!token) {
-            //     alert('로그인이 필요합니다.');
-            //     return;
-            // }
             const response = await fetch('/api/memo', {
                 method: 'POST',
                 headers: {
