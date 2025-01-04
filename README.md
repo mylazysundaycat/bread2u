@@ -9,7 +9,7 @@
 [#46 회원의 베이커리 북마크 추가 시 무한 추가되는 오류](https://github.com/users/mylazysundaycat/projects/3?pane=issue&itemId=91496282&issue=mylazysundaycat%7Cbread2u%7C46)
 <br>[#42 제과점 OPEN API 중복 데이터 문제](https://github.com/users/mylazysundaycat/projects/3/views/1?pane=issue&itemId=91447981&issue=mylazysundaycat%7Cbread2u%7C42)
 <br>[#57 EC2 서버 구축 이후 API 요청 에러](https://github.com/users/mylazysundaycat/projects/3/views/1?pane=issue&itemId=91707833&issue=mylazysundaycat%7Cbread2u%7C57)
-
+<br>[#58 Unexpected token '<', "<!DOCTYPE " 에러](https://github.com/users/mylazysundaycat/projects/3/views/1?pane=issue&itemId=91889551&issue=mylazysundaycat%7Cbread2u%7C58)
 ### Project Architecture
 
 <img src="./Docs/image/bread2u_architecture.png">
